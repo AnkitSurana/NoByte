@@ -6,18 +6,25 @@ labels: bug
 ---
 
 **Which tool or page?**
+
 <!-- e.g. QR Code Generator, /tools/qr-code -->
 
 **What happened?**
-<!-- What did you expect to happen instead? -->
+
+<!-- What you saw. -->
+
+**What did you expect instead?**
 
 **Steps to reproduce**
+
 1.
 2.
 3.
 
-**Browser & OS**
+**Browser and OS**
+
 <!-- e.g. Chrome 128 on macOS 15, Safari on iOS 18 -->
 
 **Screenshots**
-<!-- If applicable, add screenshots to help explain the problem. -->
+
+<!-- Optional, but they help a lot. -->

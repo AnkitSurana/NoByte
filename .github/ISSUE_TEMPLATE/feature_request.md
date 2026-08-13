@@ -10,6 +10,7 @@ labels: enhancement
 **Proposed solution**
 
 **Can this be done honestly, entirely client-side, in a browser?**
-<!-- NoByte deliberately leaves out tools that can't be done truthfully in a browser (e.g. a real speed test or a live currency feed). See the README's "Honest scope" section. -->
+
+<!-- NoByte deliberately leaves out tools that cannot be done truthfully in a browser, such as a real speed test or a live currency feed. See "Tools that use a third-party service" in the README. -->
 
 **Anything else?**
