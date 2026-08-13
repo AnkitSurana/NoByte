@@ -197,11 +197,15 @@ function dateLabel(iso) {
 function blogTag(cat) {
   return `<span class="post-tag" data-cat="${cat}">${esc(BLOG_CAT_LABEL[cat] || cat)}</span>`;
 }
-/** Date + category capsules for a post header, keyed by slug. */
+/** Date + category capsules for a post header, keyed by slug.
+ * A post that has been materially rewritten carries an "updated" date as well;
+ * both are shown, because replacing the original date would quietly claim the
+ * piece is newer than it is. */
 function blogMeta(slug, blog) {
   const p = blog.find((x) => x.slug === slug);
   if (!p) throw new Error(`blog-meta: unknown post "${slug}"`);
-  return `<p class="post__meta"><time datetime="${p.date}">${dateLabel(p.date)}</time><span class="post-tags">${p.cats.map(blogTag).join("")}</span></p>`;
+  const updated = p.updated ? `<time class="post__updated" datetime="${p.updated}">Updated ${dateLabel(p.updated)}</time>` : "";
+  return `<p class="post__meta"><time datetime="${p.date}">${dateLabel(p.date)}</time>${updated}<span class="post-tags">${p.cats.map(blogTag).join("")}</span></p>`;
 }
 /** The whole index: search box, filter chips, and the card list. */
 function blogList(blog) {
@@ -282,9 +286,22 @@ function renderPage(layout, partials, data, meta, body) {
   // noindex="1" is for pages whose content only exists on the visitor's own
   // device (the favourites list), so a crawler would only ever see an empty page.
   const robots = meta.noindex === "1" ? "noindex, follow" : "index, follow";
-  // Tool pages carry SoftwareApplication plus a BreadcrumbList that mirrors the
-  // Home / Category / Tool trail already shown on the page. All of this lives in
-  // <head> as JSON-LD; none of it changes what the page renders.
+  // A post is recognised by its path matching a registry entry, so a new post
+  // gets its structured data by being added to blog.json and nothing else —
+  // the same "registry is the source of truth" rule the tool pages follow.
+  const post = data.blog.find((p) => `/blog/${p.slug}/` === path) || null;
+  // Tool pages carry SoftwareApplication and posts carry BlogPosting, each with
+  // a BreadcrumbList mirroring the trail already shown on the page. All of this
+  // lives in <head> as JSON-LD; none of it changes what the page renders.
+  const breadcrumbs = (crumbs) => ({
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: c.name,
+      item: c.item,
+    })),
+  });
   let structured = "";
   if (meta.tool === "1") {
     const toolName = title.replace(/ \| NoByte.*/, "");
@@ -304,15 +321,32 @@ function renderPage(layout, partials, data, meta, body) {
         description,
         url: canonical,
       },
+      breadcrumbs(crumbs),
+    ];
+    structured = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@graph": graph })}</script>`;
+  } else if (post) {
+    const publisher = { "@type": "Organization", name: "NoByte", url: SITE_URL + "/" };
+    const graph = [
       {
-        "@type": "BreadcrumbList",
-        itemListElement: crumbs.map((c, i) => ({
-          "@type": "ListItem",
-          position: i + 1,
-          name: c.name,
-          item: c.item,
-        })),
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.excerpt,
+        // dateModified falls back to the publish date: a post that has not been
+        // revised is unmodified, not undated.
+        datePublished: post.date,
+        dateModified: post.updated || post.date,
+        articleSection: post.cats.map((c) => BLOG_CAT_LABEL[c] || c),
+        author: publisher,
+        publisher,
+        image: ogImage,
+        mainEntityOfPage: canonical,
+        url: canonical,
       },
+      breadcrumbs([
+        { name: "Home", item: SITE_URL + "/" },
+        { name: "Blog", item: `${SITE_URL}/blog/` },
+        { name: post.title, item: canonical },
+      ]),
     ];
     structured = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@graph": graph })}</script>`;
   }
@@ -340,6 +374,7 @@ function renderPage(layout, partials, data, meta, body) {
     .replaceAll("{{keywords}}", esc(keywords))
     .replaceAll("{{robots}}", robots)
     .replaceAll("{{canonical}}", canonical)
+    .replaceAll("{{ogType}}", post ? "article" : "website")
     .replaceAll("{{ogImage}}", ogImage)
     .replaceAll("{{structured}}", structured)
     .replaceAll("{{searchScript}}", searchScript)
@@ -351,9 +386,13 @@ function renderPage(layout, partials, data, meta, body) {
 }
 
 /* ---------- sitemap ---------- */
+/* Entries are {path, lastmod}. lastmod is only set where a real date exists to
+   back it (posts, from the registry); the rest go out without one, since a
+   made-up date across every URL is the thing that gets a sitemap's dates
+   ignored wholesale. */
 function writeSitemap(paths) {
   const urls = paths
-    .map((p) => `  <url><loc>${SITE_URL}${p}</loc><changefreq>weekly</changefreq></url>`)
+    .map(({ path, lastmod }) => `  <url><loc>${SITE_URL}${path}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ""}<changefreq>weekly</changefreq></url>`)
     .join("\n");
   writeFileSync(join(DIST, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
   // robots
@@ -460,7 +499,10 @@ function build() {
     mkdirSync(dirname(outPath), { recursive: true });
     writeFileSync(outPath, versionAssets(renderPage(layout, partials, data, meta, body)));
     emitted.add(relPath.replace(/\\/g, "/"));
-    if (meta.path && meta.path !== "/404" && meta.noindex !== "1") sitemapPaths.push(meta.path);
+    if (meta.path && meta.path !== "/404" && meta.noindex !== "1") {
+      const post = data.blog.find((p) => `/blog/${p.slug}/` === meta.path);
+      sitemapPaths.push({ path: meta.path, lastmod: post ? post.updated || post.date : "" });
+    }
   };
 
   // Map a page's URL path to its output file so clean URLs (folder/index.html) work on any static host.

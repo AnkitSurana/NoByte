@@ -691,7 +691,14 @@ del { background: var(--bad-wash); color: var(--bad); border-radius: 4px; paddin
  * lift). Headings and crumbs live OUTSIDE .prose, so nothing gets underlined. */
 .post-wrap { position: relative; z-index: 1; max-width: 40rem; margin-inline: auto; }
 .post__meta, .post-card__meta { font-family: var(--font-mono); font-size: var(--t-xs); color: var(--ink-3); display: flex; align-items: center; gap: var(--s3); }
-.post__meta time, .post-card__meta time { color: var(--ink-2); }
+.post__meta time, .post-card__meta time { color: var(--ink-2); white-space: nowrap; }
+/* Shown only on a post that has been revised, so it sits quieter than the
+   publish date rather than competing with it. A revised post has two dates, so
+   the row has to be allowed to wrap; without this the flex line holds and each
+   date breaks mid-way instead ("25 July / 2026") on a narrow screen. */
+.post__meta { flex-wrap: wrap; row-gap: var(--s2); }
+.post__meta .post__updated { color: var(--ink-3); }
+.post__meta .post__updated::before { content: "·"; margin-inline-end: var(--s3); }
 /* Category capsules. Tool categories reuse the tile colours so a developer post
    reads as developer; privacy is an ink pill; guide is a plain outline. Dark
    text on colour is constant in both themes, same as the tool tiles. */
