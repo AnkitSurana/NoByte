@@ -1,4 +1,4 @@
-<!-- meta title="How to fix messy JSON and read the error | NoByte" description="When JSON will not parse, the error can be blunt. Here is how to make a file readable and find the character that is actually breaking it." path="/blog/fix-messy-json/" keywords="fix json, json syntax error, json parse error, format json, validate json" -->
+<!-- meta title="How to fix messy JSON and read the error | NoByte" description="When JSON will not parse, the error points at where the parser gave up, not at your mistake. How to read it, the causes behind most failures, and the one that never errors at all." path="/blog/fix-messy-json/" keywords="fix json, json syntax error, json parse error, format json, validate json, unexpected token json, json comments" -->
 <section class="section">
   <div class="container container-wide has-stickers">
     <span class="sticker sticker--1">line and column</span>
@@ -7,8 +7,8 @@
     <span class="sticker sticker--4">double quotes</span>
     <span class="sticker sticker--5">pretty print</span>
     <span class="sticker sticker--6">or minify</span>
-    <span class="sticker sticker--7">spot the typo</span>
-    <span class="sticker sticker--8">valid json</span>
+    <span class="sticker sticker--7">smart quotes</span>
+    <span class="sticker sticker--8">no comments</span>
     <span class="sticker sticker--9">paste and go</span>
     <span class="sticker sticker--10">no upload</span>
     <span class="sticker sticker--11">in your browser</span>
@@ -23,20 +23,31 @@
 
       <div class="prose post__body">
         <h2>Format first, read second</h2>
-        <p>Minified JSON on a single line is hard to scan for a missing bracket. Formatting it adds indentation and line breaks so the structure becomes visible, which on its own often shows where a level was never closed. Paste your JSON into the <a href="/tools/json-formatter/">JSON formatter</a> and press Format.</p>
+        <p>Minified JSON on a single line is hard to scan for a missing bracket. Formatting it adds indentation and line breaks so the structure becomes visible, which on its own often shows where a level was opened and never closed. Paste your JSON into the <a href="/tools/json-formatter/">JSON formatter</a> and press Format. Two spaces, four spaces, or tabs, depending on what the file around it uses.</p>
 
-        <h2>What the common errors mean</h2>
-        <p>Most parse failures come from a short list of causes:</p>
+        <h2>The error points at where parsing stopped</h2>
+        <p>This is the part that wastes the most time. A parser reads left to right and complains at the first point where what it sees cannot possibly continue. That is often a line or two after the actual mistake.</p>
+        <p>A missing comma is the clearest case. Leave one out after a value and the parser happily reads the value, then finds a quoted key where it expected a comma or a closing brace, and reports the error there. You stare at the reported line, which is perfectly correct, while the real problem sits at the end of the line above it.</p>
+        <p>So treat the position as a starting point and read backwards from it. The formatter converts the raw character offset into a line and column, which is enough to land you in the right neighbourhood.</p>
+
+        <h2>What usually causes it</h2>
+        <p>Most failures come from a short list:</p>
         <ul>
-          <li>A trailing comma after the last item in an object or array.</li>
-          <li>Single quotes where JSON requires double quotes.</li>
-          <li>A key that is not wrapped in quotes.</li>
-          <li>A bracket or brace that was opened and never closed.</li>
+          <li>A trailing comma after the last item in an object or array. Valid in JavaScript, not in JSON.</li>
+          <li>Single quotes where JSON requires double quotes, or a key with no quotes at all.</li>
+          <li>Comments. JSON has none, and <code>//</code> or <code>/* */</code> in a config file will stop a strict parser even though the editor highlighted them nicely.</li>
+          <li>A bracket or brace opened and never closed, which usually gets reported at the very end of the file.</li>
+          <li>Values that only exist in JavaScript: <code>undefined</code>, <code>NaN</code>, <code>Infinity</code>, and numbers written as <code>.5</code> or <code>01</code>.</li>
         </ul>
-        <p>The formatter points at the line and column where parsing stopped, which is usually right after the real mistake rather than on it.</p>
+
+        <h2>The one that comes from copying and pasting</h2>
+        <p>If the JSON came out of a chat message, an email, or a word processor, suspect the quotes before anything else. Those tools rewrite straight quotes as curly ones, and a curly quote is not a string delimiter, it is just a character the parser did not expect. The two look nearly identical in most fonts, which is what makes this one maddening. The same applies to a non-breaking space pasted in place of a normal one.</p>
+
+        <h2>The problem that never raises an error</h2>
+        <p>Duplicate keys are legal enough that most parsers accept them without complaint, and simply keep the last one. So a config with a setting listed twice parses cleanly and quietly ignores the value you meant to use. If a setting seems to have no effect, search the file for the key before assuming the software is at fault. Nothing will flag it for you.</p>
 
         <h2>Minify when you are done</h2>
-        <p>Once the JSON is valid, you may want it small again for a config field or a request body. Minify strips the whitespace back out and leaves the smallest valid version of the same data.</p>
+        <p>Once the JSON is valid you may want it small again for a config field, a request body, or an environment variable. Minify strips the whitespace back out and leaves the smallest valid version of the same data.</p>
         <p>Format, validate, or minify with the <a href="/tools/json-formatter/">JSON formatter</a>. Nothing is uploaded, so it is safe for config and data you cannot share.</p>
       </div>
     </article>

@@ -1,4 +1,4 @@
-<!-- meta title="How to compress an image without it going blurry | NoByte" description="Compression trades file size against detail. Here is how to make an image smaller while keeping it looking right, and which format to pick." path="/blog/compress-image-without-blur/" keywords="compress image, reduce image size, jpg compression quality, webp vs jpg, compress without losing quality" -->
+<!-- meta title="How to compress an image without it going blurry | NoByte" description="Compression trades file size against detail, but the biggest saving is usually the pixel dimensions. How to shrink an image while keeping it sharp, and which format to pick." path="/blog/compress-image-without-blur/" keywords="compress image, reduce image size, jpg compression quality, webp vs jpg, compress without losing quality, resize before compressing" -->
 <section class="section">
   <div class="container container-wide has-stickers">
     <span class="sticker sticker--1">quality slider</span>
@@ -7,7 +7,7 @@
     <span class="sticker sticker--4">smaller files</span>
     <span class="sticker sticker--5">stay sharp</span>
     <span class="sticker sticker--6">no blur</span>
-    <span class="sticker sticker--7">half the size</span>
+    <span class="sticker sticker--7">resize first</span>
     <span class="sticker sticker--8">never uploaded</span>
     <span class="sticker sticker--9">your photos</span>
     <span class="sticker sticker--10">drop it in</span>
@@ -18,18 +18,30 @@
         <nav class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>Compress without blur</span></nav>
         {{blog-meta:compress-image-without-blur}}
         <h1 class="page-title post__title">How to compress an image without it going blurry</h1>
-        <p class="page-lead">Compression trades file size against detail. Here is how to make an image smaller while keeping it looking right, and how to choose the format.</p>
+        <p class="page-lead">Compression trades file size against detail, but the biggest saving is usually somewhere else entirely. Here is how to make an image smaller while keeping it looking right.</p>
       </header>
 
       <div class="prose post__body">
         <h2>Why smaller tends to mean softer</h2>
-        <p>JPG and WebP save space by discarding the detail your eye is least likely to miss. Push the quality down far enough and the losses start to show as soft edges and blocky patches in areas of flat colour. The trick is finding the point just before that begins.</p>
+        <p>JPG and WebP save space by discarding the detail your eye is least likely to miss. Push the quality down far enough and the losses start to show as soft edges, and as blocky patches in areas that should be flat colour: a clear sky, a plain wall. The trick is finding the point just before that begins.</p>
+
+        <h2>Check the dimensions before you touch the quality</h2>
+        <p>This is the step people skip. A photo straight off a phone can be 4,000 pixels wide. If it is going into a page that displays it at 800, three quarters of those pixels are being thrown away by the browser after being downloaded in full. No quality setting fixes that, because the file is large for a reason the slider cannot address.</p>
+        <p>Halving an image's width and height quarters its pixel count, and the file usually falls by something close to that, with no visible softening at all if you were never seeing those pixels. Compare that with dropping quality far enough to save the same space, which you would see immediately. So: resize to the size it will actually be shown at with the <a href="/tools/image-resizer/">image resizer</a>, then compress what is left.</p>
+        <p>The compressor deliberately keeps the original dimensions, so the two steps stay separate and you can see what each one cost you.</p>
 
         <h2>Using the slider</h2>
-        <p>Open the <a href="/tools/image-compressor/">image compressor</a> and drop an image in. Move the quality slider down and watch the file size fall next to a live preview. Somewhere around the middle, most photos lose more than half their size with no difference you can spot at normal viewing distance. When the preview starts to look worse, step back up a little.</p>
+        <p>Open the <a href="/tools/image-compressor/">image compressor</a> and drop an image in. It starts at quality 70. Move the slider and watch the file size change next to the preview.</p>
+        <p>For most photographs the useful band is somewhere between 60 and 80. Below about 50 the artefacts become noticeable on flat areas and around hard edges. Above about 90 the file grows quickly while the improvement is difficult to see. Judge it on the preview at full size, not on a thumbnail, since a thumbnail hides exactly the problems you are looking for.</p>
 
-        <h2>Which format, and when</h2>
-        <p>JPG suits photographs. WebP usually produces a smaller file at the same quality and handles both photos and graphics, so it is worth trying wherever the place you are uploading to accepts it. For a screenshot with sharp text, keep the quality high; text is where compression shows first.</p>
+        <h2>Compressing twice makes it worse</h2>
+        <p>Quality is not a property of the file that you can raise and lower freely. Every save at a lossy quality discards detail permanently, and re-encoding an already-compressed JPG discards more on top, even at a high setting. Do it repeatedly and the artefacts accumulate.</p>
+        <p>The habit that avoids this: keep the original, and compress from it each time. If you have to try three quality settings, run all three from the source file rather than compressing the compressed one.</p>
+
+        <h2>Which format, and one trap</h2>
+        <p>JPG suits photographs and is accepted everywhere. WebP usually produces a smaller file at the same visible quality and handles both photographs and flat graphics, so it is worth trying wherever the destination accepts it.</p>
+        <p>The trap is transparency. JPG cannot store it, so a transparent PNG saved as JPG comes out with the see-through areas filled in white, which is rarely what anyone wanted from a logo. Choose WebP if the image has transparency you need to keep.</p>
+        <p>For screenshots and anything with sharp text, lossy compression is the wrong tool at any quality: text edges are the first thing it damages. Keep those as PNG, or convert with the <a href="/tools/image-converter/">image format converter</a>.</p>
         <p>Try it on the <a href="/tools/image-compressor/">image compressor</a>. The image is processed in your browser and never uploaded.</p>
       </div>
     </article>

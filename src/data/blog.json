@@ -30,15 +30,17 @@
   {
     "slug": "what-makes-a-password-strong",
     "title": "What actually makes a password strong",
-    "excerpt": "Strength is not about odd symbols; it is about length and randomness. What matters, and how to get it without inventing anything yourself.",
+    "excerpt": "Strength is not about odd symbols; it is about length and randomness. The arithmetic behind that, why complexity rules backfire, and the habit that matters more than either.",
     "date": "2026-07-24",
+    "updated": "2026-08-13",
     "cats": ["daily-use", "privacy", "guide"]
   },
   {
     "slug": "fix-messy-json",
     "title": "How to fix messy JSON and read the error",
-    "excerpt": "When JSON will not parse, the error can be blunt. How to make a file readable, find the character that is breaking it, and minify it once it is valid.",
+    "excerpt": "When JSON will not parse, the error points at where the parser gave up, not at your mistake. How to read it, what usually causes it, and the problem that never errors at all.",
     "date": "2026-07-23",
+    "updated": "2026-08-13",
     "cats": ["developer", "guide"]
   },
   {
@@ -51,8 +53,9 @@
   {
     "slug": "compress-image-without-blur",
     "title": "How to compress an image without it going blurry",
-    "excerpt": "Compression trades file size against detail. How to shrink a JPG or WebP while keeping it looking right, and which format to reach for.",
+    "excerpt": "Compression trades file size against detail, but the biggest saving is usually the pixel dimensions. How to shrink an image while keeping it sharp, and which format to reach for.",
     "date": "2026-07-21",
+    "updated": "2026-08-13",
     "cats": ["image", "guide"]
   },
   {

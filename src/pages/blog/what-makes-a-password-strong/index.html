@@ -1,4 +1,4 @@
-<!-- meta title="What actually makes a password strong | NoByte" description="Password strength is about length and randomness, not odd symbols. What matters, and how to get it without inventing anything yourself." path="/blog/what-makes-a-password-strong/" keywords="strong password, password length, random password, password generator, secure password tips" -->
+<!-- meta title="What actually makes a password strong | NoByte" description="Password strength is about length and randomness, not odd symbols. The arithmetic behind that, why complexity rules backfire, and the habit that matters more than either." path="/blog/what-makes-a-password-strong/" keywords="strong password, password length, random password, password generator, secure password tips, password reuse" -->
 <section class="section">
   <div class="container container-wide has-stickers">
     <span class="sticker sticker--1">length wins</span>
@@ -22,15 +22,32 @@
       </header>
 
       <div class="prose post__body">
-        <h2>Length beats complexity</h2>
-        <p>A long password built from ordinary characters is harder to crack than a short one crammed with symbols, because every extra character multiplies the number of guesses an attacker has to make. Swapping a 3 for an E does almost nothing. Adding four more characters does a great deal.</p>
+        <h2>Length beats complexity, and the gap is enormous</h2>
+        <p>A long password built from ordinary characters is harder to crack than a short one crammed with symbols, because every extra character multiplies the number of guesses an attacker has to make rather than adding to it.</p>
+        <p>Some arithmetic to show the scale. Using upper case, lower case, digits, and the symbols on a standard keyboard gives a pool of 87 characters per position. Adding four characters to a password multiplies the number of possible values by 87 to the fourth power, which is about 57 million. Four characters. Not 57 million more combinations, 57 million times as many.</p>
+        <p>Compare the two ends of that. Eight lower case letters give about 210 billion possibilities, which sounds enormous and is not: dedicated hardware works through that range quickly. Sixteen characters from the full pool give a number with 31 digits in it. The second is about 52 quintillion times larger than the first, and the only thing that really changed was length.</p>
+        <p>Now compare that with the classic complexity trick. Swapping a 3 for an E, or an @ for an a, moves you nowhere, because cracking tools apply those substitutions as standard rules. A dictionary word with predictable substitutions is a dictionary word.</p>
 
         <h2>Randomness is the other half</h2>
-        <p>A password is only as good as it is unpredictable. Anything you pick by hand tends to fall into a pattern that cracking tools already expect: a name, a date, a keyboard run. A generator that draws from the browser's cryptographic random source sidesteps that. Open the <a href="/tools/password-generator/">password generator</a>, set the length to sixteen or more, and let it choose.</p>
+        <p>A password is only as good as it is unpredictable. Anything chosen by hand falls into a pattern that cracking tools already expect: a name, a date, a keyboard run, a word with the first letter capitalised and a 1 on the end. The search space above assumes every position is equally likely. Pick by hand and you collapse it, whatever the password looks like.</p>
+        <p>This is where "must contain one upper case, one number, and one symbol" rules quietly backfire. Faced with them, most people produce a capital at the front, a digit at the end, and an exclamation mark after that. The rule adds a symbol and removes the unpredictability that actually mattered, which is why <code>P@ssw0rd!</code> satisfies almost every corporate policy and is among the first things any attacker tries.</p>
+
+        <h2>The thing that matters more than either</h2>
+        <p>A perfect password used in two places is weaker than a mediocre one used once. When a site is breached, the stolen pairs of address and password get replayed against banks, email providers, and shopping sites automatically. The attacker never has to crack anything, because you already gave them a working password: they are just trying it on a different door.</p>
+        <p>So the ranking is: never reuse, then make it long, then make it random. Most people work that list backwards.</p>
 
         <h2>You are not meant to remember it</h2>
-        <p>Random passwords feel impractical because people try to memorise them, which is the wrong job for a person. Save each one in your browser or a password manager and let the machine hold it. The single password worth committing to memory is the one that unlocks the manager, and that one can be a long passphrase rather than a jumble.</p>
-        <p>Make one with the <a href="/tools/password-generator/">password generator</a>. It is created in your browser with the Web Crypto API and never sent anywhere.</p>
+        <p>Random passwords feel impractical because people try to memorise them, which is the wrong job for a person. Save each one in your browser or a password manager and let the machine hold it. The single password worth committing to memory is the one that unlocks the manager, and that one can be a long passphrase of unrelated words, since length is doing the work.</p>
+
+        <h2>Making one</h2>
+        <p>The <a href="/tools/password-generator/">password generator</a> has a length slider up to 64 and toggles for the four character types. A few notes on using it:</p>
+        <ul>
+          <li>Sixteen is a sensible floor. Go higher wherever the site allows it, since the cost to you is zero when a manager is doing the typing.</li>
+          <li>Turning off symbols weakens things far less than shortening the password does, so if a site rejects them, add a few characters instead of arguing with the form.</li>
+          <li>The "No look-alikes" toggle drops characters like 0 and O, 1 and l. Worth it for a password you will read aloud or copy off a screen, unnecessary otherwise.</li>
+        </ul>
+        <p>It draws from <code>crypto.getRandomValues</code>, the browser's cryptographic random source, rather than <code>Math.random</code>, and it discards values that would land unevenly across the character set instead of taking a remainder. That second part matters: a plain remainder makes the first few characters of the set slightly more likely, and slightly predictable is exactly what you were trying to avoid.</p>
+        <p>The password is generated in your browser and never sent anywhere.</p>
       </div>
     </article>
   </div>
