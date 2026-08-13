@@ -1,0 +1,20 @@
+<!-- meta tool="1" title="Text diff: compare two texts | NoByte" description="Compare two texts and see added and removed words or lines highlighted. Runs entirely in your browser." path="/tools/text-diff/" keywords="text diff, compare text, diff checker, text compare" -->
+{{tool-hero:text-diff}}
+<section class="section--tight">
+  <div class="container">
+    <div class="tool-layout tool-layout--split">
+      <div class="field"><label for="td-a">Original</label><textarea class="textarea mono" id="td-a" spellcheck="false" style="min-height:200px;">The quick brown fox jumps over the lazy dog.</textarea></div>
+      <div class="field"><label for="td-b">Changed</label><textarea class="textarea mono" id="td-b" spellcheck="false" style="min-height:200px;">The quick red fox leaps over the lazy cat.</textarea></div>
+    </div>
+    <div class="row row-wrap mt-4" style="gap:var(--s4);align-items:center;">
+      <div class="field"><label for="td-mode">Compare by</label>
+        <select class="select" id="td-mode"><option value="words">Words</option><option value="lines">Lines</option><option value="chars">Characters</option></select>
+      </div>
+      <span class="badge badge--ok" id="td-added">+0</span>
+      <span class="badge badge--danger" id="td-removed">-0</span>
+    </div>
+    <div class="output-box mt-4" id="td-result" aria-live="polite"></div>
+  </div>
+</section>
+<script src="/assets/vendor/diff.min.js"></script>
+<script type="module" src="/js/tools/text-diff.js"></script>

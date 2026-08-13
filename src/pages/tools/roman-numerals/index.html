@@ -1,0 +1,26 @@
+<!-- meta tool="1" title="Roman numeral converter | NoByte" description="Convert numbers to Roman numerals and back, for values from 1 to 3999. Type in either box and the other updates. Runs in your browser." path="/tools/roman-numerals/" keywords="roman numeral converter, roman numerals, number to roman, roman to number" -->
+{{tool-hero:roman-numerals}}
+<section class="section--tight">
+  <div class="container" style="max-width:640px;">
+    <div class="tool-layout tool-layout--split">
+      <div class="field">
+        <label for="rn-number">Number</label>
+        <input class="input mono" id="rn-number" type="text" inputmode="numeric" placeholder="2026" style="font-size:var(--t-lg);" />
+      </div>
+      <div class="field">
+        <div class="row between"><label for="rn-roman">Roman numeral</label>
+          <button class="btn btn--sm copy-btn" data-copy="#rn-roman"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <input class="input mono" id="rn-roman" type="text" placeholder="MMXXVI" style="font-size:var(--t-lg);text-transform:uppercase;" />
+      </div>
+    </div>
+    <p class="field-error mt-2" id="rn-error"></p>
+    <p class="muted xs mt-2">Type in either box and the other updates automatically.</p>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Standard Roman numerals cover 1 to 3999. There is no symbol for zero or negative numbers, and values above 3999 need overlines that plain text cannot show.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/roman-numerals.js"></script>

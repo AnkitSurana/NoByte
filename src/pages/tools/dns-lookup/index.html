@@ -1,0 +1,27 @@
+<!-- meta tool="1" title="DNS lookup: A, AAAA, MX, NS, TXT, CNAME | NoByte" description="Look up DNS records (A, AAAA, MX, NS, TXT, CNAME) for any domain over DNS-over-HTTPS. Runs from your browser." path="/tools/dns-lookup/" keywords="dns lookup, dns records, mx record, nslookup, dns checker" -->
+{{tool-hero:dns-lookup}}
+<section class="section--tight">
+  <div class="container" style="max-width:760px;">
+    <form id="dns-form" class="row row-wrap" style="gap:var(--s3);align-items:end;">
+      <div class="field grow" style="min-width:220px;">
+        <label for="dns-domain">Domain</label>
+        <input class="input mono" id="dns-domain" placeholder="example.com" autocomplete="off" spellcheck="false" value="example.com" />
+      </div>
+      <div class="field">
+        <label for="dns-type">Record type</label>
+        <select class="select" id="dns-type">
+          <option value="ALL">All common</option>
+          <option>A</option><option>AAAA</option><option>MX</option><option>NS</option><option>TXT</option><option>CNAME</option>
+        </select>
+      </div>
+      <button class="btn btn--primary" type="submit" id="dns-submit">
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="btn-label">Look up</span>
+      </button>
+    </form>
+
+    <p class="field-error mt-2" id="dns-error"></p>
+    <div id="dns-results" class="stack mt-5"></div>
+  </div>
+</section>
+<script type="module" src="/js/tools/dns-lookup.js"></script>

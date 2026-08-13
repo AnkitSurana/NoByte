@@ -1,0 +1,59 @@
+<!-- meta tool="1" title="Password generator: strong random passwords | NoByte" description="Generate random passwords with adjustable length and character sets, using the browser crypto API. Nothing is sent anywhere." path="/tools/password-generator/" keywords="password generator, random password, strong password, secure password" -->
+{{tool-hero:password-generator}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <div class="result-panel">
+      <div class="row between mb-2">
+        <span class="label">Generated password</span>
+        <span class="badge badge--muted" id="pg-strength">—</span>
+      </div>
+      <div class="row" style="gap:var(--s2);">
+        <input class="input mono grow" id="pg-output" readonly value="" aria-label="Generated password" style="font-size:var(--t-lg);" />
+        <button class="btn copy-btn" type="button" data-copy="#pg-output">
+          <svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg>
+          <svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg>
+          Copy
+        </button>
+        <button class="btn" type="button" id="pg-regen">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#refresh"></use></svg>
+          New
+        </button>
+      </div>
+      <div class="strength-meter mt-3" aria-hidden="true"><span id="pg-meter"></span></div>
+    </div>
+
+    <div class="card mt-5">
+      <div class="field">
+        <div class="row between">
+          <label for="pg-length">Length</label>
+          <span class="mono" id="pg-length-val">16</span>
+        </div>
+        <input type="range" id="pg-length" min="6" max="64" value="16" />
+      </div>
+
+      <div class="mt-4 pg-options">
+        <label class="switch"><input type="checkbox" id="pg-upper" checked /><span class="switch__track"></span> Uppercase (A–Z)</label>
+        <label class="switch"><input type="checkbox" id="pg-lower" checked /><span class="switch__track"></span> Lowercase (a–z)</label>
+        <label class="switch"><input type="checkbox" id="pg-numbers" checked /><span class="switch__track"></span> Numbers (0–9)</label>
+        <label class="switch"><input type="checkbox" id="pg-symbols" checked /><span class="switch__track"></span> Symbols (!@#…)</label>
+        <label class="switch"><input type="checkbox" id="pg-exclude" /><span class="switch__track"></span> No look-alikes (0/O, 1/l)</label>
+      </div>
+      <p class="field-error mt-2" id="pg-error"></p>
+    </div>
+    <style>
+      .pg-options { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+      /* Two columns squeezed "No look-alikes (0/O, 1/l)" onto three lines on a
+         phone, so the toggles stack there instead. */
+      @media (max-width: 560px) {
+        .pg-options { grid-template-columns: 1fr; gap: var(--s4); }
+        .pg-options .switch { min-height: 44px; }
+      }
+    </style>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Passwords are generated in your browser with <code>crypto.getRandomValues</code> and never leave this page.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/password-generator.js"></script>

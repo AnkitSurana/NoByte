@@ -1,0 +1,26 @@
+<!-- meta tool="1" title="GST / VAT calculator: add or remove tax | NoByte" description="Add or remove GST or VAT at preset or custom rates, and see the net, tax, and gross amounts. Runs in your browser." path="/tools/gst-calculator/" keywords="gst calculator, vat calculator, tax calculator, add remove gst" -->
+{{tool-hero:gst-calculator}}
+<section class="section--tight">
+  <div class="container" style="max-width:640px;">
+    <div class="card">
+      <div class="tabs mb-4" data-tabs role="tablist" aria-label="Direction">
+        <button class="tab" role="tab" id="g-t-add" aria-controls="g-p-add" aria-selected="true">Add tax</button>
+        <button class="tab" role="tab" id="g-t-remove" aria-controls="g-p-remove" aria-selected="false" tabindex="-1">Remove tax</button>
+      </div>
+      <div class="tab-panel" id="g-p-add" role="tabpanel" aria-labelledby="g-t-add"><p class="muted small">Enter the amount before tax.</p></div>
+      <div class="tab-panel" id="g-p-remove" role="tabpanel" aria-labelledby="g-t-remove" hidden><p class="muted small">Enter the amount including tax.</p></div>
+
+      <div class="field mt-3"><label for="gst-amount">Amount</label><input class="input mono" id="gst-amount" type="number" min="0" value="1000" inputmode="decimal" /></div>
+      <div class="field mt-3"><label for="gst-rate">Tax rate</label>
+        <select class="select" id="gst-rate"><option>5</option><option>12</option><option selected>18</option><option>20</option><option>28</option><option value="custom">Custom…</option></select>
+      </div>
+      <div class="field mt-3 hidden" id="gst-custom-wrap"><label for="gst-custom">Custom rate (%)</label><input class="input mono" id="gst-custom" type="number" min="0" step="0.1" value="7.5" /></div>
+    </div>
+    <div class="stack mt-4">
+      <div class="result-row"><span class="label">Net (before tax)</span><span class="mono val" id="gst-net">—</span></div>
+      <div class="result-row"><span class="label">Tax</span><span class="mono val" id="gst-tax">—</span></div>
+      <div class="result-row"><span class="label">Gross (including tax)</span><span class="mono val" id="gst-gross">—</span></div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/gst-calculator.js"></script>

@@ -1,0 +1,30 @@
+<!-- meta tool="1" title="Countdown timer | NoByte" description="Count down to any date and time, with a live display of days, hours, minutes, and seconds. Runs in your browser, no account needed." path="/tools/countdown-timer/" keywords="countdown timer, countdown clock, time until, days until, event countdown" -->
+{{tool-hero:countdown-timer}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <div class="card">
+      <div class="field mb-3"><label for="cd-label">Label <span class="muted xs">(optional)</span></label><input class="input" id="cd-label" placeholder="Launch day" maxlength="60" /></div>
+      <div class="row row-wrap" style="gap:var(--s4);align-items:end;">
+        <div class="field"><label for="cd-date">Target date</label><input class="input" type="date" id="cd-date" /></div>
+        <div class="field"><label for="cd-time">Target time</label><input class="input" type="time" id="cd-time" value="00:00" /></div>
+      </div>
+    </div>
+
+    <div class="result-panel text-center mt-4">
+      <div class="muted small" id="cd-caption">Time remaining</div>
+      <div class="cd-display mt-3" id="cd-display" role="timer" aria-live="off">
+        <div class="cd-unit"><span class="cd-num" id="cd-d">0</span><span class="cd-lbl">days</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-h">0</span><span class="cd-lbl">hours</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-m">0</span><span class="cd-lbl">min</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-s">0</span><span class="cd-lbl">sec</span></div>
+      </div>
+      <p class="mt-3" id="cd-note"></p>
+    </div>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>The countdown uses your device clock and the time zone it is set to. It keeps running while this tab is open.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/countdown-timer.js"></script>

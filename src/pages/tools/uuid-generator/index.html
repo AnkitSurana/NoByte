@@ -1,0 +1,22 @@
+<!-- meta tool="1" title="UUID generator: random v4 UUIDs | NoByte" description="Generate random version 4 UUIDs in bulk with crypto.randomUUID. Copy one or many. Runs in your browser." path="/tools/uuid-generator/" keywords="uuid generator, guid generator, random uuid, v4 uuid" -->
+{{tool-hero:uuid-generator}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <div class="row row-wrap mb-4" style="gap:var(--s4);align-items:end;">
+      <div class="field"><label for="uu-count">How many</label><input class="input mono" id="uu-count" type="number" min="1" max="100" value="5" style="width:110px;" /></div>
+      <label class="switch"><input type="checkbox" id="uu-upper" /><span class="switch__track"></span> Uppercase</label>
+      <label class="switch"><input type="checkbox" id="uu-nodash" /><span class="switch__track"></span> No hyphens</label>
+      <button class="btn btn--primary" id="uu-gen"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#refresh"></use></svg> Generate</button>
+    </div>
+    <div class="row between mb-2">
+      <span class="label">Result</span>
+      <button class="btn btn--sm copy-btn" data-copy="#uu-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy all</button>
+    </div>
+    <textarea class="textarea mono" id="uu-out" readonly style="min-height:220px;" aria-label="Generated UUIDs"></textarea>
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Version 4 UUIDs from <code>crypto.randomUUID</code>, generated in your browser.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/uuid-generator.js"></script>

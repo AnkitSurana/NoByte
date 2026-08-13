@@ -1,0 +1,92 @@
+<!-- meta tool="1" title="Word Rush: beat-the-clock word game | NoByte" description="Solve as many hidden words as you can before the clock runs out. Words vary from three to six letters. Each solve adds time to the clock; a miss takes some away." path="/tools/game-word-guess/" keywords="word game, word rush, timed word game, variable length word game, guess the word" -->
+{{tool-hero:game-word-guess}}
+<section class="section--tight">
+  <div class="container">
+    <div class="game" style="max-width:min(94vw, 520px);">
+      <div class="hud">
+        <div class="score-row">
+          <div class="score-box"><span class="score-box__label">Time</span><span class="score-box__val" id="wg-time">100</span></div>
+          <div class="score-box"><span class="score-box__label">Solved</span><span class="score-box__val" id="wg-solved">0</span></div>
+          <div class="score-box"><span class="score-box__label">Best</span><span class="score-box__val" id="wg-best">0</span></div>
+        </div>
+        <div class="row" style="gap:var(--s2);">
+          <select class="select select--sm" id="wg-diff" aria-label="Difficulty">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate" selected>Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+          <button class="btn btn--sm" id="wg-hint-btn" type="button">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#lightbulb"></use></svg>
+            Hint <span class="wg-cost">−<span id="wg-hint-cost">6</span>s</span>
+          </button>
+          <button class="btn btn--primary btn--sm" id="wg-new" type="button">New</button>
+        </div>
+      </div>
+      <div class="wg-grid" id="wg-grid" aria-label="Guess grid"></div>
+      <p class="wg-hint" id="wg-hint" aria-live="polite" hidden></p>
+      <p class="game-status" id="wg-status"></p>
+      <div class="wg-keys" id="wg-keys"></div>
+      <h2 class="g-how">How to play</h2>
+      <p class="g-note">Race the clock. Each word is 3 to 6 letters and the grid shrinks to fit, greying the spare cells. Solve one for <b>+time</b>, miss one and lose time. Stuck? <b>Hint</b> gives you one letter in its right place for a few seconds off the clock, twice per word. Run out of rows or run out of time and the word is spelled out for you. Beginner is shorter words and a longer clock; Advanced is longer words and less time.</p>
+      <div class="wg-legend">
+        <span><i class="hit"></i> right spot</span>
+        <span><i class="near"></i> in word, wrong spot</span>
+        <span><i class="miss"></i> not in word</span>
+        <span><i class="show"></i> the answer</span>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .wg-grid { display: grid; grid-template-rows: repeat(6, minmax(0, 1fr)); gap: var(--s2); max-width: min(84vw, 380px); margin: 0 auto var(--s4); }
+  .wg-grid .wg-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--s2); }
+  .wg-grid .wg-tile { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.2rem, 8vmin, 2.2rem); text-transform: uppercase; border: var(--bw) solid var(--ink); border-radius: var(--radius); background: var(--surface); color: var(--ink); }
+  .wg-tile.off { background: color-mix(in srgb, var(--ink) 12%, transparent); border-color: color-mix(in srgb, var(--ink) 25%, transparent); }
+  .wg-tile.hit { background: var(--ok); color: #fff; border-color: var(--ok); }
+  .wg-tile.near { background: var(--warn); color: #fff; border-color: var(--warn); }
+  .wg-tile.miss { background: color-mix(in srgb, var(--ink) 30%, transparent); color: #fff; }
+  /* the answer, handed over after a miss or when the clock runs out: the ink
+     outline of an unplayed tile, filled with the highlight yellow */
+  .wg-tile.show { background: var(--hl); color: var(--on-color); border-color: var(--on-color); border-style: dashed; }
+  /* revealed letters for the current word, as slots under the grid */
+  .wg-hint { display: flex; justify-content: center; gap: var(--s2); margin: calc(var(--s4) * -1) 0 var(--s4); }
+  .wg-hint i {
+    width: 26px; height: 30px; display: grid; place-items: center;
+    font-family: var(--font-display); font-weight: 700; font-size: var(--t-md); font-style: normal;
+    text-transform: uppercase; border-bottom: var(--bw) solid var(--ink); border-radius: 2px;
+  }
+  .wg-hint i.blank { opacity: .3; }
+  #wg-hint-btn .icon { width: 16px; height: 16px; }
+  .wg-cost { font-family: var(--font-mono); font-size: 10px; opacity: .7; }
+  /* Three controls plus the three score boxes are wider than the board, so this
+     HUD always wraps onto two lines. The shared space-between would then pin
+     both lines to the left edge, off-centre from the grid under them: centre
+     them instead, as the phone layout already does. */
+  .hud { justify-content: center; }
+  .hud .row { justify-content: center; }
+  /* Keys are the shared .gkey keycap; this row only sizes them. Fixed height
+     rather than vertical padding — padding made each key 63px tall against
+     28px of width on a phone, a thin sliver that ate the screen. */
+  .wg-keys { display: flex; flex-direction: column; gap: 6px; }
+  .wg-keys .wg-krow { display: flex; gap: 5px; justify-content: center; }
+  .wg-keys .gkey { flex: 1; min-width: 0; max-width: 46px; min-height: 0; height: 48px; padding: 0 2px; text-transform: uppercase; }
+  .wg-keys .gkey.wide { flex: 1.6; max-width: 72px; }
+  .wg-keys .gkey .icon { width: 18px; height: 18px; }
+  .wg-keys button.hit { background: var(--ok); color: #fff; border-color: var(--ok); }
+  .wg-keys button.near { background: var(--warn); color: #fff; border-color: var(--warn); }
+  .wg-keys button.miss { background: color-mix(in srgb, var(--ink) 30%, transparent); color: #fff; }
+  .wg-legend { display: flex; justify-content: center; flex-wrap: wrap; gap: var(--s4); margin-top: var(--s4); font-size: var(--t-xs); color: var(--ink-2); }
+  .wg-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .wg-legend i { width: 14px; height: 14px; border-radius: 3px; border: 2px solid var(--ink); }
+  .wg-legend i.hit { background: var(--ok); } .wg-legend i.near { background: var(--warn); } .wg-legend i.miss { background: color-mix(in srgb, var(--ink) 30%, transparent); }
+  .wg-legend i.show { background: var(--hl); border-style: dashed; }
+  #wg-time.low { color: var(--bad); }
+  /* The grid and the keyboard have to be on screen together to play, so on a
+     phone the grid is capped by height as well as width. */
+  @media (max-width: 640px) {
+    .wg-grid { max-width: min(80vw, 46vh, 320px); }
+    .wg-keys button { height: 44px; }
+    .wg-legend { gap: var(--s3); }
+  }
+</style>
+<script type="module" src="/js/tools/game-word-guess.js"></script>

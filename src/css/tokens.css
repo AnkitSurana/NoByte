@@ -1,0 +1,141 @@
+/* ============================================================
+   NoByte — design tokens
+   "Workshop": cream paper, thick ink outlines, hard offset
+   shadows (never blur), colour-coded tiles, rounded geometric
+   display face, springy overshoot motion.
+   ============================================================ */
+
+@font-face { font-family: "Outfit"; font-style: normal; font-weight: 500; font-display: swap; src: url("/assets/fonts/outfit-latin-500.woff2") format("woff2"); }
+@font-face { font-family: "Outfit"; font-style: normal; font-weight: 700; font-display: swap; src: url("/assets/fonts/outfit-latin-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("/assets/fonts/inter-latin-400.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url("/assets/fonts/inter-latin-500.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url("/assets/fonts/inter-latin-600.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("/assets/fonts/jbmono-latin-400.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("/assets/fonts/jbmono-latin-500.woff2") format("woff2"); }
+
+:root {
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --t-xs: .75rem;
+  --t-sm: .8438rem;
+  --t-base: .9375rem;
+  --t-md: 1.0625rem;
+  --t-lg: 1.25rem;
+  --t-xl: 1.5rem;
+  --t-2xl: 1.9rem;
+  --t-3xl: 2.6rem;
+  --t-4xl: 3.4rem;
+  --t-5xl: 4.6rem;
+  --lead-tight: 1.02;
+  --lead-snug: 1.2;
+  --lead-body: 1.6;
+  --track-display: -.035em;
+  --track-tight: -.02em;
+  --track-caps: .1em;
+
+  --s1: .25rem; --s2: .5rem; --s3: .75rem; --s4: 1rem;
+  --s5: 1.5rem; --s6: 2rem; --s7: 2.5rem; --s8: 3rem;
+  --s10: 4rem; --s12: 5.5rem;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --radius-full: 999px;
+
+  /* The material language: a thick outline plus a hard, un-blurred
+     offset shadow. Never a soft drop shadow. */
+  --bw: 2.5px;
+  --hard: 5px 5px 0 var(--ink);
+  --hard-sm: 3px 3px 0 var(--ink);
+  --hard-lg: 9px 11px 0 var(--ink);
+
+  /* Springy overshoot is the motion signature */
+  --pop: cubic-bezier(.34, 1.6, .5, 1);
+  --ease-out: cubic-bezier(.2, .9, .3, 1);
+  --t-fast: 160ms;
+  --t-mid: 260ms;
+  --t-slow: 380ms;
+
+  --measure: 34rem;
+  --page: 72rem;
+  --page-wide: 82rem;
+  --header-h: 68px;
+
+  /* ---- Light (primary) ---- */
+  --paper: #FFF8EC;
+  --paper-2: #FFF3DE;
+  --surface: #FFFFFF;
+  --ink: #1D1A16;
+  --ink-2: #55503F;
+  --ink-3: #8A8271;
+
+  /* Tile colours, one per category — meaning, not decoration */
+  --c-dev: #7FD1F5;
+  --c-doc: #FFD84D;
+  --c-fin: #8BE38F;
+  --c-img: #FF7BB0;
+  --c-day: #FF9A4A;
+  --c-game: #B79CF6;
+
+  --accent: #1D1A16;         /* primary action is ink itself */
+  --accent-on: #FFF8EC;
+  --hl: #FFD84D;             /* marker highlight behind headings */
+  --ok: #1B7A3D; --ok-wash: #D9F2DF;
+  --warn: #8A5200; --warn-wash: #FFEBC7;
+  --bad: #B3261E; --bad-wash: #FFE1DE;
+  --ring: #1D1A16;
+  --code-bg: #FFF3DE;
+  /* Constant: coloured tiles keep dark text and light insets in BOTH themes */
+  --on-color: #1D1A16;
+  --on-color-inset: #FFF8EC;
+}
+
+/* ---- Dark: a dim workshop. Paper goes to warm near-black, but the
+   tiles stay bright with ink text, like sticky notes on a dark board. ---- */
+:root[data-theme="dark"] {
+  --paper: #16130E;
+  --paper-2: #1E1A14;
+  --surface: #221E17;
+  --ink: #FFF6E6;
+  --ink-2: #C3BBA8;
+  --ink-3: #8D8574;
+  --hard: 5px 5px 0 #000;
+  --hard-sm: 3px 3px 0 #000;
+  --hard-lg: 9px 11px 0 #000;
+  --accent: #FFD84D;
+  --accent-on: #1D1A16;
+  --hl: #FFD84D;
+  --ok: #6FDC91; --ok-wash: #16301F;
+  --warn: #F0B24A; --warn-wash: #33260F;
+  --bad: #FF8A80; --bad-wash: #3A1A17;
+  --ring: #FFD84D;
+  --code-bg: #1E1A14;
+  --on-color: #1D1A16;
+  --on-color-inset: #FFF8EC;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #16130E;
+    --paper-2: #1E1A14;
+    --surface: #221E17;
+    --ink: #FFF6E6;
+    --ink-2: #C3BBA8;
+    --ink-3: #8D8574;
+    --hard: 5px 5px 0 #000;
+    --hard-sm: 3px 3px 0 #000;
+    --hard-lg: 9px 11px 0 #000;
+    --accent: #FFD84D;
+    --accent-on: #1D1A16;
+    --hl: #FFD84D;
+    --ok: #6FDC91; --ok-wash: #16301F;
+    --warn: #F0B24A; --warn-wash: #33260F;
+    --bad: #FF8A80; --bad-wash: #3A1A17;
+    --ring: #FFD84D;
+    --code-bg: #1E1A14;
+    --on-color: #1D1A16;
+    --on-color-inset: #FFF8EC;
+  }
+}

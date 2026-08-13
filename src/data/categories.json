@@ -1,0 +1,32 @@
+[
+  {
+    "id": "developer",
+    "name": "Developer",
+    "description": "Encoders, formatters, generators, and network lookups."
+  },
+  {
+    "id": "productivity",
+    "name": "Productivity",
+    "description": "PDF and text tools for everyday document work."
+  },
+  {
+    "id": "finance",
+    "name": "Finance",
+    "description": "Loan, currency, tax, and investment calculators."
+  },
+  {
+    "id": "image",
+    "name": "Image",
+    "description": "Resize, compress, and convert images in your browser."
+  },
+  {
+    "id": "daily-use",
+    "name": "Daily use",
+    "description": "Quick calculators and generators for common tasks."
+  },
+  {
+    "id": "games",
+    "name": "Games",
+    "description": "Small games that run in your browser. No signup, high scores stay on your device."
+  }
+]

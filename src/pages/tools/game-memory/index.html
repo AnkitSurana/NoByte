@@ -1,0 +1,30 @@
+<!-- meta tool="1" title="Memory match game | NoByte" description="Flip the cards and find every matching pair in as few moves as you can. A quick memory game that runs in your browser." path="/tools/game-memory/" keywords="memory game, matching game, concentration game, card matching, memory match" -->
+{{tool-hero:game-memory}}
+<section class="section--tight">
+  <div class="container">
+    <div class="game game-fit" style="--gmax:560px;">
+      <div class="hud">
+        <div class="score-row">
+          <div class="score-box"><span class="score-box__label">Moves</span><span class="score-box__val" id="m-moves">0</span></div>
+          <div class="score-box"><span class="score-box__label">Pairs</span><span class="score-box__val" id="m-pairs">0 / 8</span></div>
+          <div class="score-box"><span class="score-box__label">Best</span><span class="score-box__val" id="m-best">—</span></div>
+        </div>
+        <button class="btn btn--primary" id="m-new">New game</button>
+      </div>
+      <div class="memory game-board" id="m-board"></div>
+      <p class="game-status" id="m-status"></p>
+      <h2 class="g-how">How to play</h2>
+      <p class="g-note">Flip two cards. Matching emoji stay up; otherwise they flip back. Find all eight pairs in as few flips as you can.</p>
+    </div>
+  </div>
+</section>
+<style>
+  .memory { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 2.5%; aspect-ratio: 1; }
+  .memory button { font-size: clamp(2rem, 11vmin, 3.4rem); border: var(--bw) solid var(--ink); border-radius: var(--radius); cursor: pointer; background: var(--ink); color: transparent; transition: background var(--t-fast) ease, transform var(--t-fast) var(--pop); }
+  .memory button::after { content: "?"; color: var(--paper); font-family: var(--font-display); font-weight: 700; }
+  .memory button.up, .memory button.done { background: var(--surface); color: var(--ink); }
+  .memory button.up::after, .memory button.done::after { content: none; }
+  .memory button.done { background: var(--ok-wash); border-color: var(--ok); }
+  .memory button:disabled { cursor: default; }
+</style>
+<script type="module" src="/js/tools/game-memory.js"></script>

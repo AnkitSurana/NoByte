@@ -1,0 +1,25 @@
+<!-- meta tool="1" title="JWT decoder: read header and payload | NoByte" description="Decode a JWT to read its header and payload, with issued and expiry times. Decoding only; the signature is not verified. Runs locally." path="/tools/jwt-decoder/" keywords="jwt decoder, decode jwt, json web token, jwt parser" -->
+{{tool-hero:jwt-decoder}}
+<section class="section--tight">
+  <div class="container">
+    <div class="notice notice--warn mb-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#alert-triangle"></use></svg>
+      <div>This decodes only. It does not verify the signature, so it cannot tell you whether a token is genuine. Do not paste production tokens you would not want in your clipboard history.</div>
+    </div>
+    <div class="field">
+      <label for="jwt-input">Token</label>
+      <textarea class="textarea mono" id="jwt-input" spellcheck="false" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…" style="min-height:110px;"></textarea>
+      <p class="field-error" id="jwt-error"></p>
+    </div>
+    <div class="row row-wrap mt-3" style="gap:var(--s3);">
+      <button class="btn btn--sm" id="jwt-example">Load example</button>
+      <span id="jwt-exp-badge"></span>
+    </div>
+    <div class="tool-layout tool-layout--split mt-4">
+      <div><div class="label mb-2">Header</div><div class="output-box" id="jwt-header">—</div></div>
+      <div><div class="label mb-2">Payload</div><div class="output-box" id="jwt-payload">—</div></div>
+    </div>
+    <div class="stack mt-4" id="jwt-claims"></div>
+  </div>
+</section>
+<script type="module" src="/js/tools/jwt-decoder.js"></script>

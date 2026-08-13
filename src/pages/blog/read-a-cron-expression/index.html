@@ -1,0 +1,43 @@
+<!-- meta title="How to read a cron expression without guessing | NoByte" description="Cron's five fields decide when a job runs, and they are easy to misread. Here is how to work out what a line means, and how to check it before you rely on it." path="/blog/read-a-cron-expression/" keywords="read cron expression, cron syntax, crontab explained, cron schedule, cron every 15 minutes" -->
+<section class="section">
+  <div class="container container-wide has-stickers">
+    <span class="sticker sticker--1">five fields</span>
+    <span class="sticker sticker--2">star is every</span>
+    <span class="sticker sticker--3">step values</span>
+    <span class="sticker sticker--4">read it back</span>
+    <span class="sticker sticker--5">next run times</span>
+    <span class="sticker sticker--6">plain english</span>
+    <span class="sticker sticker--7">no guessing</span>
+    <span class="sticker sticker--8">crontab</span>
+    <span class="sticker sticker--9">every 5 min</span>
+    <span class="sticker sticker--10">weekdays only</span>
+    <span class="sticker sticker--11">local time</span>
+    <span class="sticker sticker--12">in your browser</span>
+    <article class="post-wrap">
+      <header class="post__head">
+        <nav class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>Read a cron expression</span></nav>
+        {{blog-meta:read-a-cron-expression}}
+        <h1 class="page-title post__title">How to read a cron expression without guessing</h1>
+        <p class="page-lead">Cron's five fields decide when a job runs, and they are easy to misread. Here is how to work out what a line means, and how to check it before you rely on it.</p>
+      </header>
+
+      <div class="prose post__body">
+        <h2>The five fields</h2>
+        <p>A standard cron line has five fields, separated by spaces: minute, hour, day of the month, month, and day of the week. A number in a field means "at this value", and a star means "every". So <code>0 9 * * *</code> reads as nine in the morning, every day.</p>
+
+        <h2>The symbols that trip people up</h2>
+        <p>Three symbols do most of the work:</p>
+        <ul>
+          <li>A star (<code>*</code>) means every value of that field.</li>
+          <li>A slash sets a step. <code>*/15</code> in the minute field is every fifteen minutes.</li>
+          <li>A dash sets a range and a comma sets a list. <code>1-5</code> in the day-of-week field is Monday to Friday; <code>1,15</code> in the day-of-month field is the 1st and the 15th.</li>
+        </ul>
+        <p>The field that catches people out is day of the week, where both <code>0</code> and <code>7</code> mean Sunday.</p>
+
+        <h2>Check it before you rely on it</h2>
+        <p>The safest habit is to read the schedule back in plain words and look at the next few run times before you save it. Paste the line into the <a href="/tools/cron-explainer/">cron explainer</a> and it does both: a sentence describing when it runs, and the upcoming dates. If the sentence does not match what you meant, the expression is wrong, not your memory.</p>
+        <p>Try it with the <a href="/tools/cron-explainer/">cron expression explainer</a>. It runs in your browser, so you can check a schedule without sending it anywhere.</p>
+      </div>
+    </article>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+<!-- meta tool="1" title="CSV to JSON converter (and back) | NoByte" description="Convert CSV to JSON and JSON back to CSV, with delimiter and header options. Runs entirely in your browser." path="/tools/csv-json/" keywords="csv to json, json to csv, csv converter, csv parser" -->
+{{tool-hero:csv-json}}
+<section class="section--tight">
+  <div class="container">
+    <div class="row row-wrap mb-4" style="gap:var(--s3);align-items:end;">
+      <div class="field"><label for="cj-dir">Direction</label>
+        <select class="select" id="cj-dir"><option value="c2j">CSV → JSON</option><option value="j2c">JSON → CSV</option></select>
+      </div>
+      <div class="field"><label for="cj-delim">Delimiter</label>
+        <select class="select" id="cj-delim"><option value=",">Comma</option><option value=";">Semicolon</option><option value="&#9;">Tab</option><option value="|">Pipe</option></select>
+      </div>
+      <label class="switch"><input type="checkbox" id="cj-header" checked /><span class="switch__track"></span> First row is a header</label>
+      <button class="btn btn--sm" id="cj-example" style="margin-left:auto;">Load example</button>
+    </div>
+    <div class="tool-layout tool-layout--split">
+      <div class="field">
+        <label for="cj-input" id="cj-in-label">CSV input</label>
+        <textarea class="textarea mono" id="cj-input" spellcheck="false" style="min-height:300px;"></textarea>
+        <p class="field-error" id="cj-error"></p>
+      </div>
+      <div class="field">
+        <div class="row between"><label for="cj-output" id="cj-out-label">JSON output</label>
+          <button class="btn btn--sm copy-btn" data-copy="#cj-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="cj-output" readonly spellcheck="false" style="min-height:300px;"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/csv-json.js"></script>

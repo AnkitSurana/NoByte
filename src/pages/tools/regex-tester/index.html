@@ -1,0 +1,42 @@
+<!-- meta tool="1" title="Regex tester: live match highlighting | NoByte" description="Test JavaScript regular expressions with live match highlighting, capture groups, and flags. Runs in your browser." path="/tools/regex-tester/" keywords="regex tester, regular expression, regex match, regex online" -->
+{{tool-hero:regex-tester}}
+<section class="section--tight">
+  <div class="container">
+    <div class="row row-wrap mb-3" style="gap:var(--s3);align-items:end;">
+      <div class="field grow" style="min-width:240px;">
+        <label for="re-pattern">Pattern</label>
+        <div class="row" style="gap:var(--s2);">
+          <span class="mono muted">/</span>
+          <input class="input mono grow" id="re-pattern" spellcheck="false" placeholder="\b\w+@\w+\.\w+\b" />
+          <span class="mono muted">/</span>
+          <input class="input mono" id="re-flags" value="g" style="width:80px;" aria-label="Flags" spellcheck="false" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="re-common">Common patterns</label>
+        <select class="select" id="re-common">
+          <option value="">Choose…</option>
+          <option value="[\w.+-]+@[\w-]+\.[\w.]+">Email</option>
+          <option value="https?://[^\s]+">URL</option>
+          <option value="\b(?:\d{1,3}\.){3}\d{1,3}\b">IPv4</option>
+          <option value="\d{4}-\d{2}-\d{2}">Date (YYYY-MM-DD)</option>
+          <option value="#[0-9a-fA-F]{3,6}\b">Hex color</option>
+        </select>
+      </div>
+    </div>
+    <p class="field-error" id="re-error"></p>
+
+    <div class="field mt-3">
+      <label for="re-text">Test string</label>
+      <textarea class="textarea mono" id="re-text" spellcheck="false" style="min-height:170px;">Contact ada@example.com or grace@navy.mil for details.</textarea>
+    </div>
+
+    <div class="row between mt-4 mb-2"><span class="label">Matches</span><span class="badge badge--muted" id="re-count">0</span></div>
+    <div class="output-box" id="re-highlight" aria-live="polite"></div>
+    <div class="mt-4 hidden" id="re-groups-wrap">
+      <div class="label mb-2">Capture groups</div>
+      <div style="overflow-x:auto;"><table class="data-table" id="re-groups"></table></div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/regex-tester.js"></script>

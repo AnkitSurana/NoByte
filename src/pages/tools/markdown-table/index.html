@@ -1,0 +1,19 @@
+<!-- meta tool="1" title="Markdown table generator | NoByte" description="Build a Markdown table in a grid editor with column alignment, and copy the GitHub-flavored output. Runs in your browser." path="/tools/markdown-table/" keywords="markdown table, table generator, gfm table, markdown generator" -->
+{{tool-hero:markdown-table}}
+<section class="section--tight">
+  <div class="container">
+    <div class="row row-wrap mb-4" style="gap:var(--s3);align-items:end;">
+      <div class="field"><label for="mt-rows">Rows</label><input class="input mono" id="mt-rows" type="number" min="1" max="20" value="3" style="width:90px;" /></div>
+      <div class="field"><label for="mt-cols">Columns</label><input class="input mono" id="mt-cols" type="number" min="1" max="10" value="3" style="width:90px;" /></div>
+      <button class="btn btn--sm btn--ghost" id="mt-clear">Clear cells</button>
+    </div>
+    <div style="overflow-x:auto;"><table class="data-table" id="mt-grid"></table></div>
+    <div class="row between mt-5 mb-2">
+      <span class="label">Markdown</span>
+      <button class="btn btn--sm copy-btn" data-copy="#mt-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+    </div>
+    <textarea class="textarea mono" id="mt-out" readonly style="min-height:160px;" aria-label="Markdown output"></textarea>
+    <p class="muted xs mt-2">Pairs well with the <a href="/tools/readme-builder/" style="color:var(--accent);">README builder</a>.</p>
+  </div>
+</section>
+<script type="module" src="/js/tools/markdown-table.js"></script>

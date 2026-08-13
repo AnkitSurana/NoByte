@@ -1,0 +1,30 @@
+<!-- meta tool="1" title="Unit converter: length, weight, temperature | NoByte" description="Convert between units of length, weight, temperature, area, volume, speed, and data. Runs entirely in your browser." path="/tools/unit-converter/" keywords="unit converter, metric to imperial, temperature converter, length converter" -->
+{{tool-hero:unit-converter}}
+<section class="section--tight">
+  <div class="container" style="max-width:760px;">
+    <div class="field mb-4">
+      <label for="uc-category">Category</label>
+      <select class="select" id="uc-category"></select>
+    </div>
+
+    <div class="tool-layout tool-layout--split" style="align-items:end;">
+      <div class="field">
+        <label for="uc-from-val">From</label>
+        <input class="input mono" id="uc-from-val" type="number" value="1" inputmode="decimal" />
+        <select class="select mt-2" id="uc-from-unit" aria-label="Convert from unit"></select>
+      </div>
+      <div class="field">
+        <label for="uc-to-val">To</label>
+        <input class="input mono" id="uc-to-val" type="number" readonly />
+        <select class="select mt-2" id="uc-to-unit" aria-label="Convert to unit"></select>
+      </div>
+    </div>
+
+    <div class="row mt-4" style="gap:var(--s3);">
+      <button class="btn" id="uc-swap" type="button"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-right-left"></use></svg> Swap</button>
+      <button class="btn copy-btn" id="uc-copy" type="button" data-copy="#uc-to-val"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy result</button>
+    </div>
+    <p class="muted small mt-4" id="uc-formula"></p>
+  </div>
+</section>
+<script type="module" src="/js/tools/unit-converter.js"></script>

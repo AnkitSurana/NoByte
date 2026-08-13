@@ -1,0 +1,23 @@
+<!-- meta tool="1" title="Color picker: HEX, RGB, HSL converter | NoByte" description="Pick a color and read it as HEX, RGB, and HSL. Copy any format with one click. Runs in your browser." path="/tools/color-picker/" keywords="color picker, hex to rgb, hsl, color converter" -->
+{{tool-hero:color-picker}}
+<section class="section--tight">
+  <div class="container" style="max-width:760px;">
+    <div class="tool-layout tool-layout--split">
+      <div>
+        <div class="color-preview" id="cp-preview" style="background:#2563eb;"></div>
+        <div class="row mt-4" style="gap:var(--s3);">
+          <input type="color" id="cp-input" value="#2563eb" aria-label="Pick a color" />
+          <input class="input mono grow" id="cp-hex-edit" value="#2563EB" aria-label="Enter a hex color" />
+        </div>
+        <div class="row row-wrap mt-3" id="cp-swatches" aria-label="Preset colors"></div>
+      </div>
+
+      <div class="stack">
+        <div class="result-row"><span class="label">HEX</span><span class="mono val" data-fmt="hex">#2563EB</span><button class="btn btn--sm copy-btn" data-copy-fmt="hex" aria-label="Copy HEX value"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
+        <div class="result-row"><span class="label">RGB</span><span class="mono val" data-fmt="rgb">rgb(37, 99, 235)</span><button class="btn btn--sm copy-btn" data-copy-fmt="rgb" aria-label="Copy RGB value"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
+        <div class="result-row"><span class="label">HSL</span><span class="mono val" data-fmt="hsl">hsl(222, 83%, 53%)</span><button class="btn btn--sm copy-btn" data-copy-fmt="hsl" aria-label="Copy HSL value"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/color-picker.js"></script>

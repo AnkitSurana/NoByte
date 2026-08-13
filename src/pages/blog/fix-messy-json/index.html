@@ -1,0 +1,44 @@
+<!-- meta title="How to fix messy JSON and read the error | NoByte" description="When JSON will not parse, the error can be blunt. Here is how to make a file readable and find the character that is actually breaking it." path="/blog/fix-messy-json/" keywords="fix json, json syntax error, json parse error, format json, validate json" -->
+<section class="section">
+  <div class="container container-wide has-stickers">
+    <span class="sticker sticker--1">line and column</span>
+    <span class="sticker sticker--2">trailing comma</span>
+    <span class="sticker sticker--3">missing bracket</span>
+    <span class="sticker sticker--4">double quotes</span>
+    <span class="sticker sticker--5">pretty print</span>
+    <span class="sticker sticker--6">or minify</span>
+    <span class="sticker sticker--7">spot the typo</span>
+    <span class="sticker sticker--8">valid json</span>
+    <span class="sticker sticker--9">paste and go</span>
+    <span class="sticker sticker--10">no upload</span>
+    <span class="sticker sticker--11">in your browser</span>
+    <span class="sticker sticker--12">your data</span>
+    <article class="post-wrap">
+      <header class="post__head">
+        <nav class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>Fix messy JSON</span></nav>
+        {{blog-meta:fix-messy-json}}
+        <h1 class="page-title post__title">How to fix messy JSON and read the error</h1>
+        <p class="page-lead">When JSON will not parse, the message you get back can be blunt. Here is how to make a file readable, and how to find the character that is actually breaking it.</p>
+      </header>
+
+      <div class="prose post__body">
+        <h2>Format first, read second</h2>
+        <p>Minified JSON on a single line is hard to scan for a missing bracket. Formatting it adds indentation and line breaks so the structure becomes visible, which on its own often shows where a level was never closed. Paste your JSON into the <a href="/tools/json-formatter/">JSON formatter</a> and press Format.</p>
+
+        <h2>What the common errors mean</h2>
+        <p>Most parse failures come from a short list of causes:</p>
+        <ul>
+          <li>A trailing comma after the last item in an object or array.</li>
+          <li>Single quotes where JSON requires double quotes.</li>
+          <li>A key that is not wrapped in quotes.</li>
+          <li>A bracket or brace that was opened and never closed.</li>
+        </ul>
+        <p>The formatter points at the line and column where parsing stopped, which is usually right after the real mistake rather than on it.</p>
+
+        <h2>Minify when you are done</h2>
+        <p>Once the JSON is valid, you may want it small again for a config field or a request body. Minify strips the whitespace back out and leaves the smallest valid version of the same data.</p>
+        <p>Format, validate, or minify with the <a href="/tools/json-formatter/">JSON formatter</a>. Nothing is uploaded, so it is safe for config and data you cannot share.</p>
+      </div>
+    </article>
+  </div>
+</section>

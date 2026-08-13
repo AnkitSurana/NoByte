@@ -1,0 +1,25 @@
+<!-- meta tool="1" title="2048: sliding number puzzle | NoByte" description="Play 2048 in your browser. Slide the tiles with arrow keys or swipe to combine matching numbers and reach 2048. Your best score stays on your device." path="/tools/game-2048/" keywords="2048 game, 2048 puzzle, number puzzle, sliding tiles game, play 2048" -->
+{{tool-hero:game-2048}}
+<section class="section--tight">
+  <div class="container">
+    <div class="game game-fit" style="--gmax:600px;">
+      <div class="hud">
+        <div class="score-row">
+          <div class="score-box"><span class="score-box__label">Score</span><span class="score-box__val" id="g-score">0</span></div>
+          <div class="score-box"><span class="score-box__label">Best</span><span class="score-box__val" id="g-best">0</span></div>
+        </div>
+        <button class="btn btn--primary" id="g-new">New game</button>
+      </div>
+      <div class="g2048 game-board game-board--swipe" id="g-board" role="grid" aria-label="2048 board" tabindex="0"></div>
+      <p class="game-status" id="g-status"></p>
+      <h2 class="g-how">How to play</h2>
+      <p class="g-note">Move with <kbd class="cap">←</kbd><kbd class="cap">↑</kbd><kbd class="cap">→</kbd><kbd class="cap">↓</kbd> or swipe. Tiles with the same number merge into their double. Get to 2048.</p>
+    </div>
+  </div>
+</section>
+<style>
+  .g2048 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 2.5%; aspect-ratio: 1; outline: none; }
+  .g2048 .cell { display: flex; align-items: center; justify-content: center; border-radius: var(--radius); background: color-mix(in srgb, var(--ink) 9%, transparent); font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 9vmin, 3rem); color: var(--ink); border: 2px solid transparent; }
+  .g2048 .cell[data-v]:not([data-v="0"]) { border-color: var(--ink); animation: pop-in 160ms var(--pop); }
+</style>
+<script type="module" src="/js/tools/game-2048.js"></script>

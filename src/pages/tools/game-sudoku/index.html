@@ -1,0 +1,55 @@
+<!-- meta tool="1" title="Sudoku | NoByte" description="Play Sudoku in your browser with three difficulty levels. Every puzzle has one solution. Check your work or reveal the answer. Nothing is uploaded." path="/tools/game-sudoku/" keywords="sudoku, sudoku game, sudoku puzzle, play sudoku, number puzzle" -->
+{{tool-hero:game-sudoku}}
+<section class="section--tight">
+  <div class="container">
+    <div class="game game-fit" style="--gmax:600px;--gvh:64vh;">
+      <div class="hud">
+        <select class="select select--sm" id="su-diff" aria-label="Difficulty">
+          <option value="40">Easy</option>
+          <option value="32">Medium</option>
+          <option value="27">Hard</option>
+        </select>
+        <div class="row" style="gap:var(--s2);">
+          <button class="btn btn--sm" id="su-check" type="button">Check</button>
+          <button class="btn btn--sm" id="su-solve" type="button">Solve</button>
+          <button class="btn btn--primary btn--sm" id="su-new" type="button">New</button>
+        </div>
+      </div>
+      <div class="sudoku game-board" id="su-board"></div>
+      <div class="su-pad" id="su-pad"></div>
+      <p class="game-status" id="su-status"></p>
+      <h2 class="g-how">How to play</h2>
+      <p class="g-note">Pick a cell, then a number, so every row, column, and 3×3 box has 1 to 9 with no repeats. Bold numbers are fixed; conflicts show red.</p>
+    </div>
+  </div>
+</section>
+<style>
+  /* Rows are declared, not inferred from the cells: letting each cell size
+     itself by aspect-ratio meant its line box could win over the ratio on a
+     narrow screen, so the nine rows outgrew the square board and overflow
+     clipped the last one. */
+  .sudoku { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-template-rows: repeat(9, minmax(0, 1fr)); gap: 0; aspect-ratio: 1; overflow: hidden; }
+  .sudoku button { min-width: 0; padding: 0; line-height: 1; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.1rem, 5.2vmin, 1.8rem); background: var(--surface); border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); color: var(--accent); cursor: pointer; }
+  .sudoku button.given { color: var(--ink); cursor: default; }
+  .sudoku button.sel { background: var(--hl); }
+  .sudoku button.bad { color: #fff; background: var(--bad); }
+  .sudoku button:nth-child(9n+1) { border-left: 2.5px solid var(--ink); }
+  .sudoku button:nth-child(9n) { border-right: 2.5px solid var(--ink); }
+  .sudoku button:nth-child(-n+9) { border-top: 2.5px solid var(--ink); }
+  .sudoku button:nth-child(n+73) { border-bottom: 2.5px solid var(--ink); }
+  .sudoku button:nth-child(n+19):nth-child(-n+27),
+  .sudoku button:nth-child(n+46):nth-child(-n+54) { border-bottom: 2.5px solid var(--ink); }
+  .sudoku button:nth-child(9n+3), .sudoku button:nth-child(9n+6) { border-right: 2.5px solid var(--ink); }
+  /* Keys are .gkey (the shared keycap); this only lays them out. Not .gpad —
+     that hides itself on pointer:fine, and the pad is how you play with a
+     mouse too. */
+  .su-pad { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: var(--s2); margin-top: var(--s4); }
+  .su-pad .gkey { min-height: 46px; }
+  /* Ten keys across a phone leaves each ~26px wide — too narrow to hit.
+     Five across gives a comfortable two-row pad instead. */
+  @media (max-width: 560px) {
+    .su-pad { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .su-pad .gkey { min-height: 54px; font-size: var(--t-lg); }
+  }
+</style>
+<script type="module" src="/js/tools/game-sudoku.js"></script>

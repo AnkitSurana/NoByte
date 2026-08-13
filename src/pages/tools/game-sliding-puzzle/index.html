@@ -1,0 +1,27 @@
+<!-- meta tool="1" title="Sliding puzzle (15 puzzle) | NoByte" description="Slide the numbered tiles into order from 1 to 15. A classic sliding puzzle that runs in your browser, with a move counter and best score." path="/tools/game-sliding-puzzle/" keywords="sliding puzzle, 15 puzzle, fifteen puzzle, tile puzzle, number slide game" -->
+{{tool-hero:game-sliding-puzzle}}
+<section class="section--tight">
+  <div class="container">
+    <div class="game game-fit" style="--gmax:500px;">
+      <div class="hud">
+        <div class="score-row">
+          <div class="score-box"><span class="score-box__label">Moves</span><span class="score-box__val" id="p-moves">0</span></div>
+          <div class="score-box"><span class="score-box__label">Best</span><span class="score-box__val" id="p-best">—</span></div>
+        </div>
+        <button class="btn btn--primary" id="p-new">Shuffle</button>
+      </div>
+      <div class="slide game-board" id="p-board"></div>
+      <p class="game-status" id="p-status"></p>
+      <h2 class="g-how">How to play</h2>
+      <p class="g-note">Pick a tile next to the gap to slide it. Put them in order 1 to 15 with the gap bottom-right. Every shuffle is solvable.</p>
+    </div>
+  </div>
+</section>
+<style>
+  .slide { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 2%; aspect-ratio: 1; }
+  .slide button { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 10vmin, 2.8rem); background: var(--surface); border: var(--bw) solid var(--ink); border-radius: var(--radius); color: var(--ink); cursor: pointer; transition: transform var(--t-fast) var(--pop); }
+  .slide button:hover { transform: translate(-1px, -1px); }
+  .slide .gap { background: transparent; border-color: transparent; cursor: default; }
+  .slide .gap:hover { transform: none; }
+</style>
+<script type="module" src="/js/tools/game-sliding-puzzle.js"></script>

@@ -1,0 +1,39 @@
+<!-- meta tool="1" title="Text line tools: sort, dedupe, trim | NoByte" description="Sort lines, remove duplicates, trim whitespace, reverse order, and add line numbers. Runs entirely in your browser." path="/tools/text-tools/" keywords="sort lines, remove duplicate lines, text tools, deduplicate text" -->
+{{tool-hero:text-tools}}
+<section class="section--tight">
+  <div class="container">
+    <div class="row row-wrap mb-4" style="gap:var(--s2);">
+      <button class="btn btn--sm" data-op="sort-asc">Sort A→Z</button>
+      <button class="btn btn--sm" data-op="sort-desc">Sort Z→A</button>
+      <button class="btn btn--sm" data-op="sort-num">Sort numerically</button>
+      <button class="btn btn--sm" data-op="dedupe">Remove duplicates</button>
+      <button class="btn btn--sm" data-op="trim">Trim whitespace</button>
+      <button class="btn btn--sm" data-op="blank">Remove blank lines</button>
+      <button class="btn btn--sm" data-op="reverse">Reverse order</button>
+      <button class="btn btn--sm" data-op="shuffle">Shuffle</button>
+      <button class="btn btn--sm" data-op="number">Number lines</button>
+      <button class="btn btn--sm" data-op="lower">lowercase</button>
+      <button class="btn btn--sm" data-op="upper">UPPERCASE</button>
+    </div>
+    <div class="tool-layout tool-layout--split">
+      <div class="field">
+        <label for="tt-input">Input</label>
+        <textarea class="textarea mono" id="tt-input" spellcheck="false" style="min-height:320px;" placeholder="One item per line…"></textarea>
+        <p class="muted xs" id="tt-in-count">0 lines</p>
+      </div>
+      <div class="field">
+        <div class="row between"><label for="tt-output">Output</label>
+          <button class="btn btn--sm copy-btn" data-copy="#tt-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="tt-output" readonly spellcheck="false" style="min-height:320px;"></textarea>
+        <p class="muted xs" id="tt-out-count">0 lines</p>
+      </div>
+    </div>
+    <div class="row mt-3" style="gap:var(--s3);">
+      <button class="btn btn--sm" id="tt-example">Load example</button>
+      <button class="btn btn--sm btn--ghost" id="tt-use-output">Use output as input</button>
+      <button class="btn btn--sm btn--ghost" id="tt-clear">Clear</button>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/text-tools.js"></script>

@@ -1,0 +1,42 @@
+<!-- meta tool="1" title="PDF page tools: reorder, delete, extract, split | NoByte" description="Rearrange, remove, extract, or split the pages of a PDF, all in your browser. Drag to reorder, tick pages to select. Files are never uploaded." path="/tools/pdf-page-tools/" keywords="pdf page tools, reorder pdf pages, delete pdf pages, extract pdf pages, split pdf" -->
+{{tool-hero:pdf-page-tools}}
+<section class="section--tight">
+  <div class="container">
+    <div class="dropzone" id="pp-drop">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#upload"></use></svg>
+      <div><strong>Drop a PDF here</strong> or click to choose</div>
+      <div class="xs">Opened and edited in your browser</div>
+    </div>
+
+    <div id="pp-workspace" hidden>
+      <div class="row between mt-4 mb-3" style="flex-wrap:wrap;gap:var(--s3);">
+        <span class="muted small" id="pp-info"></span>
+        <span class="row" style="gap:var(--s2);">
+          <button class="btn btn--sm" type="button" id="pp-selall">Select all</button>
+          <button class="btn btn--sm" type="button" id="pp-clear">Clear</button>
+        </span>
+      </div>
+      <p class="muted xs mb-3">Drag a page to reorder. Tick pages to select them for delete or extract.</p>
+
+      <div class="pp-grid" id="pp-pages"></div>
+
+      <div class="row row-wrap mt-5" style="gap:var(--s3);">
+        <button class="btn" type="button" id="pp-delete" disabled>Delete selected</button>
+        <button class="btn" type="button" id="pp-extract" disabled>Extract selected</button>
+        <button class="btn" type="button" id="pp-split">Split to ZIP</button>
+        <button class="btn btn--primary" type="button" id="pp-download" style="margin-left:auto;">
+          <span class="spinner"></span><span class="btn-label">Download PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Everything happens in your browser with pdf-lib and pdf.js. Encrypted PDFs cannot be opened. Reordering and deleting keep the original page content; only the page order and set change.</div>
+    </div>
+  </div>
+</section>
+<script src="/assets/vendor/pdf-lib.min.js"></script>
+<script src="/assets/vendor/fflate.min.js"></script>
+<script src="/assets/vendor/sortable.min.js"></script>
+<script type="module" src="/js/tools/pdf-page-tools.js"></script>

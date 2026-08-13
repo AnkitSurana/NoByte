@@ -1,0 +1,26 @@
+<!-- meta tool="1" title="Word counter: words, characters, reading time | NoByte" description="Count words, characters, sentences, paragraphs, and reading time as you type. Runs entirely in your browser." path="/tools/word-counter/" keywords="word counter, character counter, reading time, text statistics" -->
+{{tool-hero:word-counter}}
+<section class="section--tight">
+  <div class="container">
+    <div class="tool-layout">
+      <div class="field">
+        <label for="wc-input" class="sr-only">Text to analyze</label>
+        <textarea class="textarea mono" id="wc-input" placeholder="Start typing or paste your text…" style="min-height:260px;" autofocus></textarea>
+        <div class="row row-wrap between mt-2">
+          <button class="btn btn--sm" type="button" data-example>Load example</button>
+          <button class="btn btn--sm btn--ghost" type="button" data-clear>Clear</button>
+        </div>
+      </div>
+
+      <div class="stat-grid" id="wc-stats">
+        <div class="stat"><span class="stat__value mono" data-stat="words">0</span><span class="stat__label">Words</span></div>
+        <div class="stat"><span class="stat__value mono" data-stat="characters">0</span><span class="stat__label">Characters</span></div>
+        <div class="stat"><span class="stat__value mono" data-stat="charactersNoSpaces">0</span><span class="stat__label">Characters (no spaces)</span></div>
+        <div class="stat"><span class="stat__value mono" data-stat="sentences">0</span><span class="stat__label">Sentences</span></div>
+        <div class="stat"><span class="stat__value mono" data-stat="paragraphs">0</span><span class="stat__label">Paragraphs</span></div>
+        <div class="stat"><span class="stat__value mono" data-stat="readingTime">0s</span><span class="stat__label">Reading time</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/word-counter.js"></script>

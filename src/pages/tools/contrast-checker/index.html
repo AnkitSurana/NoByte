@@ -1,0 +1,35 @@
+<!-- meta tool="1" title="Colour contrast checker: WCAG AA and AAA | NoByte" description="Check the contrast ratio between two colours against WCAG AA and AAA thresholds for normal and large text. Runs in your browser." path="/tools/contrast-checker/" keywords="contrast checker, wcag contrast, accessibility contrast, color contrast ratio" -->
+{{tool-hero:contrast-checker}}
+<section class="section--tight">
+  <div class="container" style="max-width:760px;">
+    <div class="tool-layout tool-layout--split">
+      <div class="field">
+        <label for="cc-fg">Text colour</label>
+        <div class="row" style="gap:var(--s2);"><input type="color" id="cc-fg" value="#5b616e" /><input class="input mono grow" id="cc-fg-hex" value="#5B616E" aria-label="Text colour hex" /></div>
+      </div>
+      <div class="field">
+        <label for="cc-bg">Background colour</label>
+        <div class="row" style="gap:var(--s2);"><input type="color" id="cc-bg" value="#ffffff" /><input class="input mono grow" id="cc-bg-hex" value="#FFFFFF" aria-label="Background colour hex" /></div>
+      </div>
+    </div>
+
+    <div class="result-panel text-center mt-5" id="cc-sample">
+      <div class="result-value" id="cc-ratio">—</div>
+      <div class="muted small">contrast ratio</div>
+      <div id="cc-preview" style="margin-top:var(--s4);padding:var(--s5);border-radius:var(--radius);">
+        <p style="font-size:var(--t-base);margin-bottom:var(--s2);">Normal text at 16px looks like this.</p>
+        <p style="font-size:var(--t-xl);font-weight:600;">Large text at 20px bold.</p>
+      </div>
+    </div>
+
+    <div class="stack mt-4">
+      <div class="result-row"><span class="label">AA normal text (4.5:1)</span><span id="cc-aa"></span></div>
+      <div class="result-row"><span class="label">AA large text (3:1)</span><span id="cc-aa-lg"></span></div>
+      <div class="result-row"><span class="label">AAA normal text (7:1)</span><span id="cc-aaa"></span></div>
+      <div class="result-row"><span class="label">AAA large text (4.5:1)</span><span id="cc-aaa-lg"></span></div>
+    </div>
+    <button class="btn btn--sm mt-4" id="cc-swap"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-right-left"></use></svg> Swap colours</button>
+    <p class="muted xs mt-4">Large text means 18.66px bold or 24px regular and above.</p>
+  </div>
+</section>
+<script type="module" src="/js/tools/contrast-checker.js"></script>

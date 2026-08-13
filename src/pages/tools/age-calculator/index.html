@@ -1,0 +1,22 @@
+<!-- meta tool="1" title="Age calculator: exact age and next birthday | NoByte" description="Calculate an exact age in years, months, and days, plus the countdown to the next birthday. Runs in your browser." path="/tools/age-calculator/" keywords="age calculator, date of birth, how old am i, birthday countdown" -->
+{{tool-hero:age-calculator}}
+<section class="section--tight">
+  <div class="container" style="max-width:640px;">
+    <div class="card">
+      <div class="field"><label for="ag-dob">Date of birth</label><input class="input mono" id="ag-dob" type="date" /></div>
+      <div class="field mt-3"><label for="ag-on">Age on</label><input class="input mono" id="ag-on" type="date" /></div>
+      <p class="field-error mt-2" id="ag-error"></p>
+    </div>
+    <div class="result-panel text-center mt-4">
+      <div class="muted small">Age</div>
+      <div class="result-value" id="ag-main">—</div>
+    </div>
+    <div class="stack mt-4">
+      <div class="result-row"><span class="label">In months</span><span class="mono val" id="ag-months">—</span></div>
+      <div class="result-row"><span class="label">In weeks</span><span class="mono val" id="ag-weeks">—</span></div>
+      <div class="result-row"><span class="label">In days</span><span class="mono val" id="ag-days">—</span></div>
+      <div class="result-row"><span class="label">Next birthday</span><span class="val" id="ag-next">—</span></div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/age-calculator.js"></script>

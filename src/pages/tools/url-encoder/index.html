@@ -1,0 +1,33 @@
+<!-- meta tool="1" title="URL encoder and decoder | NoByte" description="Encode or decode URL components and inspect a URL's parts (protocol, host, path, query). Runs entirely in your browser." path="/tools/url-encoder/" keywords="url encoder, url decoder, percent encoding, query string parser" -->
+{{tool-hero:url-encoder}}
+<section class="section--tight">
+  <div class="container">
+    <div class="tool-layout tool-layout--split">
+      <div class="field">
+        <label for="ue-plain">Plain text</label>
+        <textarea class="textarea mono" id="ue-plain" placeholder="hello world & more" style="min-height:150px;"></textarea>
+      </div>
+      <div class="field">
+        <div class="row between"><label for="ue-encoded">Encoded</label>
+          <button class="btn btn--sm copy-btn" data-copy="#ue-encoded"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="ue-encoded" placeholder="hello%20world%20%26%20more" style="min-height:150px;"></textarea>
+        <p class="field-error" id="ue-error"></p>
+      </div>
+    </div>
+    <label class="switch mt-3"><input type="checkbox" id="ue-component" checked /><span class="switch__track"></span> Encode as a component (encodes &amp; ? / : =)</label>
+
+    <h2 class="section-heading mt-6" style="font-size:var(--t-xl);">Inspect a URL</h2>
+    <div class="field">
+      <label for="ue-url">URL</label>
+      <input class="input mono" id="ue-url" placeholder="https://example.com/path?a=1&b=two#top" />
+      <p class="field-error" id="ue-url-error"></p>
+    </div>
+    <div class="stack mt-3" id="ue-parts"></div>
+    <div id="ue-params-wrap" class="mt-4 hidden">
+      <div class="label mb-2">Query parameters</div>
+      <div style="overflow-x:auto;"><table class="data-table" id="ue-params"></table></div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/url-encoder.js"></script>

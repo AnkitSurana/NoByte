@@ -1,0 +1,39 @@
+<!-- meta tool="1" title="Image to Base64 data URL | NoByte" description="Convert an image to a Base64 data URL, with copy-ready img and CSS snippets. Runs in your browser." path="/tools/image-to-base64/" keywords="image to base64, data uri, base64 image, image encoder" -->
+{{tool-hero:image-to-base64}}
+<section class="section--tight">
+  <div class="container" style="max-width:760px;">
+    <div class="dropzone" id="ib-drop">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#upload"></use></svg>
+      <div><strong>Drop an image here</strong> or click to choose</div>
+      <div class="xs">Encoded in your browser</div>
+    </div>
+    <p class="muted small mt-3" id="ib-info"></p>
+    <img class="img-preview mt-4 hidden" id="ib-preview" alt="Selected image" />
+
+    <div class="stack mt-5 hidden" id="ib-outputs">
+      <div>
+        <div class="row between mb-2"><span class="label">Data URL</span>
+          <button class="btn btn--sm copy-btn" data-copy="#ib-dataurl"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="ib-dataurl" readonly aria-label="Data URL output" style="min-height:110px;"></textarea>
+      </div>
+      <div>
+        <div class="row between mb-2"><span class="label">HTML</span>
+          <button class="btn btn--sm copy-btn" data-copy="#ib-html"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="ib-html" readonly aria-label="HTML snippet" style="min-height:70px;"></textarea>
+      </div>
+      <div>
+        <div class="row between mb-2"><span class="label">CSS</span>
+          <button class="btn btn--sm copy-btn" data-copy="#ib-css"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="ib-css" readonly aria-label="CSS snippet" style="min-height:70px;"></textarea>
+      </div>
+    </div>
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Data URLs are roughly a third larger than the file. They suit small icons; large images are usually better served as normal files.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/image-to-base64.js"></script>

@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "wifi-qr-code",
+    "title": "How to make a Wi-Fi QR code guests can scan",
+    "excerpt": "A Wi-Fi QR code lets people join your network without typing the password. How to make one, what the fields mean, and how to get it to scan first time.",
+    "date": "2026-07-25",
+    "cats": ["daily-use", "privacy", "guide"]
+  },
+  {
+    "slug": "what-makes-a-password-strong",
+    "title": "What actually makes a password strong",
+    "excerpt": "Strength is not about odd symbols; it is about length and randomness. What matters, and how to get it without inventing anything yourself.",
+    "date": "2026-07-24",
+    "cats": ["daily-use", "privacy", "guide"]
+  },
+  {
+    "slug": "fix-messy-json",
+    "title": "How to fix messy JSON and read the error",
+    "excerpt": "When JSON will not parse, the error can be blunt. How to make a file readable, find the character that is breaking it, and minify it once it is valid.",
+    "date": "2026-07-23",
+    "cats": ["developer", "guide"]
+  },
+  {
+    "slug": "read-a-cron-expression",
+    "title": "How to read a cron expression without guessing",
+    "excerpt": "Cron's five fields are easy to misread. What each one means, the symbols that trip people up, and how to check a schedule before you rely on it.",
+    "date": "2026-07-22",
+    "cats": ["developer", "guide"]
+  },
+  {
+    "slug": "compress-image-without-blur",
+    "title": "How to compress an image without it going blurry",
+    "excerpt": "Compression trades file size against detail. How to shrink a JPG or WebP while keeping it looking right, and which format to reach for.",
+    "date": "2026-07-21",
+    "cats": ["image", "guide"]
+  },
+  {
+    "slug": "when-to-use-base64",
+    "title": "What Base64 is for, and what it is not",
+    "excerpt": "Base64 turns binary data into plain text so it can travel through channels built for text. What it does, what it does not, and when to reach for it.",
+    "date": "2026-07-20",
+    "cats": ["developer", "guide"]
+  },
+  {
+    "slug": "count-words-as-you-write",
+    "title": "Knowing how long your text is, as you write it",
+    "excerpt": "Word and character limits are everywhere, and eyeballing them does not work. A quick way to keep both counts in view while you draft.",
+    "date": "2026-07-19",
+    "cats": ["productivity", "guide"]
+  },
+  {
+    "slug": "where-your-files-go",
+    "title": "Where your files go when you use an online tool",
+    "excerpt": "Most online tools upload your file to a server to process it. NoByte does the work in your browser instead. What that difference means, and how to check it.",
+    "date": "2026-07-18",
+    "cats": ["privacy"]
+  }
+]

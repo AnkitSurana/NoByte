@@ -1,0 +1,48 @@
+<!-- meta tool="1" title="Minesweeper | NoByte" description="Play Minesweeper in your browser. Clear the grid without hitting a mine, using the numbers to work out where the mines are. The first click is always safe." path="/tools/game-minesweeper/" keywords="minesweeper, minesweeper game, mine sweeper, logic game, browser minesweeper" -->
+{{tool-hero:game-minesweeper}}
+<section class="section--tight">
+  <div class="container">
+    <div class="game mn-game">
+      <div class="mn-bar">
+        <div class="score-box"><span class="score-box__label">Mines</span><span class="score-box__val" id="mn-left">0</span></div>
+        <div class="score-box"><span class="score-box__label">Time</span><span class="score-box__val" id="mn-time">0</span></div>
+        <select class="select select--sm" id="mn-diff" aria-label="Difficulty">
+          <option value="9,9,10">Beginner</option>
+          <option value="16,16,40">Intermediate</option>
+          <option value="16,30,99">Expert</option>
+        </select>
+        <button class="btn btn--sm" id="mn-flag" type="button" aria-pressed="false" title="Toggle flag mode for tapping">🚩 Flag: off</button>
+        <button class="btn btn--primary btn--sm" id="mn-new" type="button">New</button>
+      </div>
+      <div class="mn-scroll"><div class="mines game-board" id="mn-board"></div></div>
+      <p class="game-status" id="mn-status"></p>
+      <h2 class="g-how">How to play</h2>
+      <p class="g-note">Tap a square to reveal it; the number tells you how many mines touch it, diagonals included. Long-press, right-click, or turn on Flag, to mark a mine. The first click is always safe.</p>
+    </div>
+  </div>
+</section>
+<style>
+  .mn-game { max-width: min(96vw, 720px); margin-inline: auto; }
+  .mn-bar { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: var(--s2); margin-bottom: var(--s4); }
+  /* text-align centring, not flex: a flex child wider than an overflow:auto
+     parent has its left overhang clipped and unreachable by scrolling. */
+  .mn-scroll { overflow-x: auto; padding-bottom: var(--s2); text-align: center; }
+  /* Cells have a floor as well as a ceiling. Clamping only to 100% meant a
+     30-column Expert grid squeezed itself into a phone at 7px a cell —
+     untappable. Below the floor the grid grows past the container and
+     .mn-scroll scrolls it instead. */
+  .mines {
+    display: inline-grid; gap: 3px; vertical-align: top;
+    width: clamp(calc(var(--cols, 9) * 26px), 100%, calc(var(--cols, 9) * 42px));
+  }
+  /* the callout/selection suppression keeps a long-press-to-flag from raising
+     the browser's own context menu instead */
+  .mines button { aspect-ratio: 1; padding: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(0.85rem, 3.4vmin, 1.2rem); border: 2px solid var(--ink); border-radius: 6px; background: var(--surface); box-shadow: inset 0 -3px 0 color-mix(in srgb, var(--ink) 14%, transparent); cursor: pointer; color: var(--ink); user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  .mines button.rev { background: var(--paper-2); box-shadow: none; cursor: default; }
+  .mines button.mine { background: var(--bad); box-shadow: none; }
+  .mines button[data-n="1"] { color: #2563eb; } .mines button[data-n="2"] { color: #1b7a3d; }
+  .mines button[data-n="3"] { color: #b3261e; } .mines button[data-n="4"] { color: #6d28d9; }
+  .mines button[data-n="5"] { color: #8a5200; } .mines button[data-n="6"] { color: #0e7490; }
+  .mines button[data-n="7"] { color: #1d1a16; } .mines button[data-n="8"] { color: #8a8271; }
+</style>
+<script type="module" src="/js/tools/game-minesweeper.js"></script>

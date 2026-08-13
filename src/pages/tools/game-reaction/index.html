@@ -1,0 +1,33 @@
+<!-- meta tool="1" title="Reaction time test: F1 lights start | NoByte" description="Test your reaction time with a Formula 1 style lights-out start. Five red lights come on, then out, and you click the moment they go dark. See how you compare to a racing driver." path="/tools/game-reaction/" keywords="reaction time test, f1 reaction test, reaction speed, reflex test, lights out reaction" -->
+{{tool-hero:game-reaction}}
+<section class="section--tight">
+  <div class="container">
+    <div class="game" style="max-width:min(96vw, 760px);">
+      <button class="rx-board game-board" id="rx-board" type="button">
+        <div class="rx-lights" id="rx-lights">
+          <span class="rx-light"></span><span class="rx-light"></span><span class="rx-light"></span><span class="rx-light"></span><span class="rx-light"></span>
+        </div>
+        <div class="rx-msg" id="rx-msg">Tap to start</div>
+        <div class="rx-fact" id="rx-fact"></div>
+      </button>
+      <div class="score-row" style="justify-content:center;margin-top:var(--s4);">
+        <div class="score-box"><span class="score-box__label">Last</span><span class="score-box__val" id="r-last">—</span></div>
+        <div class="score-box"><span class="score-box__label">Best</span><span class="score-box__val" id="r-best">—</span></div>
+        <div class="score-box"><span class="score-box__label">Avg</span><span class="score-box__val" id="r-avg">—</span></div>
+      </div>
+      <h2 class="g-how">How to play</h2>
+      <p class="g-note">Just like a Formula 1 start: five red lights come on, then all go out. Tap the instant they go dark. Going before then is a jump start. Under 200 ms is around an F1 driver's reaction; the human average is about 250 ms.</p>
+    </div>
+  </div>
+</section>
+<style>
+  .rx-board { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s6); min-height: 46vh; cursor: pointer; text-align: center; background: var(--paper-2); color: var(--ink); }
+  .rx-board.go { background: var(--ok); color: #fff; }
+  .rx-board.fault { background: var(--bad); color: #fff; }
+  .rx-lights { display: flex; gap: clamp(10px, 3vw, 22px); }
+  .rx-light { width: clamp(42px, 12vw, 84px); aspect-ratio: 1; border-radius: 50%; background: color-mix(in srgb, var(--ink) 22%, transparent); border: var(--bw) solid var(--ink); transition: background 60ms linear; }
+  .rx-light.on { background: #e10600; border-color: #7a0400; box-shadow: 0 0 24px rgba(225, 6, 0, .75); }
+  .rx-msg { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 7vw, var(--t-3xl)); line-height: 1.1; }
+  .rx-fact { font-size: clamp(0.85rem, 3.4vw, var(--t-md)); max-width: 42ch; min-height: 1.2em; opacity: .95; padding-inline: var(--s3); }
+</style>
+<script type="module" src="/js/tools/game-reaction.js"></script>

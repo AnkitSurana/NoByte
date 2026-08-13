@@ -1,0 +1,24 @@
+<!-- meta title="All tools | NoByte" description="Browse every free browser-based tool on NoByte: developer utilities, PDF and image tools, calculators and more." path="/tools/" keywords="online tools, free tools, developer tools, pdf tools, calculators" -->
+<section class="section">
+  <div class="container container-wide">
+    <nav class="crumbs"><a href="/">Home</a> / <span>All tools</span></nav>
+    <h1 class="page-title">All tools</h1>
+    <p class="page-lead">Everything in the workshop. The DNS lookup and dictionary reach out to a public service; the rest runs entirely in your browser.</p>
+
+    <div class="row between mt-6 mb-4" style="gap:var(--s4);align-items:center;flex-wrap:wrap;">
+      <div class="hsearch" style="margin-left:0;max-width:26rem;flex:1;min-width:16rem;">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/icons.svg#search"></use></svg>
+        <input type="search" placeholder="Filter tools" aria-label="Filter tools" autocomplete="off" data-search-page-input />
+      </div>
+      <label class="sort-control">Sort
+        <select class="select select--sm" data-sort aria-label="Sort tools">
+          <option value="popular">Most popular</option>
+          <option value="name">Name (A–Z)</option>
+        </select>
+      </label>
+      <span class="eyebrow" data-search-count>&nbsp;</span>
+    </div>
+
+    <div class="tool-grid" data-reveal-group data-search-results>{{cards:all}}</div>
+  </div>
+</section>

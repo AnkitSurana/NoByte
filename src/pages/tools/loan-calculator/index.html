@@ -1,0 +1,54 @@
+<!-- meta tool="1" title="Loan calculator: payments, interest, amortization | NoByte" description="Calculate monthly loan payments, total interest, and a full amortization schedule. Works for mortgages, car, and personal loans." path="/tools/loan-calculator/" keywords="loan calculator, emi calculator, mortgage calculator, amortization schedule" -->
+{{tool-hero:loan-calculator}}
+<section class="section--tight">
+  <div class="container">
+    <div class="tool-layout tool-layout--split">
+      <div class="card">
+        <div class="field mb-4">
+          <label for="lc-amount">Loan amount</label>
+          <input class="input mono" id="lc-amount" type="number" value="250000" min="0" inputmode="decimal" />
+        </div>
+        <div class="field mb-4">
+          <div class="row between"><label for="lc-rate">Annual interest rate</label><span class="mono" id="lc-rate-val">6.5%</span></div>
+          <input type="range" id="lc-rate" min="0" max="20" step="0.1" value="6.5" />
+        </div>
+        <div class="field mb-4">
+          <div class="row between"><label for="lc-term">Term</label><span class="mono" id="lc-term-val">30 years</span></div>
+          <input type="range" id="lc-term" min="1" max="40" step="1" value="30" />
+        </div>
+        <div class="field">
+          <label for="lc-currency">Currency symbol</label>
+          <input class="input" id="lc-currency" value="$" maxlength="3" style="max-width:90px;" />
+        </div>
+      </div>
+
+      <div>
+        <div class="result-panel text-center">
+          <div class="muted small">Monthly payment</div>
+          <div class="result-value" id="lc-monthly">—</div>
+          <svg id="lc-chart" viewBox="0 0 120 120" width="150" height="150" style="margin:var(--s4) auto 0;" role="img" aria-label="Principal vs interest">
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--surface)" stroke-width="16" />
+            <circle id="lc-arc" cx="60" cy="60" r="48" fill="none" stroke="var(--accent)" stroke-width="16" stroke-dasharray="0 999" stroke-linecap="butt" transform="rotate(-90 60 60)" />
+          </svg>
+          <div class="row" style="justify-content:center;gap:var(--s4);">
+            <span class="legend"><i style="background:var(--accent)"></i> Principal</span>
+            <span class="legend"><i style="background:var(--ink-3)"></i> Interest</span>
+          </div>
+        </div>
+        <div class="stack mt-4">
+          <div class="result-row"><span class="label">Total principal</span><span class="mono val" id="lc-principal">—</span></div>
+          <div class="result-row"><span class="label">Total interest</span><span class="mono val" id="lc-interest">—</span></div>
+          <div class="result-row"><span class="label">Total paid</span><span class="mono val" id="lc-total">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <details class="card mt-5">
+      <summary style="cursor:pointer;font-weight:600;">Amortization schedule (yearly)</summary>
+      <div class="table-scroll mt-3">
+        <table class="data-table" id="lc-schedule"></table>
+      </div>
+    </details>
+  </div>
+</section>
+<script type="module" src="/js/tools/loan-calculator.js"></script>

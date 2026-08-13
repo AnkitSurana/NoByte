@@ -1,0 +1,34 @@
+<!-- meta tool="1" title="SIP calculator: monthly investment growth | NoByte" description="Estimate the future value of a monthly SIP investment, with invested-versus-gains breakdown and a chart. Runs in your browser." path="/tools/sip-calculator/" keywords="sip calculator, investment calculator, mutual fund calculator, compound interest" -->
+{{tool-hero:sip-calculator}}
+<section class="section--tight">
+  <div class="container">
+    <div class="tool-layout tool-layout--split">
+      <div class="card">
+        <div class="field mb-4"><label for="sip-amount">Monthly investment</label><input class="input mono" id="sip-amount" type="number" min="0" value="5000" inputmode="decimal" /></div>
+        <div class="field mb-4"><div class="row between"><label for="sip-rate">Expected annual return</label><span class="mono" id="sip-rate-val">12%</span></div><input type="range" id="sip-rate" min="1" max="30" step="0.5" value="12" /></div>
+        <div class="field mb-4"><div class="row between"><label for="sip-years">Duration</label><span class="mono" id="sip-years-val">10 years</span></div><input type="range" id="sip-years" min="1" max="40" value="10" /></div>
+        <div class="field"><label for="sip-currency">Currency symbol</label><input class="input" id="sip-currency" value="₹" maxlength="3" style="max-width:90px;" /></div>
+      </div>
+      <div>
+        <div class="result-panel text-center">
+          <div class="muted small">Estimated value</div>
+          <div class="result-value" id="sip-total">—</div>
+          <svg id="sip-chart" viewBox="0 0 120 120" width="150" height="150" style="margin:var(--s4) auto 0;" role="img" aria-label="Invested versus gains">
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--ink-3)" stroke-width="16" />
+            <circle id="sip-arc" cx="60" cy="60" r="48" fill="none" stroke="var(--accent)" stroke-width="16" stroke-dasharray="0 999" transform="rotate(-90 60 60)" />
+          </svg>
+          <div class="row" style="justify-content:center;gap:var(--s4);">
+            <span class="legend"><i style="background:var(--accent)"></i> Invested</span>
+            <span class="legend"><i style="background:var(--ink-3)"></i> Gains</span>
+          </div>
+        </div>
+        <div class="stack mt-4">
+          <div class="result-row"><span class="label">Total invested</span><span class="mono val" id="sip-invested">—</span></div>
+          <div class="result-row"><span class="label">Estimated gains</span><span class="mono val" id="sip-gains">—</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="muted xs mt-4">A projection using a constant return. Real investment returns vary and are not guaranteed.</p>
+  </div>
+</section>
+<script type="module" src="/js/tools/sip-calculator.js"></script>

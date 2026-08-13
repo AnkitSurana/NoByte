@@ -1,0 +1,32 @@
+<!-- meta tool="1" title="Slug generator: clean URL slugs | NoByte" description="Turn a title into a URL-friendly slug. Handles accents, punctuation, and spacing, with options for separator and letter case. Runs in your browser." path="/tools/slug-generator/" keywords="slug generator, url slug, permalink generator, seo slug, kebab case" -->
+{{tool-hero:slug-generator}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <div class="field">
+      <label for="sg-input">Text</label>
+      <textarea class="textarea" id="sg-input" spellcheck="false" placeholder="How to Bake Sourdough Bread at Home" style="min-height:96px;"></textarea>
+    </div>
+
+    <div class="row row-wrap mt-4" style="gap:var(--s4);align-items:end;">
+      <div class="field"><label for="sg-sep">Separator</label>
+        <select class="select" id="sg-sep"><option value="-">Hyphen ( - )</option><option value="_">Underscore ( _ )</option></select>
+      </div>
+      <label class="switch"><input type="checkbox" id="sg-lower" checked /><span class="switch__track"></span> Lowercase</label>
+      <label class="switch"><input type="checkbox" id="sg-strip" checked /><span class="switch__track"></span> Strip stop words</label>
+    </div>
+
+    <div class="field mt-4">
+      <div class="row between"><label for="sg-output">Slug</label>
+        <button class="btn btn--sm copy-btn" data-copy="#sg-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+      </div>
+      <input class="input mono" id="sg-output" readonly value="" aria-label="Generated slug" style="font-size:var(--t-md);" />
+      <p class="muted xs" id="sg-len"></p>
+    </div>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Accented letters are folded to their closest ASCII form (café becomes cafe). Characters outside the Latin alphabet, such as CJK, are dropped rather than transliterated.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/slug-generator.js"></script>

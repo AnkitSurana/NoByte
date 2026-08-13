@@ -1,0 +1,47 @@
+<!-- meta tool="1" title="Chmod calculator: file permission numbers | NoByte" description="Tick read, write, and execute for owner, group, and others to get the octal chmod number and symbolic string. Type a number to go the other way. Runs in your browser." path="/tools/chmod-calculator/" keywords="chmod calculator, file permissions, octal permissions, unix permissions, chmod 755" -->
+{{tool-hero:chmod-calculator}}
+<section class="section--tight">
+  <div class="container" style="max-width:640px;">
+    <div class="card">
+      <table class="chmod-grid">
+        <thead>
+          <tr><th></th><th>Read</th><th>Write</th><th>Execute</th></tr>
+        </thead>
+        <tbody id="cm-body">
+          <tr data-who="owner"><th scope="row">Owner</th>
+            <td><input type="checkbox" data-bit="4" aria-label="Owner read" /></td>
+            <td><input type="checkbox" data-bit="2" aria-label="Owner write" /></td>
+            <td><input type="checkbox" data-bit="1" aria-label="Owner execute" /></td>
+          </tr>
+          <tr data-who="group"><th scope="row">Group</th>
+            <td><input type="checkbox" data-bit="4" aria-label="Group read" /></td>
+            <td><input type="checkbox" data-bit="2" aria-label="Group write" /></td>
+            <td><input type="checkbox" data-bit="1" aria-label="Group execute" /></td>
+          </tr>
+          <tr data-who="others"><th scope="row">Others</th>
+            <td><input type="checkbox" data-bit="4" aria-label="Others read" /></td>
+            <td><input type="checkbox" data-bit="2" aria-label="Others write" /></td>
+            <td><input type="checkbox" data-bit="1" aria-label="Others execute" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="stack mt-4">
+      <div class="result-row"><span class="label">Octal</span>
+        <span class="row" style="gap:var(--s2)">
+          <input class="input mono" id="cm-octal" value="000" maxlength="3" inputmode="numeric" style="width:6rem;text-align:center;font-size:var(--t-lg);" aria-label="Octal permission number" />
+          <button class="btn btn--sm copy-btn" data-copy="#cm-octal"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </span>
+      </div>
+      <div class="result-row"><span class="label">Symbolic</span><span class="mono val" id="cm-symbolic">----------</span></div>
+      <div class="result-row"><span class="label">Command</span><span class="mono val" id="cm-cmd">chmod 000 file</span></div>
+    </div>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>The symbolic string starts with a dash for a regular file. Special bits (setuid, setgid, sticky) are not covered here.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/chmod-calculator.js"></script>

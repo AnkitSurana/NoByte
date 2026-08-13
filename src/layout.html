@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}" />
+    <meta name="keywords" content="{{keywords}}" />
+    <meta name="author" content="NoByte" />
+    <meta name="robots" content="{{robots}}" />
+    <link rel="canonical" href="{{canonical}}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{canonical}}" />
+    <meta property="og:title" content="{{title}}" />
+    <meta property="og:description" content="{{description}}" />
+    <meta property="og:image" content="{{ogImage}}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{title}}" />
+    <meta name="twitter:description" content="{{description}}" />
+    <meta name="twitter:image" content="{{ogImage}}" />
+
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+    <!-- Set theme before paint to avoid flash -->
+    <script>
+      (function () {
+        // Default to light for everyone; only go dark if the visitor chose it.
+        var t;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+      })();
+    </script>
+    <meta name="theme-color" content="#FFF8EC" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#16130E" media="(prefers-color-scheme: dark)" />
+    <!--
+      Preload the three faces every page paints with. Without this a font is
+      only discovered after tokens.css has downloaded and parsed, so the text
+      swaps in a round trip later than it needs to. These three are used site
+      wide (display headings, body copy, the mono in crumbs and the footer);
+      the remaining weights load on demand.
+    -->
+    <link rel="preload" href="/assets/fonts/outfit-latin-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/jbmono-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/tokens.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    {{structured}}
+  </head>
+  <body>
+    <!--
+      You read the source. Good instinct for a site like this.
+      Nothing you do here leaves your browser, and you can prove it:
+      the whole thing is open at https://github.com/AnkitSurana/NoByte
+    -->
+    <a class="skip-link" href="#main">Skip to content</a>
+    <!-- include:header -->
+    <main id="main">
+      {{content}}
+    </main>
+    <!-- include:footer -->
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="false"></div>
+    <script type="module" src="/js/theme.js"></script>
+    <script type="module" src="/js/ui.js"></script>
+{{searchScript}}
+    <script type="module" src="/js/motion.js"></script>
+  </body>
+</html>

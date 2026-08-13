@@ -1,0 +1,29 @@
+<!-- meta tool="1" title="Image format converter: PNG, JPG, WebP | NoByte" description="Convert images between PNG, JPG, and WebP in your browser. JPG output is flattened onto white. Nothing is uploaded." path="/tools/image-converter/" keywords="image converter, png to jpg, webp converter, convert image" -->
+{{tool-hero:image-converter}}
+<section class="section--tight">
+  <div class="container" style="max-width:760px;">
+    <div class="dropzone" id="cv-drop">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#image"></use></svg>
+      <div><strong>Drop an image here</strong> or click to choose</div>
+      <div class="xs">PNG, JPG, or WebP</div>
+    </div>
+    <p class="muted small mt-3" id="cv-info"></p>
+    <div class="row row-wrap mt-4" style="gap:var(--s4);align-items:end;">
+      <div class="field"><label for="cv-format">Convert to</label>
+        <select class="select" id="cv-format"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option></select>
+      </div>
+      <div class="field grow" style="min-width:180px;" id="cv-quality-wrap">
+        <div class="row between"><label for="cv-quality">Quality</label><span class="mono" id="cv-quality-val">92%</span></div>
+        <input type="range" id="cv-quality" min="10" max="100" value="92" />
+      </div>
+      <button class="btn btn--primary" id="cv-download" disabled><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download</button>
+    </div>
+    <p class="muted small mt-2" id="cv-out-info"></p>
+    <div class="notice notice--warn mt-4 hidden" id="cv-alpha-warn">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#alert-triangle"></use></svg>
+      <div>JPG has no transparency. Transparent areas are filled with white.</div>
+    </div>
+    <img class="img-preview mt-4 hidden" id="cv-preview" alt="Converted preview" />
+  </div>
+</section>
+<script type="module" src="/js/tools/image-converter.js"></script>

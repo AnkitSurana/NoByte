@@ -1,0 +1,27 @@
+<!-- meta tool="1" title="Color palette generator | NoByte" description="Pick a base color and get a tint and shade scale plus complementary, analogous, and triadic colors. Click any swatch to copy its hex. Runs in your browser." path="/tools/color-palette/" keywords="color palette generator, color scheme, tints and shades, complementary colors, hex palette" -->
+{{tool-hero:color-palette}}
+<section class="section--tight">
+  <div class="container" style="max-width:820px;">
+    <div class="row row-wrap" style="gap:var(--s4);align-items:end;">
+      <div class="field"><label for="pl-picker">Base color</label><input type="color" id="pl-picker" value="#2563EB" /></div>
+      <div class="field"><label for="pl-hex">Hex</label><input class="input mono" id="pl-hex" value="#2563EB" maxlength="7" style="width:9rem;text-transform:uppercase;" /></div>
+      <p class="field-error" id="pl-error" style="align-self:center;"></p>
+    </div>
+
+    <div class="mt-5">
+      <span class="label">Tints and shades <span class="muted xs">click a swatch to copy its hex</span></span>
+      <div class="pal-row mt-2" id="pl-scale"></div>
+    </div>
+
+    <div class="mt-5">
+      <span class="label">Harmonies</span>
+      <div class="pal-row pal-row--wide mt-2" id="pl-harmony"></div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>The scale keeps the base hue and adjusts lightness. Harmonies rotate the hue on the color wheel: complementary is opposite, analogous is next door, triadic is a third of the way around.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/color-palette.js"></script>

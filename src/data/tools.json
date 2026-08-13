@@ -1,0 +1,1073 @@
+[
+  {
+    "id": "json-formatter",
+    "name": "JSON formatter",
+    "description": "Format, minify, and validate JSON with error line and column.",
+    "category": "developer",
+    "path": "/tools/json-formatter/",
+    "icon": "braces",
+    "featured": true,
+    "metaDescription": "Format, minify, and validate JSON in your browser. Shows the exact line and column of syntax errors. Nothing is uploaded.",
+    "keywords": [
+      "json formatter",
+      "json validator",
+      "json beautifier",
+      "json minify",
+      "pretty print json"
+    ],
+    "popularity": 5
+  },
+  {
+    "id": "password-generator",
+    "name": "Password generator",
+    "description": "Generate random passwords using your browser's secure randomness.",
+    "category": "daily-use",
+    "path": "/tools/password-generator/",
+    "icon": "key",
+    "featured": true,
+    "metaDescription": "Generate random passwords with adjustable length and character sets, using the browser crypto API. Nothing is sent anywhere.",
+    "keywords": [
+      "password generator",
+      "random password",
+      "secure password",
+      "passphrase"
+    ],
+    "popularity": 5
+  },
+  {
+    "id": "qr-generator",
+    "name": "QR code generator",
+    "description": "Turn text, URLs, or Wi-Fi details into a QR code. Download PNG or SVG.",
+    "category": "daily-use",
+    "path": "/tools/qr-generator/",
+    "icon": "qr-code",
+    "featured": true,
+    "metaDescription": "Create QR codes for links, text, and Wi-Fi. Choose colors and error correction, then download as PNG or SVG. Generated in your browser.",
+    "keywords": [
+      "qr code generator",
+      "qr code",
+      "wifi qr",
+      "url to qr"
+    ],
+    "popularity": 5
+  },
+  {
+    "id": "word-counter",
+    "name": "Word counter",
+    "description": "Count words, characters, sentences, paragraphs, and reading time.",
+    "category": "productivity",
+    "path": "/tools/word-counter/",
+    "icon": "hash",
+    "featured": true,
+    "metaDescription": "Count words, characters, sentences, and paragraphs as you type. Includes reading time. Runs entirely in your browser.",
+    "keywords": [
+      "word counter",
+      "character counter",
+      "reading time",
+      "text stats"
+    ],
+    "popularity": 5
+  },
+  {
+    "id": "pdf-converter",
+    "name": "PDF converter",
+    "description": "Images to PDF, PDF to JPG or PNG, and merge PDFs. All in-browser.",
+    "category": "productivity",
+    "path": "/tools/pdf-converter/",
+    "icon": "file-type",
+    "metaDescription": "Convert images to PDF, export PDF pages as JPG or PNG, and merge PDFs. Files are processed in your browser and never uploaded.",
+    "keywords": [
+      "pdf converter",
+      "image to pdf",
+      "pdf to jpg",
+      "merge pdf"
+    ],
+    "featured": true,
+    "popularity": 5
+  },
+  {
+    "id": "image-compressor",
+    "name": "Image compressor",
+    "description": "Re-encode JPG or WebP at a chosen quality to shrink file size.",
+    "category": "image",
+    "path": "/tools/image-compressor/",
+    "icon": "minimize",
+    "metaDescription": "Compress JPG and WebP images in your browser with a quality slider and before/after sizes. Images are never uploaded.",
+    "keywords": [
+      "image compressor",
+      "compress image",
+      "reduce image size",
+      "jpeg compressor"
+    ],
+    "featured": true,
+    "popularity": 5
+  },
+  {
+    "id": "base64",
+    "name": "Base64 encode / decode",
+    "description": "Encode or decode Base64 for text and files, with a URL-safe option.",
+    "category": "developer",
+    "path": "/tools/base64/",
+    "icon": "binary",
+    "metaDescription": "Encode and decode Base64 in your browser. Handles text and files, UTF-8 safe, with a URL-safe variant. Nothing is uploaded.",
+    "keywords": [
+      "base64 encode",
+      "base64 decode",
+      "base64 converter",
+      "url safe base64"
+    ],
+    "featured": true,
+    "popularity": 5
+  },
+  {
+    "id": "color-picker",
+    "name": "Color picker",
+    "description": "Pick a color and convert between HEX, RGB, and HSL.",
+    "category": "daily-use",
+    "path": "/tools/color-picker/",
+    "icon": "palette",
+    "metaDescription": "Pick a color and read it as HEX, RGB, and HSL. Copy any format with one click. Runs in your browser.",
+    "keywords": [
+      "color picker",
+      "hex to rgb",
+      "hsl",
+      "color converter"
+    ],
+    "featured": true,
+    "popularity": 5
+  },
+  {
+    "id": "cron-explainer",
+    "name": "Cron explainer",
+    "description": "Read a cron expression in plain English and see its next runs.",
+    "category": "developer",
+    "path": "/tools/cron-explainer/",
+    "icon": "clock",
+    "featured": true,
+    "metaDescription": "Read a cron expression in plain English and see the next run times. Supports ranges, steps, lists, and named months and weekdays. Runs in your browser.",
+    "keywords": [
+      "cron expression",
+      "crontab",
+      "cron explainer",
+      "cron parser",
+      "cron schedule"
+    ],
+    "popularity": 5
+  },
+  {
+    "id": "case-converter",
+    "name": "Case converter",
+    "description": "Convert text between upper, lower, title, sentence, and other cases.",
+    "category": "productivity",
+    "path": "/tools/case-converter/",
+    "icon": "case-sensitive",
+    "metaDescription": "Convert text to uppercase, lowercase, title case, sentence case, camelCase, and more. Runs in your browser.",
+    "keywords": [
+      "case converter",
+      "uppercase",
+      "lowercase",
+      "title case",
+      "text case"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "url-encoder",
+    "name": "URL encoder / decoder",
+    "description": "Percent-encode or decode text, and break a URL into its parts.",
+    "category": "developer",
+    "path": "/tools/url-encoder/",
+    "icon": "link",
+    "metaDescription": "Encode or decode URL components and inspect a URL's parts (protocol, host, path, query). Runs entirely in your browser.",
+    "keywords": [
+      "url encoder",
+      "url decoder",
+      "percent encoding",
+      "query string parser"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "hash-generator",
+    "name": "Hash generator",
+    "description": "Compute SHA-1, SHA-256, SHA-384, and SHA-512 for text and files.",
+    "category": "developer",
+    "path": "/tools/hash-generator/",
+    "icon": "hash",
+    "metaDescription": "Generate SHA-1, SHA-256, SHA-384, and SHA-512 hashes for text and files using the Web Crypto API. Runs in your browser.",
+    "keywords": [
+      "hash generator",
+      "sha256",
+      "sha512",
+      "checksum",
+      "file hash"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "image-resizer",
+    "name": "Image resizer",
+    "description": "Resize an image by pixels or percent, keeping aspect ratio.",
+    "category": "image",
+    "path": "/tools/image-resizer/",
+    "icon": "crop",
+    "metaDescription": "Resize images by pixels or percentage with optional aspect-ratio lock, in your browser. Images are never uploaded.",
+    "keywords": [
+      "image resizer",
+      "resize image",
+      "scale image",
+      "photo resizer"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "unit-converter",
+    "name": "Unit converter",
+    "description": "Convert length, weight, temperature, area, volume, and more.",
+    "category": "daily-use",
+    "path": "/tools/unit-converter/",
+    "icon": "ruler",
+    "metaDescription": "Convert between units of length, weight, temperature, area, volume, and speed. Runs entirely in your browser.",
+    "keywords": [
+      "unit converter",
+      "metric to imperial",
+      "temperature converter",
+      "length converter"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "percentage-calculator",
+    "name": "Percentage calculator",
+    "description": "Work out percentages, ratios, and percentage change.",
+    "category": "finance",
+    "path": "/tools/percentage-calculator/",
+    "icon": "percent",
+    "metaDescription": "Calculate a percentage of a number, what percent one number is of another, and percentage change. Runs in your browser.",
+    "keywords": [
+      "percentage calculator",
+      "percent of",
+      "percentage change",
+      "percent difference"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "markdown-table",
+    "name": "Markdown table generator",
+    "description": "Fill a grid and get a GitHub-flavored Markdown table.",
+    "category": "developer",
+    "path": "/tools/markdown-table/",
+    "icon": "table",
+    "metaDescription": "Build a Markdown table in a grid editor with column alignment, and copy the GitHub-flavored output. Runs in your browser.",
+    "keywords": [
+      "markdown table",
+      "table generator",
+      "gfm table",
+      "markdown generator"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "regex-tester",
+    "name": "Regex tester",
+    "description": "Test regular expressions with live match highlighting and groups.",
+    "category": "developer",
+    "path": "/tools/regex-tester/",
+    "icon": "regex",
+    "metaDescription": "Test JavaScript regular expressions with live match highlighting, capture groups, and flags. Runs in your browser.",
+    "keywords": [
+      "regex tester",
+      "regular expression",
+      "regex match",
+      "regex online"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "text-diff",
+    "name": "Text diff",
+    "description": "Compare two blocks of text and highlight what changed.",
+    "category": "developer",
+    "path": "/tools/text-diff/",
+    "icon": "git-compare",
+    "metaDescription": "Compare two texts and see added and removed words or lines highlighted. Runs entirely in your browser.",
+    "keywords": [
+      "text diff",
+      "compare text",
+      "diff checker",
+      "text compare"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "jwt-decoder",
+    "name": "JWT decoder",
+    "description": "Decode a JSON Web Token's header and payload. Signature is not verified.",
+    "category": "developer",
+    "path": "/tools/jwt-decoder/",
+    "icon": "key",
+    "metaDescription": "Decode a JWT to read its header and payload, with issued and expiry times. Decoding only; the signature is not verified. Runs locally.",
+    "keywords": [
+      "jwt decoder",
+      "decode jwt",
+      "json web token",
+      "jwt parser"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "uuid-generator",
+    "name": "UUID generator",
+    "description": "Generate version 4 UUIDs in bulk using the browser crypto API.",
+    "category": "developer",
+    "path": "/tools/uuid-generator/",
+    "icon": "fingerprint",
+    "metaDescription": "Generate random version 4 UUIDs in bulk with crypto.randomUUID. Copy one or many. Runs in your browser.",
+    "keywords": [
+      "uuid generator",
+      "guid generator",
+      "random uuid",
+      "v4 uuid"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "timestamp-converter",
+    "name": "Timestamp converter",
+    "description": "Convert between Unix time and human dates, with a live clock.",
+    "category": "developer",
+    "path": "/tools/timestamp-converter/",
+    "icon": "clock",
+    "metaDescription": "Convert Unix timestamps (seconds or milliseconds) to and from human-readable dates, in any timezone. Runs in your browser.",
+    "keywords": [
+      "timestamp converter",
+      "unix time",
+      "epoch converter",
+      "epoch to date"
+    ],
+    "featured": false,
+    "popularity": 4
+  },
+  {
+    "id": "pdf-page-tools",
+    "name": "PDF page tools",
+    "description": "Reorder, delete, extract, and split the pages of a PDF.",
+    "category": "productivity",
+    "path": "/tools/pdf-page-tools/",
+    "icon": "file-text",
+    "popularity": 4,
+    "keywords": [
+      "pdf page tools",
+      "reorder pdf pages",
+      "delete pdf pages",
+      "extract pdf pages",
+      "split pdf"
+    ],
+    "featured": false
+  },
+  {
+    "id": "color-palette",
+    "name": "Color palette",
+    "description": "Build a tint, shade, and harmony palette from one base color.",
+    "category": "developer",
+    "path": "/tools/color-palette/",
+    "icon": "palette",
+    "popularity": 4,
+    "keywords": [
+      "color palette generator",
+      "color scheme",
+      "tints and shades",
+      "complementary colors",
+      "hex palette"
+    ],
+    "featured": false
+  },
+  {
+    "id": "game-2048",
+    "name": "2048",
+    "description": "Slide and combine the tiles to reach 2048.",
+    "category": "games",
+    "path": "/tools/game-2048/",
+    "icon": "hash",
+    "featured": true,
+    "popularity": 4,
+    "keywords": [
+      "2048",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Puzzle"
+  },
+  {
+    "id": "game-snake",
+    "name": "Snake",
+    "description": "The classic arcade game. Eat, grow, do not crash.",
+    "category": "games",
+    "path": "/tools/game-snake/",
+    "icon": "gamepad",
+    "featured": true,
+    "popularity": 4,
+    "keywords": [
+      "snake",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Arcade"
+  },
+  {
+    "id": "game-word-guess",
+    "name": "Word Rush",
+    "description": "Solve as many words as you can before the clock runs out.",
+    "category": "games",
+    "path": "/tools/game-word-guess/",
+    "icon": "type",
+    "featured": true,
+    "popularity": 4,
+    "keywords": [
+      "word game",
+      "word rush",
+      "timed word game",
+      "five letter word game",
+      "fast word puzzle"
+    ],
+    "gameType": "Word"
+  },
+  {
+    "id": "game-typing-test",
+    "name": "Typing speed test",
+    "description": "Measure your typing speed and accuracy.",
+    "category": "games",
+    "path": "/tools/game-typing-test/",
+    "icon": "timer",
+    "featured": false,
+    "popularity": 4,
+    "keywords": [
+      "typing speed test",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Speed"
+  },
+  {
+    "id": "game-sudoku",
+    "name": "Sudoku",
+    "description": "Fill the grid so every row, column, and box has 1 to 9.",
+    "category": "games",
+    "path": "/tools/game-sudoku/",
+    "icon": "table",
+    "featured": false,
+    "popularity": 4,
+    "keywords": [
+      "sudoku",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Logic"
+  },
+  {
+    "id": "dictionary",
+    "name": "Dictionary",
+    "description": "Look up word definitions, pronunciation, and examples.",
+    "category": "daily-use",
+    "path": "/tools/dictionary/",
+    "icon": "book",
+    "featured": false,
+    "popularity": 4,
+    "keywords": [
+      "dictionary",
+      "word definitions",
+      "define word",
+      "english dictionary"
+    ]
+  },
+  {
+    "id": "readme-builder",
+    "name": "README builder",
+    "description": "Build a README by dragging sections into place, with a live preview.",
+    "category": "developer",
+    "path": "/tools/readme-builder/",
+    "icon": "book",
+    "featured": false,
+    "metaDescription": "Build a GitHub README by dragging sections into place. Live Markdown preview, templates, and one-click download. Runs in your browser.",
+    "keywords": [
+      "readme generator",
+      "readme builder",
+      "markdown editor",
+      "github readme",
+      "markdown preview"
+    ],
+    "popularity": 3
+  },
+  {
+    "id": "csv-json",
+    "name": "CSV to JSON converter",
+    "description": "Convert CSV to JSON and back, with delimiter and header options.",
+    "category": "developer",
+    "path": "/tools/csv-json/",
+    "icon": "table",
+    "metaDescription": "Convert CSV to JSON and JSON back to CSV, with delimiter and header options. Runs entirely in your browser.",
+    "keywords": [
+      "csv to json",
+      "json to csv",
+      "csv converter",
+      "csv parser"
+    ],
+    "featured": false,
+    "popularity": 3
+  },
+  {
+    "id": "loan-calculator",
+    "name": "Loan calculator",
+    "description": "Work out monthly payments, total interest, and an amortization schedule.",
+    "category": "finance",
+    "path": "/tools/loan-calculator/",
+    "icon": "calculator",
+    "featured": false,
+    "metaDescription": "Calculate loan payments, total interest, and a full amortization schedule. Works for mortgages, car, and personal loans.",
+    "keywords": [
+      "loan calculator",
+      "emi calculator",
+      "mortgage calculator",
+      "amortization",
+      "interest"
+    ],
+    "popularity": 3
+  },
+  {
+    "id": "age-calculator",
+    "name": "Age calculator",
+    "description": "Find an exact age and the days until the next birthday.",
+    "category": "daily-use",
+    "path": "/tools/age-calculator/",
+    "icon": "calendar",
+    "metaDescription": "Calculate an exact age in years, months, and days, plus the countdown to the next birthday. Runs in your browser.",
+    "keywords": [
+      "age calculator",
+      "date of birth",
+      "how old am i",
+      "birthday countdown"
+    ],
+    "featured": false,
+    "popularity": 3
+  },
+  {
+    "id": "bmi-calculator",
+    "name": "BMI calculator",
+    "description": "Calculate body mass index in metric or imperial units.",
+    "category": "daily-use",
+    "path": "/tools/bmi-calculator/",
+    "icon": "scale",
+    "metaDescription": "Calculate body mass index (BMI) in metric or imperial units, with the WHO category. Runs in your browser.",
+    "keywords": [
+      "bmi calculator",
+      "body mass index",
+      "weight calculator",
+      "healthy weight"
+    ],
+    "featured": false,
+    "popularity": 3
+  },
+  {
+    "id": "image-converter",
+    "name": "Image format converter",
+    "description": "Convert between PNG, JPG, and WebP in your browser.",
+    "category": "image",
+    "path": "/tools/image-converter/",
+    "icon": "image",
+    "metaDescription": "Convert images between PNG, JPG, and WebP in your browser. JPG output is flattened onto white. Nothing is uploaded.",
+    "keywords": [
+      "image converter",
+      "png to jpg",
+      "webp converter",
+      "convert image"
+    ],
+    "featured": false,
+    "popularity": 3
+  },
+  {
+    "id": "slug-generator",
+    "name": "Slug generator",
+    "description": "Turn a title into a clean, URL-friendly slug.",
+    "category": "developer",
+    "path": "/tools/slug-generator/",
+    "icon": "link",
+    "featured": false,
+    "metaDescription": "Turn a title into a URL-friendly slug. Handles accents, punctuation, and spacing, with options for separator and letter case. Runs in your browser.",
+    "keywords": [
+      "slug generator",
+      "url slug",
+      "permalink generator",
+      "seo slug",
+      "kebab case"
+    ],
+    "popularity": 3
+  },
+  {
+    "id": "html-entities",
+    "name": "HTML entities",
+    "description": "Encode text to HTML entities or decode them back.",
+    "category": "developer",
+    "path": "/tools/html-entities/",
+    "icon": "type",
+    "featured": false,
+    "metaDescription": "Encode text to HTML entities or decode entities back to text. Escape only the HTML-unsafe characters, or every non-ASCII character. Runs in your browser.",
+    "keywords": [
+      "html entities",
+      "html encode",
+      "html decode",
+      "escape html",
+      "entity converter"
+    ],
+    "popularity": 3
+  },
+  {
+    "id": "number-base-converter",
+    "name": "Number base converter",
+    "description": "Convert between binary, octal, decimal, and hexadecimal.",
+    "category": "developer",
+    "path": "/tools/number-base-converter/",
+    "icon": "binary",
+    "metaDescription": "Convert numbers between binary, octal, decimal, and hexadecimal, with bit width and two-complement views. Runs in your browser.",
+    "keywords": [
+      "number base converter",
+      "binary to decimal",
+      "hex converter",
+      "decimal to binary"
+    ],
+    "featured": false,
+    "popularity": 3
+  },
+  {
+    "id": "timezone-converter",
+    "name": "Time zone converter",
+    "description": "Convert a time across several time zones at once.",
+    "category": "daily-use",
+    "path": "/tools/timezone-converter/",
+    "icon": "globe",
+    "popularity": 3,
+    "keywords": [
+      "time zone converter",
+      "timezone converter",
+      "world clock",
+      "meeting planner",
+      "utc converter"
+    ],
+    "featured": false
+  },
+  {
+    "id": "countdown-timer",
+    "name": "Countdown timer",
+    "description": "Count down to any date and time, live.",
+    "category": "daily-use",
+    "path": "/tools/countdown-timer/",
+    "icon": "timer",
+    "popularity": 3,
+    "keywords": [
+      "countdown timer",
+      "countdown clock",
+      "time until",
+      "days until",
+      "event countdown"
+    ],
+    "featured": false
+  },
+  {
+    "id": "game-minesweeper",
+    "name": "Minesweeper",
+    "description": "Clear the grid without hitting a mine.",
+    "category": "games",
+    "path": "/tools/game-minesweeper/",
+    "icon": "alert-triangle",
+    "featured": false,
+    "popularity": 3,
+    "keywords": [
+      "minesweeper",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Logic"
+  },
+  {
+    "id": "game-connect-four",
+    "name": "Connect Four",
+    "description": "Line up four in a row against the computer.",
+    "category": "games",
+    "path": "/tools/game-connect-four/",
+    "icon": "gamepad",
+    "featured": false,
+    "popularity": 3,
+    "keywords": [
+      "connect four",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Strategy"
+  },
+  {
+    "id": "game-tic-tac-toe",
+    "name": "Tic-tac-toe",
+    "description": "Play noughts and crosses against an unbeatable AI.",
+    "category": "games",
+    "path": "/tools/game-tic-tac-toe/",
+    "icon": "x",
+    "featured": false,
+    "popularity": 3,
+    "keywords": [
+      "tic-tac-toe",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Strategy"
+  },
+  {
+    "id": "game-memory",
+    "name": "Memory match",
+    "description": "Find every matching pair in as few moves as you can.",
+    "category": "games",
+    "path": "/tools/game-memory/",
+    "icon": "shuffle",
+    "featured": false,
+    "popularity": 3,
+    "keywords": [
+      "memory match",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Memory"
+  },
+  {
+    "id": "game-falling-blocks",
+    "name": "Falling blocks",
+    "description": "Rotate and drop shapes to clear full lines.",
+    "category": "games",
+    "path": "/tools/game-falling-blocks/",
+    "icon": "gamepad",
+    "featured": false,
+    "popularity": 3,
+    "keywords": [
+      "falling blocks",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Arcade"
+  },
+  {
+    "id": "text-tools",
+    "name": "Text line tools",
+    "description": "Sort, deduplicate, trim, reverse, and number lines of text.",
+    "category": "productivity",
+    "path": "/tools/text-tools/",
+    "icon": "align-left",
+    "metaDescription": "Sort lines, remove duplicates, trim whitespace, reverse order, and add line numbers. Runs entirely in your browser.",
+    "keywords": [
+      "sort lines",
+      "remove duplicate lines",
+      "text tools",
+      "deduplicate text"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "lorem-ipsum",
+    "name": "Lorem ipsum generator",
+    "description": "Generate placeholder paragraphs, sentences, or words.",
+    "category": "daily-use",
+    "path": "/tools/lorem-ipsum/",
+    "icon": "align-left",
+    "metaDescription": "Generate lorem ipsum placeholder text by paragraphs, sentences, or words, ready to copy. Runs in your browser.",
+    "keywords": [
+      "lorem ipsum",
+      "placeholder text",
+      "dummy text",
+      "filler text"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "image-to-base64",
+    "name": "Image to Base64",
+    "description": "Turn an image into a data URL with ready-made HTML and CSS.",
+    "category": "image",
+    "path": "/tools/image-to-base64/",
+    "icon": "binary",
+    "metaDescription": "Convert an image to a Base64 data URL, with copy-ready <img> and CSS snippets. Runs in your browser.",
+    "keywords": [
+      "image to base64",
+      "data uri",
+      "base64 image",
+      "image encoder"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "chmod-calculator",
+    "name": "Chmod calculator",
+    "description": "Convert between permission checkboxes and octal chmod numbers.",
+    "category": "developer",
+    "path": "/tools/chmod-calculator/",
+    "icon": "lock",
+    "featured": false,
+    "metaDescription": "Tick read, write, and execute for owner, group, and others to get the octal chmod number and symbolic string. Type a number to go the other way. Runs in your browser.",
+    "keywords": [
+      "chmod calculator",
+      "file permissions",
+      "octal permissions",
+      "unix permissions",
+      "chmod 755"
+    ],
+    "popularity": 2
+  },
+  {
+    "id": "compound-interest",
+    "name": "Compound interest",
+    "description": "See how savings grow with compound interest and contributions.",
+    "category": "finance",
+    "path": "/tools/compound-interest/",
+    "icon": "trending-up",
+    "featured": false,
+    "metaDescription": "See how a starting balance and optional monthly contributions grow with compound interest. Adjust rate, term, and compounding frequency. Runs in your browser.",
+    "keywords": [
+      "compound interest calculator",
+      "savings calculator",
+      "investment growth",
+      "interest calculator",
+      "future value"
+    ],
+    "popularity": 2
+  },
+  {
+    "id": "sip-calculator",
+    "name": "SIP calculator",
+    "description": "Project a monthly investment's future value and gains.",
+    "category": "finance",
+    "path": "/tools/sip-calculator/",
+    "icon": "trending-up",
+    "metaDescription": "Estimate the future value of a monthly SIP investment, with invested-versus-gains breakdown and a chart. Runs in your browser.",
+    "keywords": [
+      "sip calculator",
+      "investment calculator",
+      "mutual fund calculator",
+      "compound interest"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "gst-calculator",
+    "name": "GST / VAT calculator",
+    "description": "Add or remove tax at common or custom rates.",
+    "category": "finance",
+    "path": "/tools/gst-calculator/",
+    "icon": "receipt",
+    "metaDescription": "Add or remove GST or VAT at preset or custom rates, and see the net, tax, and gross amounts. Runs in your browser.",
+    "keywords": [
+      "gst calculator",
+      "vat calculator",
+      "tax calculator",
+      "add remove gst"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "tip-calculator",
+    "name": "Tip & discount calculator",
+    "description": "Split a bill with a tip, or take a percentage off a price.",
+    "category": "finance",
+    "path": "/tools/tip-calculator/",
+    "icon": "receipt",
+    "metaDescription": "Calculate a tip and split the bill between people, or work out a discounted price. Runs entirely in your browser.",
+    "keywords": [
+      "tip calculator",
+      "bill splitter",
+      "discount calculator",
+      "split bill"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "roman-numerals",
+    "name": "Roman numerals",
+    "description": "Convert numbers to Roman numerals and back.",
+    "category": "daily-use",
+    "path": "/tools/roman-numerals/",
+    "icon": "hash",
+    "popularity": 2,
+    "keywords": [
+      "roman numeral converter",
+      "roman numerals",
+      "number to roman",
+      "roman to number"
+    ],
+    "featured": false
+  },
+  {
+    "id": "morse-code",
+    "name": "Morse code",
+    "description": "Translate text to Morse code and back.",
+    "category": "daily-use",
+    "path": "/tools/morse-code/",
+    "icon": "wifi",
+    "popularity": 2,
+    "keywords": [
+      "morse code translator",
+      "morse code",
+      "text to morse",
+      "morse to text",
+      "morse decoder"
+    ],
+    "featured": false
+  },
+  {
+    "id": "game-lights-out",
+    "name": "Lights Out",
+    "description": "Flip cells and their neighbors to turn every light off.",
+    "category": "games",
+    "path": "/tools/game-lights-out/",
+    "icon": "gamepad",
+    "featured": false,
+    "popularity": 2,
+    "keywords": [
+      "lights out",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Logic"
+  },
+  {
+    "id": "game-sliding-puzzle",
+    "name": "Sliding puzzle",
+    "description": "Slide the numbered tiles into order.",
+    "category": "games",
+    "path": "/tools/game-sliding-puzzle/",
+    "icon": "table",
+    "featured": false,
+    "popularity": 2,
+    "keywords": [
+      "sliding puzzle",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Puzzle"
+  },
+  {
+    "id": "game-reaction",
+    "name": "Reaction time",
+    "description": "React the moment the Formula 1 start lights go out.",
+    "category": "games",
+    "path": "/tools/game-reaction/",
+    "icon": "clock",
+    "featured": false,
+    "popularity": 2,
+    "keywords": [
+      "reaction time",
+      "browser game",
+      "online game"
+    ],
+    "gameType": "Reflex"
+  },
+  {
+    "id": "date-difference",
+    "name": "Date difference",
+    "description": "Count the time between two dates, or add days to a date.",
+    "category": "daily-use",
+    "path": "/tools/date-difference/",
+    "icon": "calendar",
+    "featured": false,
+    "metaDescription": "Count the years, months, and days between two dates, plus the total in days, weeks, and hours. Add or subtract days from a date too. Runs in your browser.",
+    "keywords": [
+      "date difference",
+      "days between dates",
+      "date calculator",
+      "duration calculator",
+      "add days to date"
+    ],
+    "popularity": 1
+  },
+  {
+    "id": "random-picker",
+    "name": "Random picker",
+    "description": "Pick random entries from a list, or shuffle the whole list.",
+    "category": "daily-use",
+    "path": "/tools/random-picker/",
+    "icon": "shuffle",
+    "featured": false,
+    "metaDescription": "Pick one or more random entries from a list, or shuffle the whole thing. Uses the browser crypto API for the randomness, with an option to allow repeats.",
+    "keywords": [
+      "random picker",
+      "random name picker",
+      "list shuffler",
+      "random choice",
+      "raffle picker"
+    ],
+    "popularity": 1
+  },
+  {
+    "id": "contrast-checker",
+    "name": "Colour contrast checker",
+    "description": "Check text contrast against WCAG AA and AAA thresholds.",
+    "category": "daily-use",
+    "path": "/tools/contrast-checker/",
+    "icon": "eye",
+    "metaDescription": "Check the contrast ratio between two colours against WCAG AA and AAA thresholds for normal and large text. Runs in your browser.",
+    "keywords": [
+      "contrast checker",
+      "wcag contrast",
+      "accessibility contrast",
+      "color contrast ratio"
+    ],
+    "featured": false,
+    "popularity": 1
+  },
+  {
+    "id": "aspect-ratio",
+    "name": "Aspect ratio calculator",
+    "description": "Scale width and height while keeping an aspect ratio.",
+    "category": "daily-use",
+    "path": "/tools/aspect-ratio/",
+    "icon": "crop",
+    "metaDescription": "Work out width or height for a target aspect ratio, with presets for 16:9, 4:3, 1:1, and more. Runs in your browser.",
+    "keywords": [
+      "aspect ratio calculator",
+      "16:9 calculator",
+      "resize ratio",
+      "screen ratio"
+    ],
+    "featured": false,
+    "popularity": 1
+  },
+  {
+    "id": "dns-lookup",
+    "name": "DNS lookup",
+    "description": "Query A, AAAA, MX, NS, TXT, and CNAME records for a domain.",
+    "category": "developer",
+    "path": "/tools/dns-lookup/",
+    "icon": "network",
+    "metaDescription": "Look up DNS records (A, AAAA, MX, NS, TXT, CNAME) for any domain over DNS-over-HTTPS. Runs from your browser.",
+    "keywords": [
+      "dns lookup",
+      "dns records",
+      "mx record",
+      "nslookup",
+      "dns checker"
+    ],
+    "featured": false,
+    "popularity": 1
+  }
+]

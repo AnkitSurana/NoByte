@@ -1,0 +1,29 @@
+<!-- meta tool="1" title="Hash generator: SHA-256, SHA-512 | NoByte" description="Generate SHA-1, SHA-256, SHA-384, and SHA-512 hashes for text and files using the Web Crypto API. Runs in your browser." path="/tools/hash-generator/" keywords="hash generator, sha256, sha512, checksum, file hash" -->
+{{tool-hero:hash-generator}}
+<section class="section--tight">
+  <div class="container" style="max-width:760px;">
+    <div class="tabs mb-4" data-tabs role="tablist" aria-label="Input type">
+      <button class="tab" role="tab" id="h-t-text" aria-controls="h-p-text" aria-selected="true">Text</button>
+      <button class="tab" role="tab" id="h-t-file" aria-controls="h-p-file" aria-selected="false" tabindex="-1">File</button>
+    </div>
+
+    <div class="tab-panel" id="h-p-text" role="tabpanel" aria-labelledby="h-t-text">
+      <div class="field">
+        <label for="hg-input">Text</label>
+        <textarea class="textarea mono" id="hg-input" placeholder="Type something to hash…" style="min-height:130px;"></textarea>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="h-p-file" role="tabpanel" aria-labelledby="h-t-file" hidden>
+      <div class="dropzone" id="hg-drop">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#upload"></use></svg>
+        <div><strong>Drop a file here</strong> or click to choose</div>
+        <div class="xs">Hashed in your browser</div>
+      </div>
+      <p class="muted small mt-3" id="hg-file-info"></p>
+    </div>
+
+    <div class="stack mt-5" id="hg-results"></div>
+  </div>
+</section>
+<script type="module" src="/js/tools/hash-generator.js"></script>

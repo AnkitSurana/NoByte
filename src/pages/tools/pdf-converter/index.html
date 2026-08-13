@@ -1,0 +1,66 @@
+<!-- meta tool="1" title="PDF converter: images to PDF, PDF to JPG, merge | NoByte" description="Convert images to PDF, export PDF pages as JPG or PNG, and merge PDFs. Files are processed in your browser and never uploaded." path="/tools/pdf-converter/" keywords="pdf converter, image to pdf, pdf to jpg, merge pdf" -->
+{{tool-hero:pdf-converter}}
+<section class="section--tight">
+  <div class="container" style="max-width:820px;">
+    <div class="tabs mb-5" data-tabs role="tablist" aria-label="Conversion type">
+      <button class="tab" role="tab" id="t-img2pdf" aria-controls="p-img2pdf" aria-selected="true">Images → PDF</button>
+      <button class="tab" role="tab" id="t-pdf2img" aria-controls="p-pdf2img" aria-selected="false" tabindex="-1">PDF → images</button>
+      <button class="tab" role="tab" id="t-merge" aria-controls="p-merge" aria-selected="false" tabindex="-1">Merge PDFs</button>
+    </div>
+
+    <!-- Images to PDF -->
+    <div class="tab-panel" id="p-img2pdf" role="tabpanel" aria-labelledby="t-img2pdf">
+      <div class="dropzone" id="dz-images">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#image"></use></svg>
+        <div><strong>Drop images here</strong> or click to choose</div>
+        <div class="xs">JPG and PNG · one image per page</div>
+      </div>
+      <ul class="file-list mt-4" id="list-images"></ul>
+      <button class="btn btn--primary mt-4" id="btn-img2pdf" disabled>
+        <span class="spinner" aria-hidden="true"></span><span class="btn-label">Create PDF</span>
+      </button>
+    </div>
+
+    <!-- PDF to images -->
+    <div class="tab-panel" id="p-pdf2img" role="tabpanel" aria-labelledby="t-pdf2img" hidden>
+      <div class="dropzone" id="dz-pdf2img">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#file-type"></use></svg>
+        <div><strong>Drop a PDF here</strong> or click to choose</div>
+        <div class="xs">Each page becomes an image</div>
+      </div>
+      <div class="row row-wrap mt-4" style="gap:var(--s4);align-items:end;">
+        <div class="field"><label for="p2i-format">Format</label>
+          <select class="select" id="p2i-format"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select>
+        </div>
+        <div class="field"><label for="p2i-scale">Quality</label>
+          <select class="select" id="p2i-scale"><option value="1.5">Standard</option><option value="2" selected>High (2×)</option><option value="3">Very high (3×)</option></select>
+        </div>
+      </div>
+      <p class="mt-3 muted small" id="p2i-info"></p>
+      <button class="btn btn--primary mt-3" id="btn-pdf2img" disabled>
+        <span class="spinner" aria-hidden="true"></span><span class="btn-label">Convert to images</span>
+      </button>
+    </div>
+
+    <!-- Merge -->
+    <div class="tab-panel" id="p-merge" role="tabpanel" aria-labelledby="t-merge" hidden>
+      <div class="dropzone" id="dz-merge">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#file-type"></use></svg>
+        <div><strong>Drop PDFs here</strong> or click to choose</div>
+        <div class="xs">Merged in the order listed below</div>
+      </div>
+      <ul class="file-list mt-4" id="list-merge"></ul>
+      <button class="btn btn--primary mt-4" id="btn-merge" disabled>
+        <span class="spinner" aria-hidden="true"></span><span class="btn-label">Merge PDFs</span>
+      </button>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#shield"></use></svg>
+      <div>Files are processed in your browser with pdf-lib and pdf.js. Nothing is uploaded. Converting Word, Excel, or PowerPoint is not possible in the browser, so those are not offered here.</div>
+    </div>
+  </div>
+</section>
+<script src="/assets/vendor/pdf-lib.min.js"></script>
+<script src="/assets/vendor/fflate.min.js"></script>
+<script type="module" src="/js/tools/pdf-converter.js"></script>

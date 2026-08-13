@@ -1,0 +1,43 @@
+<!-- meta title="Where your files go when you use an online tool | NoByte" description="Most online tools upload your file to a server to process it. NoByte does the work in your browser instead. Here is the difference, and how to check it for yourself." path="/blog/where-your-files-go/" keywords="online tool privacy, file upload privacy, browser based tools, smallpdf alternative, in browser file processing" -->
+<section class="section">
+  <div class="container container-wide has-stickers">
+    <span class="sticker sticker--1">no uploads</span>
+    <span class="sticker sticker--2">stays on device</span>
+    <span class="sticker sticker--3">in your browser</span>
+    <span class="sticker sticker--4">no server</span>
+    <span class="sticker sticker--5">nothing stored</span>
+    <span class="sticker sticker--6">open source</span>
+    <span class="sticker sticker--7">no accounts</span>
+    <span class="sticker sticker--8">works offline</span>
+    <span class="sticker sticker--9">your files, yours</span>
+    <span class="sticker sticker--10">no tracking</span>
+    <span class="sticker sticker--11">check the code</span>
+    <span class="sticker sticker--12">zero copies</span>
+    <article class="post-wrap">
+      <header class="post__head">
+        <nav class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>Where your files go</span></nav>
+        {{blog-meta:where-your-files-go}}
+        <h1 class="page-title post__title">Where your files go when you use an online tool</h1>
+        <p class="page-lead">Most tools that shrink an image or edit a PDF work by uploading your file to a server. NoByte does the work in your browser instead. Here is the difference, and why it is worth caring about.</p>
+      </header>
+
+      <div class="prose post__body">
+        <h2>Two ways a website can handle your file</h2>
+        <p>When you hand a file to a website, the work happens in one of two places.</p>
+        <p>Usually it happens on the company's servers. Your file is uploaded, processed there, and sent back to you. Smallpdf and Online-Convert both work like this. There is a sound reason for it: doing the work on their own machines lets them offer features that would be hard to run on a phone or an older laptop. The cost is that a copy of your file has sat on a computer you do not control.</p>
+        <p>NoByte takes the other route. The browser you already have can do the work itself and hand the file back, without any of it being sent away. Nothing is uploaded, so no server is holding your document, and there is no copy to delete later.</p>
+
+        <h2>What a deletion policy really covers</h2>
+        <p>Most upload-based tools have a line in their policy saying files are removed after a set time. That is better than keeping them forever, but it still only describes what happens to your file once it has left your device. You are trusting that the deletion actually runs, and that nobody opened the file before it did. When the file never leaves your browser, none of that has to be taken on faith.</p>
+
+        <h2>Being honest about the limits</h2>
+        <p>Working in the browser has trade-offs, and it would be dishonest to hide them. Some jobs really do need a server, and NoByte leaves those out instead of faking them. There is no speed test, because a browser cannot measure a fast connection accurately. There is no live currency converter, because the free exchange-rate feeds update once a day and go stale.</p>
+        <p>Two tools reach the network because they have to. The <strong>DNS lookup</strong> has to ask a resolver, and the <strong>dictionary</strong> pulls its definitions from a public service. The <a href="/privacy/">privacy page</a> lists both.</p>
+
+        <h2>How to check it for yourself</h2>
+        <p>This is the part an upload-based tool cannot offer. Open your browser's developer tools, switch to the network tab, and use any tool on the site. You will see the page load, and after that nothing that carries your file. The site is open source as well, so you can read exactly what each tool does. If anything here is wrong, the code will show it.</p>
+        <p>Every tool on NoByte works this way. Have a look through <a href="/tools/">all the tools</a>, or read the source on <a href="https://github.com/AnkitSurana/NoByte" rel="noopener">GitHub</a>.</p>
+      </div>
+    </article>
+  </div>
+</section>

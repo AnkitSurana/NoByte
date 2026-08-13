@@ -1,0 +1,37 @@
+<!-- meta tool="1" title="Image resizer: by pixels or percent | NoByte" description="Resize images by pixels or percentage with optional aspect-ratio lock, in your browser. Images are never uploaded." path="/tools/image-resizer/" keywords="image resizer, resize image, scale image, photo resizer" -->
+{{tool-hero:image-resizer}}
+<section class="section--tight">
+  <div class="container" style="max-width:760px;">
+    <div class="dropzone" id="ir-drop">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#crop"></use></svg>
+      <div><strong>Drop an image here</strong> or click to choose</div>
+      <div class="xs">JPG, PNG, or WebP</div>
+    </div>
+    <p class="muted small mt-3" id="ir-info"></p>
+
+    <div class="tabs mt-4 mb-3" data-tabs role="tablist" aria-label="Resize mode">
+      <button class="tab" role="tab" id="ir-t-px" aria-controls="ir-p-px" aria-selected="true">Pixels</button>
+      <button class="tab" role="tab" id="ir-t-pct" aria-controls="ir-p-pct" aria-selected="false" tabindex="-1">Percent</button>
+    </div>
+    <div class="tab-panel" id="ir-p-px" role="tabpanel" aria-labelledby="ir-t-px">
+      <div class="row row-wrap" style="gap:var(--s3);align-items:end;">
+        <div class="field"><label for="ir-w">Width</label><input class="input mono" id="ir-w" type="number" min="1" style="width:120px;" /></div>
+        <div class="field"><label for="ir-h">Height</label><input class="input mono" id="ir-h" type="number" min="1" style="width:120px;" /></div>
+        <label class="switch"><input type="checkbox" id="ir-lock" checked /><span class="switch__track"></span> Lock ratio</label>
+      </div>
+    </div>
+    <div class="tab-panel" id="ir-p-pct" role="tabpanel" aria-labelledby="ir-t-pct" hidden>
+      <div class="field"><div class="row between"><label for="ir-pct">Scale</label><span class="mono" id="ir-pct-val">50%</span></div><input type="range" id="ir-pct" min="5" max="200" value="50" /></div>
+    </div>
+
+    <div class="row row-wrap mt-4" style="gap:var(--s3);align-items:end;">
+      <div class="field"><label for="ir-format">Output</label>
+        <select class="select" id="ir-format"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option></select>
+      </div>
+      <button class="btn btn--primary" id="ir-download" disabled><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download</button>
+      <span class="muted small" id="ir-out-info"></span>
+    </div>
+    <img class="img-preview mt-4 hidden" id="ir-preview" alt="Resized preview" />
+  </div>
+</section>
+<script type="module" src="/js/tools/image-resizer.js"></script>

@@ -1,0 +1,38 @@
+<!-- meta tool="1" title="Compound interest calculator | NoByte" description="See how a starting balance and optional monthly contributions grow with compound interest. Adjust rate, term, and compounding frequency. Runs in your browser." path="/tools/compound-interest/" keywords="compound interest calculator, savings calculator, investment growth, interest calculator, future value" -->
+{{tool-hero:compound-interest}}
+<section class="section--tight">
+  <div class="container">
+    <div class="tool-layout tool-layout--split">
+      <div class="card">
+        <div class="field mb-4"><label for="ci-principal">Starting balance</label><input class="input mono" id="ci-principal" type="number" min="0" value="10000" inputmode="decimal" /></div>
+        <div class="field mb-4"><label for="ci-monthly">Monthly contribution</label><input class="input mono" id="ci-monthly" type="number" min="0" value="200" inputmode="decimal" /></div>
+        <div class="field mb-4"><div class="row between"><label for="ci-rate">Annual interest rate</label><span class="mono" id="ci-rate-val">6%</span></div><input type="range" id="ci-rate" min="0" max="20" step="0.1" value="6" /></div>
+        <div class="field mb-4"><div class="row between"><label for="ci-years">Term</label><span class="mono" id="ci-years-val">10 years</span></div><input type="range" id="ci-years" min="1" max="40" value="10" /></div>
+        <div class="field mb-4"><label for="ci-freq">Compounding</label>
+          <select class="select" id="ci-freq"><option value="12" selected>Monthly</option><option value="4">Quarterly</option><option value="1">Yearly</option><option value="365">Daily</option></select>
+        </div>
+        <div class="field"><label for="ci-currency">Currency symbol</label><input class="input" id="ci-currency" value="$" maxlength="3" style="max-width:90px;" /></div>
+      </div>
+      <div>
+        <div class="result-panel text-center">
+          <div class="muted small">Final balance</div>
+          <div class="result-value" id="ci-total">—</div>
+          <svg id="ci-chart" viewBox="0 0 120 120" width="150" height="150" style="margin:var(--s4) auto 0;" role="img" aria-label="Contributions versus interest">
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--ink-3)" stroke-width="16" />
+            <circle id="ci-arc" cx="60" cy="60" r="48" fill="none" stroke="var(--accent)" stroke-width="16" stroke-dasharray="0 999" transform="rotate(-90 60 60)" />
+          </svg>
+          <div class="row" style="justify-content:center;gap:var(--s4);">
+            <span class="legend"><i style="background:var(--accent)"></i> Contributions</span>
+            <span class="legend"><i style="background:var(--ink-3)"></i> Interest</span>
+          </div>
+        </div>
+        <div class="stack mt-4">
+          <div class="result-row"><span class="label">Total contributed</span><span class="mono val" id="ci-contributed">—</span></div>
+          <div class="result-row"><span class="label">Interest earned</span><span class="mono val" id="ci-interest">—</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="muted xs mt-4">A projection using a constant rate. It assumes contributions are added at the start of each month and does not account for tax or fees.</p>
+  </div>
+</section>
+<script type="module" src="/js/tools/compound-interest.js"></script>

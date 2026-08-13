@@ -1,0 +1,66 @@
+<!-- meta tool="1" title="README builder: drag-and-drop Markdown editor | NoByte" description="Build a GitHub README by dragging sections into place, with a live Markdown preview. Templates and one-click download. Runs in your browser." path="/tools/readme-builder/" keywords="readme generator, readme builder, markdown editor, github readme" -->
+{{tool-hero:readme-builder}}
+<section class="section--tight">
+  <div class="container container-wide">
+    <div class="row row-wrap between mb-4" style="gap:var(--s3);">
+      <div class="row row-wrap" style="gap:var(--s2);">
+        <label class="label" for="rb-template" style="align-self:center;">Start from</label>
+        <select class="select" id="rb-template" style="width:auto;">
+          <option value="">Template…</option>
+          <option value="minimal">Minimal</option>
+          <option value="oss">Open-source project</option>
+          <option value="library">Library / API</option>
+        </select>
+        <button class="btn btn--sm" id="rb-clear">Start fresh</button>
+      </div>
+      <div class="row row-wrap" style="gap:var(--s2);">
+        <button class="btn btn--sm copy-btn" id="rb-copy"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy Markdown</button>
+        <button class="btn btn--sm btn--primary" id="rb-download"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download README.md</button>
+      </div>
+    </div>
+
+    <div class="rb-split" id="rb-split">
+      <!-- Editor -->
+      <div class="rb-editor">
+        <div class="tabs mb-3" data-tabs role="tablist" aria-label="Editor mode">
+          <button class="tab" role="tab" id="rb-t-builder" aria-controls="rb-p-builder" aria-selected="true">Builder</button>
+          <button class="tab" role="tab" id="rb-t-raw" aria-controls="rb-p-raw" aria-selected="false" tabindex="-1">Raw Markdown</button>
+        </div>
+
+        <div class="tab-panel" id="rb-p-builder" role="tabpanel" aria-labelledby="rb-t-builder">
+          <div class="rb-palette" id="rb-palette" aria-label="Add sections"></div>
+          <div class="rb-doc" id="rb-doc" aria-label="Document sections"></div>
+          <p class="muted small rb-empty" id="rb-empty">Add sections from the list above. Drag the handle to reorder.</p>
+        </div>
+
+        <div class="tab-panel" id="rb-p-raw" role="tabpanel" aria-labelledby="rb-t-raw" hidden>
+          <div class="rb-toolbar" id="rb-toolbar" aria-label="Formatting">
+            <button class="btn btn--sm" data-md="bold" title="Bold"><strong>B</strong></button>
+            <button class="btn btn--sm" data-md="italic" title="Italic"><em>I</em></button>
+            <button class="btn btn--sm mono" data-md="code" title="Inline code">&lt;/&gt;</button>
+            <button class="btn btn--sm" data-md="h2" title="Heading">H2</button>
+            <button class="btn btn--sm" data-md="ul" title="List">• List</button>
+            <button class="btn btn--sm" data-md="link" title="Link">Link</button>
+            <button class="btn btn--sm" data-md="table" title="Table">Table</button>
+            <button class="btn btn--sm" data-md="fence" title="Code block">Code</button>
+            <button class="btn btn--sm" id="rb-reparse" style="margin-left:auto;" title="Turn headings back into builder cards">Re-parse into sections</button>
+          </div>
+          <textarea class="textarea mono" id="rb-raw" spellcheck="false" style="min-height:520px;" aria-label="Raw Markdown"></textarea>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="rb-divider" id="rb-divider" role="separator" aria-label="Resize panels" tabindex="0"></div>
+
+      <!-- Preview -->
+      <div class="rb-preview">
+        <div class="rb-preview__bar">Preview</div>
+        <div class="markdown-body" id="rb-preview"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="/assets/vendor/marked.min.js"></script>
+<script src="/assets/vendor/dompurify.min.js"></script>
+<script src="/assets/vendor/sortable.min.js"></script>
+<script type="module" src="/js/tools/readme-builder/main.js"></script>

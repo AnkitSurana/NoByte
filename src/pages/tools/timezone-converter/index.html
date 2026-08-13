@@ -1,0 +1,27 @@
+<!-- meta tool="1" title="Time zone converter | NoByte" description="Convert a date and time from one time zone to several others at once. Uses your browser's own time zone data, so nothing is uploaded." path="/tools/timezone-converter/" keywords="time zone converter, timezone converter, world clock, meeting planner, utc converter" -->
+{{tool-hero:timezone-converter}}
+<section class="section--tight">
+  <div class="container" style="max-width:760px;">
+    <div class="card">
+      <div class="row row-wrap" style="gap:var(--s4);align-items:end;">
+        <div class="field"><label for="tz-date">Date</label><input class="input" type="date" id="tz-date" /></div>
+        <div class="field"><label for="tz-time">Time</label><input class="input" type="time" id="tz-time" /></div>
+        <div class="field" style="flex:1;min-width:14rem;"><label for="tz-from">From time zone</label>
+          <select class="select" id="tz-from"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row between mt-5 mb-2">
+      <span class="label">Converted times</span>
+      <button class="btn btn--sm" id="tz-add"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#plus"></use></svg> Add zone</button>
+    </div>
+    <div class="stack" id="tz-results"></div>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Conversions use your browser's time zone database, including daylight saving rules for the chosen date. A red note marks a different calendar day.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/timezone-converter.js"></script>

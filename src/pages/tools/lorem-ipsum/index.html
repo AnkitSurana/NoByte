@@ -1,0 +1,19 @@
+<!-- meta tool="1" title="Lorem ipsum generator: placeholder text | NoByte" description="Generate lorem ipsum placeholder text by paragraphs, sentences, or words, ready to copy. Runs in your browser." path="/tools/lorem-ipsum/" keywords="lorem ipsum, placeholder text, dummy text, filler text" -->
+{{tool-hero:lorem-ipsum}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <div class="row row-wrap mb-4" style="gap:var(--s3);align-items:end;">
+      <div class="field"><label for="li-count">How many</label><input class="input mono" id="li-count" type="number" min="1" max="50" value="3" style="width:110px;" /></div>
+      <div class="field"><label for="li-unit">Of</label>
+        <select class="select" id="li-unit"><option value="paragraphs">Paragraphs</option><option value="sentences">Sentences</option><option value="words">Words</option></select>
+      </div>
+      <label class="switch"><input type="checkbox" id="li-classic" checked /><span class="switch__track"></span> Start with "Lorem ipsum"</label>
+      <button class="btn btn--primary" id="li-gen"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#refresh"></use></svg> Generate</button>
+    </div>
+    <div class="row between mb-2"><span class="label">Output</span>
+      <button class="btn btn--sm copy-btn" data-copy="#li-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+    </div>
+    <textarea class="textarea" id="li-out" readonly style="min-height:280px;" aria-label="Generated text"></textarea>
+  </div>
+</section>
+<script type="module" src="/js/tools/lorem-ipsum.js"></script>

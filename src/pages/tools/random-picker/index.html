@@ -1,0 +1,32 @@
+<!-- meta tool="1" title="Random picker: pick names, shuffle a list | NoByte" description="Pick one or more random entries from a list, or shuffle the whole thing. Uses the browser crypto API for the randomness, with an option to allow repeats." path="/tools/random-picker/" keywords="random picker, random name picker, list shuffler, random choice, raffle picker" -->
+{{tool-hero:random-picker}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <div class="field">
+      <label for="rp-input">List <span class="muted xs">(one entry per line)</span></label>
+      <textarea class="textarea" id="rp-input" spellcheck="false" placeholder="Ana&#10;Ben&#10;Chris&#10;Dana&#10;Eli" style="min-height:180px;"></textarea>
+      <p class="muted xs" id="rp-count"></p>
+    </div>
+
+    <div class="row row-wrap mt-4" style="gap:var(--s4);align-items:end;">
+      <div class="field"><label for="rp-n">How many to pick</label><input class="input mono" type="number" id="rp-n" value="1" min="1" style="width:8rem;" /></div>
+      <label class="switch"><input type="checkbox" id="rp-repeat" /><span class="switch__track"></span> Allow repeats</label>
+      <button class="btn btn--primary" id="rp-pick" style="margin-left:auto;"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#shuffle"></use></svg> Pick</button>
+      <button class="btn" id="rp-shuffle">Shuffle all</button>
+    </div>
+    <p class="field-error mt-2" id="rp-error"></p>
+
+    <div class="result-panel mt-4" id="rp-result-wrap" hidden>
+      <div class="row between mb-2"><span class="label">Result</span>
+        <button class="btn btn--sm copy-btn" data-copy="#rp-result"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+      </div>
+      <textarea class="textarea mono" id="rp-result" readonly style="min-height:120px;background:var(--surface);"></textarea>
+    </div>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Randomness comes from <code>crypto.getRandomValues</code>, not <code>Math.random</code>. Blank lines are ignored. With repeats off, you cannot pick more entries than the list holds.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/random-picker.js"></script>

@@ -1,0 +1,27 @@
+<!-- meta tool="1" title="Number base converter: binary, hex, decimal | NoByte" description="Convert numbers between binary, octal, decimal, and hexadecimal, with bit width and two's-complement views. Runs in your browser." path="/tools/number-base-converter/" keywords="number base converter, binary to decimal, hex converter, decimal to binary" -->
+{{tool-hero:number-base-converter}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <div class="stack">
+      <div class="field"><label for="nb-dec">Decimal (base 10)</label><input class="input mono" id="nb-dec" data-base="10" spellcheck="false" placeholder="255" /></div>
+      <div class="field"><label for="nb-hex">Hexadecimal (base 16)</label><input class="input mono" id="nb-hex" data-base="16" spellcheck="false" placeholder="ff" /></div>
+      <div class="field"><label for="nb-oct">Octal (base 8)</label><input class="input mono" id="nb-oct" data-base="8" spellcheck="false" placeholder="377" /></div>
+      <div class="field"><label for="nb-bin">Binary (base 2)</label><input class="input mono" id="nb-bin" data-base="2" spellcheck="false" placeholder="11111111" /></div>
+      <div class="field"><label for="nb-custom-base">Custom base (2–36)</label>
+        <div class="row" style="gap:var(--s2);">
+          <input class="input mono" id="nb-custom-base" type="number" min="2" max="36" value="36" style="width:90px;" />
+          <input class="input mono grow" id="nb-custom" spellcheck="false" aria-label="Value in custom base" />
+        </div>
+      </div>
+    </div>
+    <p class="field-error mt-2" id="nb-error"></p>
+
+    <div class="stack mt-5">
+      <div class="result-row"><span class="label">Bits needed</span><span class="mono val" id="nb-bits">—</span></div>
+      <div class="result-row"><span class="label">Grouped binary</span><span class="mono val" id="nb-grouped">—</span></div>
+      <div class="result-row"><span class="label">Bytes (if used as size)</span><span class="mono val" id="nb-bytes">—</span></div>
+    </div>
+    <p class="muted xs mt-4">Whole numbers only. Very large values use JavaScript's BigInt, so precision is kept.</p>
+  </div>
+</section>
+<script type="module" src="/js/tools/number-base-converter.js"></script>

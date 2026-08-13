@@ -1,0 +1,34 @@
+<!-- meta tool="1" title="HTML entity encoder and decoder | NoByte" description="Encode text to HTML entities or decode entities back to text. Escape only the HTML-unsafe characters, or every non-ASCII character. Runs in your browser." path="/tools/html-entities/" keywords="html entities, html encode, html decode, escape html, entity converter" -->
+{{tool-hero:html-entities}}
+<section class="section--tight">
+  <div class="container">
+    <div class="row row-wrap mb-3" style="gap:var(--s4);align-items:end;">
+      <div class="tabs" data-tabs role="tablist" aria-label="Direction">
+        <button class="tab" role="tab" id="he-t-enc" aria-controls="he-p-enc" aria-selected="true">Encode</button>
+        <button class="tab" role="tab" id="he-t-dec" aria-controls="he-p-dec" aria-selected="false" tabindex="-1">Decode</button>
+      </div>
+      <label class="switch" id="he-scope-wrap"><input type="checkbox" id="he-all" /><span class="switch__track"></span> Escape all non-ASCII</label>
+    </div>
+    <div class="tab-panel" id="he-p-enc" role="tabpanel" aria-labelledby="he-t-enc"></div>
+    <div class="tab-panel" id="he-p-dec" role="tabpanel" aria-labelledby="he-t-dec" hidden></div>
+
+    <div class="tool-layout tool-layout--split">
+      <div class="field">
+        <label for="he-input">Input</label>
+        <textarea class="textarea mono" id="he-input" spellcheck="false" placeholder="<a href=&quot;/x&quot;>Tom &amp; Jerry</a>" style="min-height:300px;"></textarea>
+      </div>
+      <div class="field">
+        <div class="row between"><label for="he-output">Output</label>
+          <button class="btn btn--sm copy-btn" data-copy="#he-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="he-output" readonly spellcheck="false" style="min-height:300px;"></textarea>
+      </div>
+    </div>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Encoding escapes the five characters that matter in HTML (<code>&amp; &lt; &gt; " '</code>). Turn on "escape all non-ASCII" to also convert accented and other characters to numeric entities. Decoding recognises named and numeric entities.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/html-entities.js"></script>

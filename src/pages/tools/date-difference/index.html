@@ -1,0 +1,43 @@
+<!-- meta tool="1" title="Date difference calculator | NoByte" description="Count the years, months, and days between two dates, plus the total in days, weeks, and hours. Add or subtract days from a date too. Runs in your browser." path="/tools/date-difference/" keywords="date difference, days between dates, date calculator, duration calculator, add days to date" -->
+{{tool-hero:date-difference}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <div class="tabs mb-4" data-tabs role="tablist" aria-label="Mode">
+      <button class="tab" role="tab" id="dd-t-diff" aria-controls="dd-p-diff" aria-selected="true">Between dates</button>
+      <button class="tab" role="tab" id="dd-t-add" aria-controls="dd-p-add" aria-selected="false" tabindex="-1">Add or subtract</button>
+    </div>
+
+    <div class="tab-panel" id="dd-p-diff" role="tabpanel" aria-labelledby="dd-t-diff">
+      <div class="row row-wrap" style="gap:var(--s4);">
+        <div class="field"><label for="dd-from">From</label><input class="input" type="date" id="dd-from" /></div>
+        <div class="field"><label for="dd-to">To</label><input class="input" type="date" id="dd-to" /></div>
+        <label class="switch" style="align-self:end;padding-bottom:var(--s3);"><input type="checkbox" id="dd-inclusive" /><span class="switch__track"></span> Count both end days</label>
+      </div>
+      <div class="result-panel mt-4">
+        <span class="label">Difference</span>
+        <p class="result-value" id="dd-main" style="margin-top:var(--s2);">—</p>
+      </div>
+      <div class="stat-grid mt-4">
+        <div class="stat"><span class="stat__value" id="dd-days">—</span><span class="stat__label">total days</span></div>
+        <div class="stat"><span class="stat__value" id="dd-weeks">—</span><span class="stat__label">weeks</span></div>
+        <div class="stat"><span class="stat__value" id="dd-hours">—</span><span class="stat__label">hours</span></div>
+        <div class="stat"><span class="stat__value" id="dd-months">—</span><span class="stat__label">months</span></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="dd-p-add" role="tabpanel" aria-labelledby="dd-t-add" hidden>
+      <div class="row row-wrap" style="gap:var(--s4);align-items:end;">
+        <div class="field"><label for="dd-base">Start date</label><input class="input" type="date" id="dd-base" /></div>
+        <div class="field"><label for="dd-op">Direction</label>
+          <select class="select" id="dd-op"><option value="1">Add</option><option value="-1">Subtract</option></select>
+        </div>
+        <div class="field"><label for="dd-amount">Days</label><input class="input mono" type="number" id="dd-amount" value="30" min="0" style="width:8rem;" /></div>
+      </div>
+      <div class="result-panel mt-4">
+        <span class="label">Result date</span>
+        <p class="result-value" id="dd-result" style="margin-top:var(--s2);">—</p>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/date-difference.js"></script>

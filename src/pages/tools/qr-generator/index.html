@@ -1,0 +1,123 @@
+<!-- meta tool="1" title="QR code generator: text, URL, Wi-Fi | NoByte" description="Create QR codes for links, text, and Wi-Fi. Add your logo, pick a shape and colours, then download as PNG or SVG. Generated in your browser." path="/tools/qr-generator/" keywords="qr code generator, wifi qr code, url to qr, qr png svg, qr code with logo" -->
+{{tool-hero:qr-generator}}
+<style>
+  @media (min-width: 900px) {
+    /* start, not stretch: a grid item that fills the row has nowhere to stick */
+    .qr-layout { align-items: start; }
+    .qr-panel { position: sticky; top: calc(var(--header-h) + var(--s4)); }
+  }
+  /* The thumbnail is cut to the same shape the logo takes in the code, so what
+     you pick is what you see before you download anything. */
+  .qr-logo-row { display: flex; align-items: center; gap: var(--s2); margin-top: var(--s2); }
+  .qr-logo-thumb { width: 34px; height: 34px; flex: none; background: var(--paper-2) center/cover no-repeat; border: 2px solid var(--ink); }
+  #qr-logo-clear { cursor: pointer; }
+  /* Branding is opt-in: a switch reveals the controls, so the code stays plain
+     until someone asks for more. */
+  .qr-brand-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); }
+  .qr-switch { flex: none; width: 52px; height: 30px; padding: 0; cursor: pointer; position: relative;
+    border: var(--bw) solid var(--ink); border-radius: var(--radius-full); background: var(--surface);
+    transition: background var(--t-fast) ease; }
+  .qr-switch__dot { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: var(--radius-full);
+    background: var(--ink); transition: transform var(--t-fast) var(--pop); }
+  .qr-switch[aria-checked="true"] { background: var(--hl); }
+  .qr-switch[aria-checked="true"] .qr-switch__dot { transform: translateX(22px); background: var(--on-color); }
+</style>
+<section class="section--tight">
+  <div class="container">
+    <div class="tool-layout tool-layout--split qr-layout">
+      <div>
+        <div class="card">
+          <div class="tabs mb-4" data-tabs role="tablist" aria-label="QR content type">
+            <button class="tab" role="tab" id="qt-text" aria-controls="qp-text" aria-selected="true">Text / URL</button>
+            <button class="tab" role="tab" id="qt-wifi" aria-controls="qp-wifi" aria-selected="false" tabindex="-1">Wi-Fi</button>
+          </div>
+
+          <div class="tab-panel" id="qp-text" role="tabpanel" aria-labelledby="qt-text">
+            <div class="field">
+              <label for="qr-text">Text or URL</label>
+              <textarea class="textarea mono" id="qr-text" placeholder="https://example.com" style="min-height:96px;">https://nobyte.in</textarea>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="qp-wifi" role="tabpanel" aria-labelledby="qt-wifi" hidden>
+            <div class="field mb-3"><label for="qr-ssid">Network name (SSID)</label><input class="input" id="qr-ssid" placeholder="MyHomeWiFi" /></div>
+            <div class="field mb-3"><label for="qr-pass">Password</label><input class="input" id="qr-pass" placeholder="Enter your Wi-Fi password" /></div>
+            <div class="field"><label for="qr-enc">Security</label>
+              <select class="select" id="qr-enc"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">None</option></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-5">
+          <div class="qr-brand-head">
+            <div>
+              <h2 class="section-heading" style="font-size:var(--t-xl);margin:0;">Branding</h2>
+              <p class="hint" style="margin:.25rem 0 0;">Add a logo, name, colours, and a frame. Leave it off for a plain code.</p>
+            </div>
+            <button type="button" class="qr-switch" id="qr-brand-toggle" role="switch" aria-checked="false" aria-label="Enable branding"><span class="qr-switch__dot"></span></button>
+          </div>
+
+          <div id="qr-brand-body" hidden>
+            <div class="row row-wrap mt-4" style="gap:var(--s4);">
+              <div class="field"><label for="qr-brand-name">Your brand name</label><input class="input" id="qr-brand-name" maxlength="22" placeholder="Optional" /></div>
+              <div class="field"><label for="qr-logo">Your logo</label>
+                <input class="input" type="file" id="qr-logo" accept="image/*" />
+                <div class="qr-logo-row">
+                  <span class="qr-logo-thumb" id="qr-logo-thumb" role="img" aria-label="Logo preview" hidden></span>
+                  <span class="hint" id="qr-logo-name"></span>
+                  <button type="button" class="chip" id="qr-logo-clear" hidden>Remove</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row row-wrap mt-4" style="gap:var(--s4);">
+              <div class="field"><label for="qr-frame">Shape</label>
+                <select class="select" id="qr-frame">
+                  <option value="none" selected>Plain</option>
+                  <option value="panel">Square card</option>
+                  <option value="rounded">Rounded card</option>
+                  <option value="round">Round</option>
+                  <option value="ring">Round with label</option>
+                  <option value="badge">Card with label</option>
+                </select>
+              </div>
+              <div class="field" id="f-label" hidden><label for="qr-label">Label</label><input class="input" id="qr-label" value="SCAN ME" maxlength="24" /></div>
+              <div class="field"><label for="qr-style">Module shape</label>
+                <select class="select" id="qr-style"><option value="square" selected>Squares</option><option value="rounded">Rounded</option><option value="dots">Dots</option></select>
+              </div>
+              <div class="field"><label for="qr-eye-style">Corner squares</label>
+                <select class="select" id="qr-eye-style"><option value="square" selected>Square</option><option value="rounded">Rounded</option><option value="circle">Circle</option></select>
+              </div>
+            </div>
+
+            <div class="row row-wrap mt-4" style="gap:var(--s4);">
+              <div class="field"><label for="qr-fg">Foreground</label><input type="color" id="qr-fg" value="#0b0c0e" /></div>
+              <div class="field"><label for="qr-eye">Corner colour</label><input type="color" id="qr-eye" value="#0b0c0e" /></div>
+              <div class="field"><label for="qr-bg">Background</label><input type="color" id="qr-bg" value="#ffffff" /></div>
+              <div class="field" id="f-accent" hidden><label for="qr-accent">Label colour</label><input type="color" id="qr-accent" value="#ffd84d" /></div>
+            </div>
+
+            <p class="hint mt-4">The NoByte mark stays in the middle, and error correction is set high so it never stops the code scanning.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- The controls column is tall now, so the preview follows you down it
+           rather than scrolling off the top. -->
+      <div class="result-panel text-center qr-panel" id="qr-panel">
+        <div id="qr-canvas-wrap" style="display:inline-block;padding:var(--s6);background:#fff;border-radius:var(--radius);"><canvas id="qr-canvas" width="280" height="280"></canvas></div>
+        <p class="field-error mt-2" id="qr-error"></p>
+        <div class="notice notice--warn mt-3" id="qr-warn" style="text-align:left;" hidden>
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#alert-triangle"></use></svg>
+          <div></div>
+        </div>
+        <div class="row mt-4" style="justify-content:center;gap:var(--s3);">
+          <button class="btn btn--primary" id="qr-png"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> PNG</button>
+          <button class="btn" id="qr-svg"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> SVG</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="/assets/vendor/qrcode.min.js"></script>
+<script type="module" src="/js/tools/qr-generator.js"></script>

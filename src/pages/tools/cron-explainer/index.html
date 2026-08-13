@@ -1,0 +1,46 @@
+<!-- meta tool="1" title="Cron expression explainer | NoByte" description="Read a cron expression in plain English and see the next run times. Supports ranges, steps, lists, and named months and weekdays. Runs in your browser." path="/tools/cron-explainer/" keywords="cron expression, crontab, cron explainer, cron parser, cron schedule" -->
+{{tool-hero:cron-explainer}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <div class="field">
+      <label for="ce-input">Cron expression</label>
+      <input class="input mono" id="ce-input" spellcheck="false" placeholder="0 9 * * 1-5" value="0 9 * * 1-5" style="font-size:var(--t-md);" />
+      <p class="field-error" id="ce-error"></p>
+    </div>
+
+    <div class="row row-wrap mt-3" id="ce-examples" style="gap:var(--s2);">
+      <button class="chip" type="button" data-cron="*/5 * * * *">every 5 min</button>
+      <button class="chip" type="button" data-cron="0 * * * *">hourly</button>
+      <button class="chip" type="button" data-cron="30 2 * * *">daily 2:30</button>
+      <button class="chip" type="button" data-cron="0 9 * * 1-5">weekday 9am</button>
+      <button class="chip" type="button" data-cron="0 0 1 * *">1st of month</button>
+      <button class="chip" type="button" data-cron="0 0 * * 0">Sundays</button>
+    </div>
+
+    <div class="result-panel mt-4">
+      <span class="label">In plain English</span>
+      <p class="result-value" id="ce-text" style="font-size:var(--t-lg);margin-top:var(--s2);">—</p>
+    </div>
+
+    <div class="mt-4">
+      <span class="label">Field by field</span>
+      <div class="table-scroll mt-2">
+        <table class="data-table" id="ce-fields">
+          <thead><tr><th>Position</th><th>Field</th><th>You wrote</th><th>Means</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <span class="label">Next 5 runs <span class="muted xs">(your local time)</span></span>
+      <div class="stack mt-2" id="ce-runs"></div>
+    </div>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Five fields: minute, hour, day of month, month, day of week. This reads standard cron syntax with ranges, steps, and lists. It does not handle non-standard extensions such as <code>@reboot</code>, <code>L</code>, <code>W</code>, or seconds fields.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/cron-explainer.js"></script>

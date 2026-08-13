@@ -1,0 +1,34 @@
+<!-- meta tool="1" title="Aspect ratio calculator | NoByte" description="Work out width or height for a target aspect ratio, with presets for 16:9, 4:3, 1:1, and more. Runs in your browser." path="/tools/aspect-ratio/" keywords="aspect ratio calculator, 16:9 calculator, resize ratio, screen ratio" -->
+{{tool-hero:aspect-ratio}}
+<section class="section--tight">
+  <div class="container" style="max-width:680px;">
+    <div class="card">
+      <div class="field mb-4"><label for="ar-preset">Ratio</label>
+        <select class="select" id="ar-preset">
+          <option value="16:9">16:9 (widescreen video)</option>
+          <option value="4:3">4:3 (classic display)</option>
+          <option value="1:1">1:1 (square)</option>
+          <option value="3:2">3:2 (photography)</option>
+          <option value="21:9">21:9 (ultrawide)</option>
+          <option value="9:16">9:16 (vertical / stories)</option>
+          <option value="custom">Custom…</option>
+        </select>
+      </div>
+      <div class="row row-wrap mb-4 hidden" id="ar-custom-wrap" style="gap:var(--s3);">
+        <div class="field"><label for="ar-rw">Ratio width</label><input class="input mono" id="ar-rw" type="number" min="1" value="16" style="width:110px;" /></div>
+        <div class="field"><label for="ar-rh">Ratio height</label><input class="input mono" id="ar-rh" type="number" min="1" value="9" style="width:110px;" /></div>
+      </div>
+      <div class="row row-wrap" style="gap:var(--s3);">
+        <div class="field"><label for="ar-w">Width (px)</label><input class="input mono" id="ar-w" type="number" min="1" value="1920" style="width:140px;" /></div>
+        <div class="field"><label for="ar-h">Height (px)</label><input class="input mono" id="ar-h" type="number" min="1" value="1080" style="width:140px;" /></div>
+      </div>
+      <p class="hint mt-2">Edit either box and the other follows the ratio.</p>
+    </div>
+    <div class="result-panel text-center mt-4">
+      <div class="result-value" id="ar-result">—</div>
+      <div class="muted small" id="ar-simplified"></div>
+      <div id="ar-visual" style="margin:var(--s5) auto 0;background:var(--paper-2);border:var(--bw) solid var(--ink);border-radius:var(--radius);max-width:100%;"></div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/aspect-ratio.js"></script>

@@ -1,0 +1,37 @@
+<!-- meta title="What Base64 is for, and what it is not | NoByte" description="Base64 turns binary data into plain text so it can travel through channels built for text. What it does, what it does not, and when to reach for it." path="/blog/when-to-use-base64/" keywords="base64, what is base64, base64 encoding, data url, base64 is not encryption" -->
+<section class="section">
+  <div class="container container-wide has-stickers">
+    <span class="sticker sticker--1">text safe</span>
+    <span class="sticker sticker--2">data urls</span>
+    <span class="sticker sticker--3">not encryption</span>
+    <span class="sticker sticker--4">url safe too</span>
+    <span class="sticker sticker--5">a third bigger</span>
+    <span class="sticker sticker--6">encode files</span>
+    <span class="sticker sticker--7">decode back</span>
+    <span class="sticker sticker--8">utf8 safe</span>
+    <span class="sticker sticker--9">tokens travel</span>
+    <span class="sticker sticker--10">paste or drop</span>
+    <span class="sticker sticker--11">no upload</span>
+    <span class="sticker sticker--12">in your browser</span>
+    <article class="post-wrap">
+      <header class="post__head">
+        <nav class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>Base64</span></nav>
+        {{blog-meta:when-to-use-base64}}
+        <h1 class="page-title post__title">What Base64 is for, and what it is not</h1>
+        <p class="page-lead">Base64 turns binary data into plain text so it can travel through channels that were built for text. It helps to know what that buys you, and what it does not.</p>
+      </header>
+
+      <div class="prose post__body">
+        <h2>What it does</h2>
+        <p>Base64 rewrites any data using a small set of safe characters, so a file can sit inside something that only expects text: a JSON field, a data URL, the body of an email. The output runs about a third larger than the input, which is the price you pay for that safety.</p>
+
+        <h2>What it is not</h2>
+        <p>Base64 is not encryption. Anyone can decode it in a single step, so it hides nothing. If a value has to stay secret, it needs to be encrypted; encoding it only changes the alphabet, not the meaning. Treating Base64 as a way to obscure a password or a key is a common and costly mistake.</p>
+
+        <h2>When to reach for it</h2>
+        <p>Common cases are embedding a small image straight into HTML or CSS as a data URL, carrying binary inside a JSON payload, and reading the contents of a token, since many are Base64 for transport. For any of these, paste the text or drop the file into the <a href="/tools/base64/">Base64 encoder</a>, which also offers the URL-safe variant when the result has to go into a link.</p>
+        <p>Encode or decode text and files with the <a href="/tools/base64/">Base64 tool</a>. It runs in your browser, so nothing you paste is uploaded.</p>
+      </div>
+    </article>
+  </div>
+</section>

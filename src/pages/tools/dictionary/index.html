@@ -1,0 +1,30 @@
+<!-- meta tool="1" title="Dictionary: word definitions | NoByte" description="Look up the meaning, pronunciation, and examples of English words. Definitions come from a free public dictionary service." path="/tools/dictionary/" keywords="dictionary, word definitions, english dictionary, define word, word meaning" -->
+{{tool-hero:dictionary}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <form class="hero__search" id="dc-form" role="search" style="max-width:none;margin-top:0;">
+      <input type="search" id="dc-input" placeholder="Look up a word…" aria-label="Word to look up" autocomplete="off" spellcheck="false" />
+      <button type="submit"><span class="btn-label">Define</span></button>
+    </form>
+    <p class="field-error mt-2" id="dc-error"></p>
+
+    <div id="dc-results" class="mt-4"></div>
+
+    <div class="notice notice--warn mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Definitions come from the free <a href="https://dictionaryapi.dev" target="_blank" rel="noopener">Dictionary API</a>. The word you look up is sent to that service, so this is the one tool here (alongside the DNS lookup) that does not run fully offline.</div>
+    </div>
+  </div>
+</section>
+<style>
+  .dc-entry { border: var(--bw) solid var(--ink); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--hard); padding: var(--s5); margin-bottom: var(--s4); }
+  .dc-word { font-family: var(--font-display); font-weight: 700; font-size: var(--t-2xl); letter-spacing: var(--track-display); }
+  .dc-phon { font-family: var(--font-mono); color: var(--ink-2); margin-left: var(--s3); font-size: var(--t-md); }
+  .dc-audio { margin-left: var(--s2); vertical-align: middle; }
+  .dc-pos { font-family: var(--font-display); font-weight: 700; font-size: var(--t-sm); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--ink-3); margin: var(--s4) 0 var(--s2); }
+  .dc-defs { margin: 0; padding-left: var(--s5); display: flex; flex-direction: column; gap: var(--s2); }
+  .dc-defs li { padding-left: var(--s1); }
+  .dc-ex { color: var(--ink-2); font-style: italic; font-size: var(--t-sm); margin-top: 2px; }
+  .dc-syn { font-size: var(--t-xs); color: var(--ink-3); margin-top: 2px; }
+</style>
+<script type="module" src="/js/tools/dictionary.js"></script>

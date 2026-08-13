@@ -1,0 +1,61 @@
+<!-- meta title="NoByte: free browser-based tools" description="Free tools that run in your browser: convert files, format JSON, generate QR codes, and more. Nothing is uploaded, so your files and text stay on your device." path="/" keywords="online tools, free tools, browser tools, developer tools, pdf tools, calculators" -->
+<section class="hero">
+  <div class="container container-wide">
+    <span class="sticker sticker--1">no uploads</span>
+    <span class="sticker sticker--2">no trackers</span>
+    <span class="sticker sticker--3">no cookies</span>
+    <span class="sticker sticker--4">no signup</span>
+    <span class="sticker sticker--5">no ads</span>
+    <span class="sticker sticker--6">works offline</span>
+    <span class="sticker sticker--7">in your browser</span>
+    <span class="sticker sticker--8">open source</span>
+    <span class="sticker sticker--9">free forever</span>
+
+    <h1>Free tools that <mark>never see your data</mark>.</h1>
+    <p class="hero__lede">Open a tool and get on with it. Whatever you paste or drop in stays on your device, because there is no server for it to reach.</p>
+
+    <form class="hero__search" role="search" action="/tools/" method="get">
+      <input type="search" name="q" placeholder="What do you need? json, pdf, qr…" aria-label="Search tools" autocomplete="off" />
+      <button type="submit">Find it</button>
+    </form>
+  </div>
+</section>
+
+<section class="section--tight">
+  <div class="container container-wide">
+    <div class="cat-bar" data-reveal data-cat-filter>
+      <a class="cat-chip is-active" href="/tools/" data-filter="all" aria-pressed="true">All<span class="cat-chip__n">{{count:tools}}</span></a>
+      {{chips}}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container container-wide">
+    <div data-featured-block>
+      <div class="sec-head" data-reveal>
+        <h2>Popular picks</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="tool-grid" data-reveal-group>{{cards:featured}}</div>
+    </div>
+
+    <div class="sec-head" data-reveal>
+      <h2 data-filter-heading>Everything else</h2>
+      <span class="rule"></span>
+      <p data-filter-count></p>
+      <label class="sort-control">Sort
+        <select class="select select--sm" data-sort aria-label="Sort tools">
+          <option value="popular">Most popular</option>
+          <option value="name">Name (A–Z)</option>
+        </select>
+      </label>
+    </div>
+    <!-- Shown only when the Favourites chip is picked and nothing is starred. -->
+    <div class="notice notice--info mb-4" data-fav-hint hidden>
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#star"></use></svg>
+      <div>Nothing starred yet. Press the star in the corner of any tool card, or the <b>Favourite</b> button at the top of a tool's page, and it will show up here.</div>
+    </div>
+    <div class="tool-grid" data-reveal-group data-filter-grid>{{cards:all}}</div>
+  </div>
+</section>

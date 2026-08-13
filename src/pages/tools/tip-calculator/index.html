@@ -1,0 +1,39 @@
+<!-- meta tool="1" title="Tip and discount calculator | NoByte" description="Calculate a tip and split the bill between people, or work out a discounted price. Runs entirely in your browser." path="/tools/tip-calculator/" keywords="tip calculator, bill splitter, discount calculator, split bill" -->
+{{tool-hero:tip-calculator}}
+<section class="section--tight">
+  <div class="container" style="max-width:640px;">
+    <div class="tabs mb-4" data-tabs role="tablist" aria-label="Mode">
+      <button class="tab" role="tab" id="tp-t-tip" aria-controls="tp-p-tip" aria-selected="true">Tip &amp; split</button>
+      <button class="tab" role="tab" id="tp-t-disc" aria-controls="tp-p-disc" aria-selected="false" tabindex="-1">Discount</button>
+    </div>
+
+    <div class="tab-panel" id="tp-p-tip" role="tabpanel" aria-labelledby="tp-t-tip">
+      <div class="card">
+        <div class="field mb-4"><label for="tp-bill">Bill amount</label><input class="input mono" id="tp-bill" type="number" min="0" value="1200" inputmode="decimal" /></div>
+        <div class="field mb-3"><div class="row between"><label for="tp-pct">Tip</label><span class="mono" id="tp-pct-val">15%</span></div><input type="range" id="tp-pct" min="0" max="30" value="15" /></div>
+        <div class="row row-wrap mb-4" style="gap:var(--s2);">
+          <button class="btn btn--sm" data-tip="10">10%</button><button class="btn btn--sm" data-tip="15">15%</button>
+          <button class="btn btn--sm" data-tip="18">18%</button><button class="btn btn--sm" data-tip="20">20%</button>
+        </div>
+        <div class="field"><label for="tp-people">Split between</label><input class="input mono" id="tp-people" type="number" min="1" value="1" style="width:110px;" /></div>
+      </div>
+      <div class="stack mt-4">
+        <div class="result-row"><span class="label">Tip amount</span><span class="mono val" id="tp-tip">—</span></div>
+        <div class="result-row"><span class="label">Total</span><span class="mono val" id="tp-total">—</span></div>
+        <div class="result-row"><span class="label">Each person pays</span><span class="mono val" id="tp-each">—</span></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tp-p-disc" role="tabpanel" aria-labelledby="tp-t-disc" hidden>
+      <div class="card">
+        <div class="field mb-4"><label for="tp-price">Original price</label><input class="input mono" id="tp-price" type="number" min="0" value="2500" inputmode="decimal" /></div>
+        <div class="field"><div class="row between"><label for="tp-disc">Discount</label><span class="mono" id="tp-disc-val">20%</span></div><input type="range" id="tp-disc" min="0" max="90" value="20" /></div>
+      </div>
+      <div class="stack mt-4">
+        <div class="result-row"><span class="label">You save</span><span class="mono val" id="tp-save">—</span></div>
+        <div class="result-row"><span class="label">Final price</span><span class="mono val" id="tp-final">—</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/tip-calculator.js"></script>

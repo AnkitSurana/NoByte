@@ -1,0 +1,44 @@
+<!-- meta tool="1" title="Base64 encode and decode | NoByte" description="Encode and decode Base64 in your browser. Handles text and files, UTF-8 safe, with a URL-safe variant. Nothing is uploaded." path="/tools/base64/" keywords="base64 encode, base64 decode, url safe base64, base64 converter" -->
+{{tool-hero:base64}}
+<section class="section--tight">
+  <div class="container">
+    <div class="tabs mb-4" data-tabs role="tablist" aria-label="Mode">
+      <button class="tab" role="tab" id="b-t-text" aria-controls="b-p-text" aria-selected="true">Text</button>
+      <button class="tab" role="tab" id="b-t-file" aria-controls="b-p-file" aria-selected="false" tabindex="-1">File</button>
+    </div>
+
+    <div class="tab-panel" id="b-p-text" role="tabpanel" aria-labelledby="b-t-text">
+      <label class="switch mb-3"><input type="checkbox" id="b64-urlsafe" /><span class="switch__track"></span> URL-safe (- and _ instead of + and /)</label>
+      <div class="tool-layout tool-layout--split">
+        <div class="field">
+          <label for="b64-plain">Plain text</label>
+          <textarea class="textarea mono" id="b64-plain" placeholder="Hello, world" style="min-height:220px;"></textarea>
+        </div>
+        <div class="field">
+          <div class="row between"><label for="b64-encoded">Base64</label>
+            <button class="btn btn--sm copy-btn" data-copy="#b64-encoded"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          </div>
+          <textarea class="textarea mono" id="b64-encoded" placeholder="SGVsbG8sIHdvcmxk" style="min-height:220px;"></textarea>
+          <p class="field-error" id="b64-error"></p>
+        </div>
+      </div>
+      <p class="muted xs mt-2">Type in either box and the other updates automatically.</p>
+    </div>
+
+    <div class="tab-panel" id="b-p-file" role="tabpanel" aria-labelledby="b-t-file" hidden>
+      <div class="dropzone" id="b64-drop">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#upload"></use></svg>
+        <div><strong>Drop a file here</strong> or click to choose</div>
+        <div class="xs">Encoded in your browser</div>
+      </div>
+      <p class="muted small mt-3" id="b64-file-info"></p>
+      <div class="field mt-3 hidden" id="b64-file-wrap">
+        <div class="row between"><label for="b64-file-out">Base64</label>
+          <button class="btn btn--sm copy-btn" data-copy="#b64-file-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="b64-file-out" readonly style="min-height:180px;"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/base64.js"></script>

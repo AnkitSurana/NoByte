@@ -1,0 +1,35 @@
+<!-- meta tool="1" title="Tic-tac-toe vs the computer | NoByte" description="Play tic-tac-toe against an unbeatable computer opponent. The best you can do is a draw. Runs in your browser." path="/tools/game-tic-tac-toe/" keywords="tic tac toe, noughts and crosses, tic tac toe ai, play tic tac toe, xs and os" -->
+{{tool-hero:game-tic-tac-toe}}
+<section class="section--tight">
+  <div class="container">
+    <div class="game game-fit" style="--gmax:460px;">
+      <div class="hud">
+        <div class="score-row">
+          <div class="score-box"><span class="score-box__label">You</span><span class="score-box__val" id="t-win">0</span></div>
+          <div class="score-box"><span class="score-box__label">Draws</span><span class="score-box__val" id="t-draw">0</span></div>
+          <div class="score-box"><span class="score-box__label">CPU</span><span class="score-box__val" id="t-lose">0</span></div>
+        </div>
+        <div class="row" style="gap:var(--s3);">
+          <select class="select" id="t-level" aria-label="Opponent">
+            <option value="easy">Easy</option>
+            <option value="fair" selected>Fair</option>
+            <option value="perfect">Perfect</option>
+          </select>
+          <button class="btn btn--primary" id="t-new">New game</button>
+        </div>
+      </div>
+      <div class="ttt game-board" id="t-board"></div>
+      <p class="game-status" id="t-status">Your move. You are X.</p>
+      <h2 class="g-how">How to play</h2>
+      <p class="g-note">Pick a square to place your X. Three in a row wins. Tic-tac-toe is a solved game: two players who never err always draw, so the opponent has three settings. <b>Fair</b> plays the best move about three times in four and settles for second best the rest of the time, which is where your openings come from. <b>Easy</b> takes a win and blocks yours, and is otherwise picking at random. <b>Perfect</b> never errs, and a draw is the best you can get.</p>
+    </div>
+  </div>
+</section>
+<style>
+  .ttt { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 3%; aspect-ratio: 1; }
+  .ttt button { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 18vmin, 5rem); background: var(--surface); border: var(--bw) solid var(--ink); border-radius: var(--radius); color: var(--ink); cursor: pointer; transition: background var(--t-fast) ease; }
+  .ttt button:not(:disabled):hover { background: var(--hl); }
+  .ttt button.win { background: var(--ok-wash); color: var(--ok); }
+  .ttt button:disabled { cursor: default; }
+</style>
+<script type="module" src="/js/tools/game-tic-tac-toe.js"></script>

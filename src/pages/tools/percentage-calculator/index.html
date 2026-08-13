@@ -1,0 +1,31 @@
+<!-- meta tool="1" title="Percentage calculator | NoByte" description="Calculate a percentage of a number, what percent one number is of another, and percentage change. Runs in your browser." path="/tools/percentage-calculator/" keywords="percentage calculator, percent of, percentage change, percent difference" -->
+{{tool-hero:percentage-calculator}}
+<section class="section--tight">
+  <div class="container" style="max-width:720px;">
+    <div class="card mb-4">
+      <div class="label mb-3">What is X% of Y?</div>
+      <div class="row row-wrap" style="gap:var(--s3);align-items:end;">
+        <div class="field"><label for="p1-x">Percent</label><input class="input mono" id="p1-x" type="number" value="15" style="width:120px;" /></div>
+        <div class="field"><label for="p1-y">of</label><input class="input mono" id="p1-y" type="number" value="200" style="width:140px;" /></div>
+        <div class="result-row grow" style="border:none;"><span class="label">Result</span><span class="mono val" id="p1-out">—</span></div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="label mb-3">X is what percent of Y?</div>
+      <div class="row row-wrap" style="gap:var(--s3);align-items:end;">
+        <div class="field"><label for="p2-x">Value</label><input class="input mono" id="p2-x" type="number" value="30" style="width:120px;" /></div>
+        <div class="field"><label for="p2-y">of</label><input class="input mono" id="p2-y" type="number" value="200" style="width:140px;" /></div>
+        <div class="result-row grow" style="border:none;"><span class="label">Result</span><span class="mono val" id="p2-out">—</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label mb-3">Percentage change from X to Y</div>
+      <div class="row row-wrap" style="gap:var(--s3);align-items:end;">
+        <div class="field"><label for="p3-x">From</label><input class="input mono" id="p3-x" type="number" value="120" style="width:120px;" /></div>
+        <div class="field"><label for="p3-y">To</label><input class="input mono" id="p3-y" type="number" value="150" style="width:140px;" /></div>
+        <div class="result-row grow" style="border:none;"><span class="label">Change</span><span class="mono val" id="p3-out">—</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/percentage-calculator.js"></script>

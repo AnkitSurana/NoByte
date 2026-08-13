@@ -1,0 +1,43 @@
+<!-- meta tool="1" title="Falling blocks: stacking puzzle | NoByte" description="Rotate and drop the falling shapes to clear full lines. A block-stacking puzzle with a landing preview, running in your browser with keyboard and touch controls." path="/tools/game-falling-blocks/" keywords="falling blocks game, block stacking game, tetromino game, puzzle game, block puzzle" -->
+{{tool-hero:game-falling-blocks}}
+<section class="section--tight">
+  <div class="container">
+    <div class="game" style="max-width:380px;">
+      <div class="hud">
+        <div class="score-row">
+          <div class="score-box"><span class="score-box__label">Score</span><span class="score-box__val" id="fb-score">0</span></div>
+          <div class="score-box"><span class="score-box__label">Lines</span><span class="score-box__val" id="fb-lines">0</span></div>
+          <div class="score-box"><span class="score-box__label">Level</span><span class="score-box__val" id="fb-level">1</span></div>
+        </div>
+        <div class="row" style="gap:var(--s2);">
+          <button class="btn btn--sm" id="fb-pause" type="button">Pause</button>
+          <button class="btn btn--primary btn--sm" id="fb-new" type="button">New</button>
+        </div>
+      </div>
+      <div class="game-board game-board--swipe" id="fb-wrap"><canvas id="fb-canvas" aria-label="Falling blocks board"></canvas></div>
+      <p class="game-status" id="fb-status"></p>
+      <div class="gpad gpad--row">
+        <button class="gkey" type="button" data-act="left" aria-label="Move left"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-left"></use></svg></button>
+        <button class="gkey" type="button" data-act="rotate" aria-label="Rotate"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#rotate-cw"></use></svg></button>
+        <button class="gkey" type="button" data-act="down" aria-label="Soft drop"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-down"></use></svg></button>
+        <button class="gkey" type="button" data-act="drop" aria-label="Hard drop"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#chevrons-down"></use></svg></button>
+        <button class="gkey" type="button" data-act="right" aria-label="Move right"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-right"></use></svg></button>
+      </div>
+      <h2 class="g-how">How to play</h2>
+      <p class="g-note">Fill a full row to clear it and score; don't let the stack reach the top. The faint shadow shows where the piece will land. <kbd class="cap">←</kbd><kbd class="cap">→</kbd> move, <kbd class="cap">↑</kbd> rotate, <kbd class="cap">↓</kbd> drop, <kbd class="cap">Space</kbd> hard-drop, <kbd class="cap">P</kbd> pause. On a phone: use the keys below the board, holding left, right, or down to repeat. You can also tap the board to rotate, drag sideways to move, and swipe down to drop.</p>
+    </div>
+  </div>
+</section>
+<style>
+  /* The well is 1:2, so its width is really a height budget: the board renders
+     twice as tall as it is wide. svh (not vh) is what actually fits Chrome on
+     Android/iOS — vh measures the viewport with the URL bar hidden, so a
+     vh-sized board is taller than the screen you can actually see. */
+  /* The well is 1:2, so this width is really a height budget — the canvas
+     renders twice as tall as it is wide. 36svh keeps board + status + control
+     pad inside one screen below the sticky header. */
+  #fb-wrap { padding: var(--s2); width: min(86vw, 33vh, 320px); margin-inline: auto; }
+  #fb-wrap { width: min(86vw, 36svh, 320px); }
+  #fb-canvas { display: block; width: 100%; height: auto; border-radius: var(--radius-sm); }
+</style>
+<script type="module" src="/js/tools/game-falling-blocks.js"></script>

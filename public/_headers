@@ -1,0 +1,44 @@
+# Cloudflare Pages / Netlify header rules.
+#
+# Pages applies EVERY rule whose path matches and concatenates the results, so
+# an asset that matches both a specific rule and the /* catch-all ends up with
+# two Cache-Control values in one header. Browsers disagree on which duplicate
+# directive wins, so the order below is chosen to be correct under either
+# reading:
+#
+#   * HTML matches only /*, so it is unambiguous — always revalidated.
+#   * Assets match a specific rule first and /* second. If the first value
+#     wins they cache for a year; if the last wins they revalidate. Slower,
+#     never stale.
+#
+# Specific rules therefore come FIRST, and /* last.
+
+# Referenced as /css/x.css?v=<hash of contents>, so a given URL's bytes never
+# change: editing the file changes the hash, and therefore the URL, which
+# sidesteps the cache outright instead of waiting for a TTL to lapse.
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fonts and vendored libraries first, so they win over the /assets/* line below
+# under a first-value-wins reading. They are immutable by filename anyway.
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/assets/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# tools.json is fetched at runtime by the search, and is not hashed, so it is
+# content rather than an asset.
+/data/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Catch-all, last: every HTML page. HTML carries the ?v= hashes, so it must be
+# checked against the server before it is reused — otherwise a phone keeps
+# serving a page that points at last week's CSS. With no rule at all the
+# browser applies its own heuristic and can hold a page for days, which is
+# exactly the problem this line exists to prevent.
+/*
+  Cache-Control: public, max-age=0, must-revalidate

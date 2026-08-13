@@ -1,0 +1,29 @@
+<!-- meta tool="1" title="Connect Four vs the computer | NoByte" description="Drop your discs and line up four in a row before the computer does. Play Connect Four against an AI opponent in your browser." path="/tools/game-connect-four/" keywords="connect four, four in a row, connect 4 game, connect four ai, strategy game" -->
+{{tool-hero:game-connect-four}}
+<section class="section--tight">
+  <div class="container">
+    <div class="game game-fit" style="--gmax:640px;">
+      <div class="hud">
+        <div class="score-row">
+          <div class="score-box"><span class="score-box__label">You</span><span class="score-box__val" id="c4-you">0</span></div>
+          <div class="score-box"><span class="score-box__label">CPU</span><span class="score-box__val" id="c4-cpu">0</span></div>
+        </div>
+        <button class="btn btn--primary" id="c4-new" type="button">New game</button>
+      </div>
+      <div class="c4 game-board" id="c4-board"></div>
+      <p class="game-status" id="c4-status">Your move. Drop a red disc.</p>
+      <h2 class="g-how">How to play</h2>
+      <p class="g-note">Pick a column to drop your red disc. Get four in a row across, down, or diagonally before the computer does.</p>
+    </div>
+  </div>
+</section>
+<style>
+  /* fixed 7×6 geometry with even gaps keeps every disc inside the board */
+  .c4 { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(0, 1fr)); gap: var(--s2); aspect-ratio: 7 / 6; background: var(--c-dev); }
+  .c4 .slot { width: 100%; height: 100%; border-radius: 50%; background: var(--paper); border: var(--bw) solid var(--ink); cursor: pointer; transition: transform var(--t-fast) var(--pop); }
+  .c4 .slot.you { background: var(--c-img); }
+  .c4 .slot.cpu { background: var(--c-doc); }
+  .c4 .slot.win { box-shadow: 0 0 0 4px var(--ink) inset; }
+  .c4 .slot:hover { transform: scale(1.04); }
+</style>
+<script type="module" src="/js/tools/game-connect-four.js"></script>

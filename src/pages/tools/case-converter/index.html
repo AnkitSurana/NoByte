@@ -1,0 +1,40 @@
+<!-- meta tool="1" title="Case converter: upper, lower, title, camelCase | NoByte" description="Convert text between uppercase, lowercase, title case, sentence case, camelCase, snake_case, and more. Runs in your browser." path="/tools/case-converter/" keywords="case converter, uppercase, lowercase, title case, camelcase, snake case" -->
+{{tool-hero:case-converter}}
+<section class="section--tight">
+  <div class="container">
+    <div class="field">
+      <label for="cc-input" class="sr-only">Text to convert</label>
+      <textarea class="textarea mono" id="cc-input" placeholder="Type or paste text, then pick a case below…" style="min-height:160px;" autofocus></textarea>
+      <div class="row row-wrap between mt-2">
+        <button class="btn btn--sm" type="button" data-example>Load example</button>
+        <button class="btn btn--sm btn--ghost" type="button" data-clear>Clear</button>
+      </div>
+    </div>
+
+    <div class="row row-wrap mt-4" id="cc-buttons" role="group" aria-label="Case options">
+      <button class="btn btn--sm" data-case="upper">UPPERCASE</button>
+      <button class="btn btn--sm" data-case="lower">lowercase</button>
+      <button class="btn btn--sm" data-case="title">Title Case</button>
+      <button class="btn btn--sm" data-case="sentence">Sentence case</button>
+      <button class="btn btn--sm" data-case="camel">camelCase</button>
+      <button class="btn btn--sm" data-case="pascal">PascalCase</button>
+      <button class="btn btn--sm" data-case="snake">snake_case</button>
+      <button class="btn btn--sm" data-case="kebab">kebab-case</button>
+      <button class="btn btn--sm" data-case="constant">CONSTANT_CASE</button>
+      <button class="btn btn--sm" data-case="alternating">aLtErNaTiNg</button>
+    </div>
+
+    <div class="result-panel mt-4">
+      <div class="row between mb-3">
+        <span class="label" id="cc-active-label">Result</span>
+        <button class="btn btn--sm copy-btn" type="button" data-copy="#cc-output">
+          <svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg>
+          <svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <textarea class="textarea mono" id="cc-output" readonly style="min-height:120px;" aria-label="Converted text"></textarea>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/case-converter.js"></script>
