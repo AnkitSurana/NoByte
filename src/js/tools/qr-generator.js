@@ -29,6 +29,11 @@ const els = {
   frame: document.getElementById("qr-frame"),
   label: document.getElementById("qr-label"),
   brandName: document.getElementById("qr-brand-name"),
+  lockup: document.getElementById("qr-lockup"),
+  logoSize: document.getElementById("qr-logo-size"),
+  nameSize: document.getElementById("qr-name-size"),
+  nameFont: document.getElementById("qr-name-font"),
+  nameAlign: document.getElementById("qr-name-align"),
 };
 const logoInput = document.getElementById("qr-logo");
 const logoName = document.getElementById("qr-logo-name");
@@ -58,6 +63,13 @@ const brand = {
   accent:   () => brand.on ? els.accent.value : "#ffd84d",
   name:     () => brand.on ? els.brandName.value.trim() : "",
   logo:     () => brand.on ? userImg : null,
+  lockup:   () => brand.on ? els.lockup.value : "split",
+  // A multiplier on the logo's height within its band, so a square mark and a
+  // wide wordmark can each be brought to the weight their artwork wants.
+  logoScale: () => brand.on ? Number(els.logoSize.value) / 100 : 1,
+  nameScale: () => brand.on ? Number(els.nameSize.value) / 100 : 1,
+  nameFace:  () => (brand.on && FONTS[els.nameFont.value]) || FONTS.display,
+  nameAlign: () => brand.on ? els.nameAlign.value : "center",
 };
 
 /* ---------- payload ---------- */
@@ -90,14 +102,24 @@ const n = (v) => Math.round(v * 1000) / 1000;
  * the exported SVG can then pin the text to that exact width with textLength,
  * so it lands the same on a machine that has never heard of Outfit. */
 const gauge = document.createElement("canvas").getContext("2d");
-const FONT = (size) => `700 ${size}px Outfit, system-ui, sans-serif`;
-function textWidth(text, size) {
-  gauge.font = FONT(100);
+const DISPLAY = "Outfit, system-ui, sans-serif";
+/* The three faces the site already ships, so a chosen font is one that is
+ * actually loaded rather than whatever the viewer happens to have. */
+const FONTS = {
+  display: { family: DISPLAY, weight: 700 },
+  text:    { family: "Inter, system-ui, sans-serif", weight: 500 },
+  mono:    { family: "'JetBrains Mono', ui-monospace, monospace", weight: 500 },
+};
+const FONT = (size) => `700 ${size}px ${DISPLAY}`;
+/* Measured in the face it will be drawn in: a width taken from one family and
+ * applied to another is what makes textLength stretch the glyphs to reach it. */
+function textWidth(text, size, face) {
+  gauge.font = face ? `${face.weight} 100px ${face.family}` : FONT(100);
   return (gauge.measureText(text).width / 100) * size;
 }
 /** Largest size at or below `size` that keeps `text` inside `max`. */
-function fitSize(text, size, max) {
-  const w = textWidth(text, size);
+function fitSize(text, size, max, face) {
+  const w = textWidth(text, size, face);
   return w > max ? (size * max) / w : size;
 }
 
@@ -245,14 +267,14 @@ const logoRadius = (size) => size * (LOGO_CUT[brand.frame()] ?? 0);
 /** The customer's logo and name, laid out as one centred row and scaled to fit
  *  the space it has been given. Returned in coordinates relative to (0,0), so
  *  the caller can drop it into a strip or into the top of a ring. */
-function brandGroup(maxW, maxH, fill) {
-  let name = brand.name();
+function brandGroup(maxW, maxH, fill, parts = "both") {
+  let name = parts === "logo" ? "" : brand.name();
   const gap = maxH * 0.22;
-  const logo = brand.logo();
+  const logo = parts === "name" ? null : brand.logo();
   let logoW = 0, logoH = 0;
   if (logo) {
     const ratio = logo.img.naturalWidth / logo.img.naturalHeight || 1;
-    logoH = maxH;
+    logoH = maxH * brand.logoScale();
     logoW = logoH * ratio;
   }
   // A wide logo is capped rather than left to eat the whole row, so a banner
@@ -260,8 +282,9 @@ function brandGroup(maxW, maxH, fill) {
   const logoCap = name ? maxW * 0.42 : maxW;
   if (logoW > logoCap) { logoH *= logoCap / logoW; logoW = logoCap; }
 
-  let size = name ? maxH * 0.72 : 0;
-  let textW = name ? textWidth(name, size) : 0;
+  const face = brand.nameFace();
+  let size = name ? maxH * 0.72 * brand.nameScale() : 0;
+  let textW = name ? textWidth(name, size, face) : 0;
   let w = logoW + (logoW && textW ? gap : 0) + textW;
   if (w > maxW) {
     // Shrink the row as a whole so the logo and the name stay in proportion,
@@ -275,11 +298,11 @@ function brandGroup(maxW, maxH, fill) {
       const room = maxW - logoW - (logoW ? gap : 0);
       // One line, always: if the name still will not fit at the smallest size
       // it reads at, it is cut rather than wrapped or spilled.
-      if (textWidth(name, size) > room) {
-        while (name.length > 1 && textWidth(name + "…", size) > room) name = name.slice(0, -1);
-        name += "…";
+      if (textWidth(name, size, face) > room) {
+        while (name.length > 1 && textWidth(name + "\u2026", size, face) > room) name = name.slice(0, -1);
+        name += "\u2026";
       }
-      textW = textWidth(name, size);
+      textW = textWidth(name, size, face);
     }
     w = logoW + (logoW && textW ? gap : 0) + textW;
   }
@@ -289,7 +312,7 @@ function brandGroup(maxW, maxH, fill) {
     items.push({ t: "image", x, y: -logoH / 2, w: logoW, h: logoH, img: logo.img, src: logo.src, radius: logoRadius(Math.min(logoW, logoH)) });
     x += logoW + gap;
   }
-  if (textW) items.push({ t: "text", x: x + textW / 2, y: 0, size, fit: textW, text: name, fill });
+  if (textW) items.push({ t: "text", x: x + textW / 2, y: 0, size, fit: textW, text: name, fill, font: face.family, weight: face.weight });
   return { items, w, h: Math.max(logoH, size) };
 }
 
@@ -308,8 +331,22 @@ function scene() {
   // yellow bite out of it.
   const outlines = [];
   let W, H, ox = 0, oy = 0;
-  // A strip under the code carries the customer's branding on the flat shapes.
-  const strip = !f.round && hasBrand() ? total * 0.15 : 0;
+  /* On the flat shapes the branding straddles the code rather than sitting in
+   * one strip beneath it: the mark goes above, the name below. It frames the
+   * code instead of hanging off it, and it stops a wide logo and a long name
+   * competing for one row. Each strip only exists if it has something in it, so
+   * a code with just a name keeps its old proportions. */
+  const lock = brand.lockup();
+  const flat = !f.round;
+  // "split" is the default lockup: mark above, name below. The other two keep
+  // both together on one side, which suits a wordmark that already reads as the
+  // name, or a logo that wants to sit with it.
+  const above = lock === "above" ? hasBrand() : lock === "split" && Boolean(brand.logo());
+  const below = lock === "below" ? hasBrand() : lock === "split" && Boolean(brand.name());
+  const logoStrip = flat && above ? total * 0.15 : 0;
+  const strip = flat && below ? total * 0.15 : 0;
+  const topParts = lock === "split" ? "logo" : "both";
+  const bottomParts = lock === "split" ? "name" : "both";
   const onAccent = light(accent) ? "#1D1A16" : bg;
   const name = brand.name();
   // Every download carries a credit line. Light, small, and clear of the code.
@@ -372,9 +409,10 @@ function scene() {
     const gap = bar ? total * 0.07 : 0;
     const r = kind === "panel" ? 0 : total * 0.08;
     W = total + f.pad * 2;
-    const card = W + strip + gap + bar; // everything above the credit line
+    const card = W + logoStrip + strip + gap + bar; // everything above the credit line
     H = card + foot;
-    ox = oy = f.pad;
+    ox = f.pad;
+    oy = f.pad + logoStrip; // the code starts below the mark
     const box = [STROKE, STROKE, W - STROKE * 2, card - STROKE * 2];
     if (f.pad) {
       items.push({ t: "path", d: rectPath(...box, [r, r, r, r]), fill: bg });
@@ -389,10 +427,24 @@ function scene() {
       const size = fitSize(label, bar * 0.56, W - total * 0.14);
       items.push({ t: "text", x: W / 2, y: card - bar / 2 - STROKE / 2, size, fit: textWidth(label, size), text: label, fill: onAccent });
     }
-    // Centred in whatever room is left between the code and the bar below it.
+    // The mark, centred in the band above the code.
+    if (logoStrip) {
+      items.push(...shift(brandGroup(W * 0.82, logoStrip * 0.66, fg, topParts), W / 2, f.pad + logoStrip / 2));
+    }
+    // The name sits high in the room below the code rather than centred in it.
+    // The code already carries four blank modules of quiet zone along its
+    // bottom edge, so centring in what is left counts that emptiness twice and
+    // leaves the name looking adrift. Nothing moves into the quiet zone, which
+    // must stay clear; the name just stops floating below it.
     if (strip) {
-      const top = f.pad + total, bottom = card - bar - STROKE;
-      items.push(...shift(brandGroup(W * 0.82, strip * 0.66, fg), W / 2, (top + bottom) / 2));
+      const top = oy + total, bottom = card - bar - STROKE;
+      // Aligned inside the same 82% band the group is measured against, so
+      // "left" lands on the code's left edge rather than the card's.
+      const grp = brandGroup(W * 0.82, strip * 0.66, fg, bottomParts);
+      const half = (W * 0.82) / 2;
+      const a = brand.nameAlign();
+      const ax = a === "left" ? W / 2 - half + grp.w / 2 : a === "right" ? W / 2 + half - grp.w / 2 : W / 2;
+      items.push(...shift(grp, ax, top + (bottom - top) * 0.34));
     }
   }
 
@@ -414,20 +466,34 @@ function scene() {
   // The credit line. Quiet enough to stay out of the way of whoever's code this
   // is, plain enough to read at a glance, and always outside the code itself.
   const credit = "Generated using nobyte.in";
-  const size = fitSize(credit, foot * 0.52, W * 0.8);
-  items.push({ t: "text", x: W / 2, y: H - foot * 0.46, size, fit: textWidth(credit, size), text: credit, fill: fg, opacity: 0.3, weight: 400 });
+  // Set in the text face at its lightest, not the display face: Outfit ships
+  // only 500 and 700, so anything thinner asked of it is synthesised and comes
+  // back looking smeared rather than light.
+  const size = fitSize(credit, foot * 0.34, W * 0.6);
+  // No textLength here: it is measured off the Outfit gauge, and pinning Inter
+  // to a width taken from another face stretches the glyphs to reach it.
+  items.push({ t: "text", x: W / 2, y: H - foot * 0.42, size, text: credit, fill: fg, opacity: 0.28, weight: 400, font: "Inter, system-ui, sans-serif" });
 
-  return { W, H, items: items.concat(outlines) };
+  /* Breathing room around the whole drawing. Without it the card's edge is the
+   * edge of the file, so the download sits flush against whatever it is placed
+   * on and reads as though it were cropped. Returned separately rather than
+   * folded into the geometry, because every path here is already a built
+   * string: the renderers offset by it instead. */
+  const margin = W * 0.05;
+  return { W, H, margin, items: items.concat(outlines) };
 }
 
 /* ---------- renderers ---------- */
 function paint(target, cell) {
   const s = scene();
-  target.width = Math.round(s.W * cell);
-  target.height = Math.round(s.H * cell);
+  target.width = Math.round((s.W + s.margin * 2) * cell);
+  target.height = Math.round((s.H + s.margin * 2) * cell);
   const g = target.getContext("2d");
   g.clearRect(0, 0, target.width, target.height);
   g.imageSmoothingEnabled = true;
+  // Everything below is drawn in scene coordinates, so the margin is applied
+  // once here rather than added to each item.
+  g.translate(s.margin * cell, s.margin * cell);
   g.imageSmoothingQuality = "high";
   for (const it of s.items) {
     if (it.t === "path") {
@@ -457,7 +523,7 @@ function paint(target, cell) {
       g.save();
       g.fillStyle = it.fill;
       g.globalAlpha = it.opacity ?? 1;
-      g.font = `${it.weight || 700} ${it.size * cell}px Outfit, system-ui, sans-serif`;
+      g.font = `${it.weight || 700} ${it.size * cell}px ${it.font || "Outfit, system-ui, sans-serif"}`;
       g.textAlign = "center";
       g.textBaseline = "middle";
       g.fillText(it.text, it.x * cell, it.y * cell);
@@ -522,7 +588,7 @@ function toSvg() {
       // without Outfit installed still gets it inside its patch.
       const fit = it.fit ? ` textLength="${n(it.fit)}" lengthAdjust="spacingAndGlyphs"` : "";
       const op = it.opacity != null ? ` fill-opacity="${it.opacity}"` : "";
-      body += `<text x="${n(it.x)}" y="${n(it.y)}" font-family="Outfit, system-ui, sans-serif" font-weight="${it.weight || 700}" font-size="${n(it.size)}" fill="${it.fill}"${op} text-anchor="middle" dominant-baseline="central"${fit}>${xmlEsc(it.text)}</text>`;
+      body += `<text x="${n(it.x)}" y="${n(it.y)}" font-family="${it.font || "Outfit, system-ui, sans-serif"}" font-weight="${it.weight || 700}" font-size="${n(it.size)}" fill="${it.fill}"${op} text-anchor="middle" dominant-baseline="central"${fit}>${xmlEsc(it.text)}</text>`;
     } else if (it.t === "arctext") {
       const id = `ring${ring++}`;
       // sweep 0 runs left to right under the circle, sweep 1 over the top
@@ -530,7 +596,11 @@ function toSvg() {
       body += `<text font-family="Outfit, system-ui, sans-serif" font-weight="700" font-size="${n(it.size)}" fill="${it.fill}" letter-spacing="${n(it.size * 0.06)}"><textPath href="#${id}" startOffset="50%" text-anchor="middle">${xmlEsc(it.text)}</textPath></text>`;
     }
   }
-  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${n(s.W)} ${n(s.H)}"${crisp ? ' shape-rendering="crispEdges"' : ""}>${defs ? `<defs>${defs}</defs>` : ""}${body}</svg>`;
+  // The viewBox grows by the margin on all four sides and the drawing is
+  // shifted into it, so the vector file carries the same breathing room as the
+  // raster one instead of ending at the card's edge.
+  const m = s.margin;
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${n(s.W + m * 2)} ${n(s.H + m * 2)}"${crisp ? ' shape-rendering="crispEdges"' : ""}>${defs ? `<defs>${defs}</defs>` : ""}<g transform="translate(${n(m)} ${n(m)})">${body}</g></svg>`;
 }
 
 /* ---------- build ---------- */
@@ -698,6 +768,14 @@ Object.values(els).forEach((el) => {
   el.addEventListener("input", build);
   el.addEventListener("change", build); // selects in Safari
 });
+const readout = (input, out) => {
+  const el = document.getElementById(out);
+  const show = () => { el.textContent = `${input.value}%`; };
+  input.addEventListener("input", show);
+  show();
+};
+readout(els.logoSize, "qr-logo-size-val");
+readout(els.nameSize, "qr-name-size-val");
 logoInput.addEventListener("change", () => takeLogo(logoInput.files[0]));
 logoClear.addEventListener("click", () => {
   userImg = null;
