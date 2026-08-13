@@ -1,0 +1,52 @@
+<!-- meta title="How to take GST out of a price | NoByte" description="Working backwards from a tax-inclusive price is not the same as subtracting the rate. Here is the arithmetic, the mistake almost everyone makes, and how to check a figure." path="/blog/remove-gst-from-a-price/" keywords="remove gst from price, reverse gst calculation, gst inclusive to exclusive, extract vat from total, backward gst calculator" -->
+<section class="section">
+  <div class="container container-wide has-stickers">
+    <span class="sticker sticker--1">tax inclusive</span>
+    <span class="sticker sticker--2">work backwards</span>
+    <span class="sticker sticker--3">not minus 18</span>
+    <span class="sticker sticker--4">divide, don't subtract</span>
+    <span class="sticker sticker--5">net and gross</span>
+    <span class="sticker sticker--6">any rate</span>
+    <span class="sticker sticker--7">gst or vat</span>
+    <span class="sticker sticker--8">check the invoice</span>
+    <span class="sticker sticker--9">off by 32.40</span>
+    <span class="sticker sticker--10">one formula</span>
+    <span class="sticker sticker--11">no signup</span>
+    <span class="sticker sticker--12">in your browser</span>
+    <article class="post-wrap">
+      <header class="post__head">
+        <nav class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>Take GST out of a price</span></nav>
+        {{blog-meta:remove-gst-from-a-price}}
+        <h1 class="page-title post__title">How to take GST out of a price</h1>
+        <p class="page-lead">Working backwards from a tax-inclusive price is not the same as subtracting the rate. Here is the arithmetic, the mistake almost everyone makes, and how to check a figure.</p>
+      </header>
+
+      <div class="prose post__body">
+        <h2>Adding tax is the easy direction</h2>
+        <p>If you know the price before tax, adding it is straightforward. At 18%, a net price of 1,000 becomes 1,180. You multiply by 1.18.</p>
+        <p>The direction people get wrong is the other one: you have a total of 1,180 that already includes tax, and you need to know how much of it was tax.</p>
+
+        <h2>The mistake</h2>
+        <p>The instinct is to take 18% off the total. That gives 1,180 minus 212.40, or 967.60. It looks reasonable and it is wrong.</p>
+        <p>The reason is that the 18% was never charged on 1,180. It was charged on 1,000. Taking 18% of the larger number removes too much, because you are applying the rate to a base that already has the tax folded into it.</p>
+
+        <h2>The arithmetic that works</h2>
+        <p>Since the gross is the net multiplied by 1.18, you get back by dividing rather than subtracting:</p>
+        <ul>
+          <li>Net = gross divided by (1 + rate). Here, 1,180 / 1.18 = 1,000.</li>
+          <li>Tax = gross minus net. Here, 1,180 - 1,000 = 180.</li>
+        </ul>
+        <p>So the tax inside 1,180 is 180, not 212.40. The two methods differ by 32.40 on a single small invoice, and the gap grows with the rate: at 28% the wrong method is off by nearly 8% of the total.</p>
+        <p>The same formula covers every rate. For 5%, divide by 1.05. For a VAT rate of 20%, divide by 1.2. Nothing about it is specific to one country's tax.</p>
+
+        <h2>A quick sanity check</h2>
+        <p>Whatever number you land on, test it forwards. Take your net figure, add the rate, and see whether you get the total you started with. 1,000 plus 18% is 1,180, so 1,000 is right. 967.60 plus 18% is 1,141.77, which is not the total on the invoice, so it is wrong.</p>
+        <p>That check takes a few seconds and catches the error every time, including the one where the rate itself was entered wrongly.</p>
+
+        <h2>Doing it without the arithmetic</h2>
+        <p>The <a href="/tools/gst-calculator/">GST and VAT calculator</a> has separate tabs for the two directions, so you pick "Remove tax" and it does the division for you. It shows the net, the tax, and the gross together, which is usually what an invoice needs anyway. Common rates are in the dropdown and there is a custom field for anything else.</p>
+        <p>It runs in your browser, so the figures stay on your machine.</p>
+      </div>
+    </article>
+  </div>
+</section>

@@ -1,5 +1,26 @@
 [
   {
+    "slug": "what-compounding-actually-does",
+    "title": "What compounding actually does to savings",
+    "excerpt": "Compounding looks slow for years and then stops looking slow. Why time matters far more than the compounding frequency, and what a projection can and cannot tell you.",
+    "date": "2026-08-13",
+    "cats": ["finance", "guide"]
+  },
+  {
+    "slug": "what-an-emi-is-made-of",
+    "title": "What an EMI is actually made of",
+    "excerpt": "A loan payment stays the same every month, but what it is buying changes. Why early payments are almost all interest, and what that means for paying extra.",
+    "date": "2026-08-13",
+    "cats": ["finance", "guide"]
+  },
+  {
+    "slug": "remove-gst-from-a-price",
+    "title": "How to take GST out of a price",
+    "excerpt": "Working backwards from a tax-inclusive price is not the same as subtracting the rate. Here is the arithmetic, the mistake almost everyone makes, and how to check a figure.",
+    "date": "2026-08-13",
+    "cats": ["finance", "guide"]
+  },
+  {
     "slug": "wifi-qr-code",
     "title": "How to make a Wi-Fi QR code guests can scan",
     "excerpt": "A Wi-Fi QR code lets people join your network without typing the password. How to make one, what the fields mean, and how to get it to scan first time.",
