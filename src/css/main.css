@@ -576,6 +576,14 @@ details.notice p, details.notice ul { font-size: var(--t-sm); }
 
 /* HUD row above a board: scores on one side, a primary action on the other */
 .hud { display: flex; justify-content: space-between; align-items: center; gap: var(--s3); flex-wrap: wrap; margin-bottom: var(--s4); }
+/* Keep the trailing group on the right edge even after a wrap. space-between
+   only spreads a line that has two items on it, so a wrapped second line falls
+   hard left under the scores, which is what made a wrapped HUD read as broken.
+   An auto margin holds that edge on its own line too. It moves nothing while
+   both fit (space-between already had them at the edges) and cannot resize
+   either group, which matters because these children vary per game: a button
+   or a select sits here on some boards, not always a row. */
+.hud > :last-child { margin-inline-start: auto; }
 .score-row { display: flex; gap: var(--s2); }
 .score-box { background: var(--paper-2); border: var(--bw) solid var(--ink); border-radius: var(--radius); padding: var(--s2) var(--s4); text-align: center; min-width: 64px; }
 .score-box__label { display: block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); white-space: nowrap; }
@@ -905,6 +913,8 @@ del { background: var(--bad-wash); color: var(--bad); border-radius: 4px; paddin
   /* stack the HUD so score boxes and buttons never overflow or wrap oddly */
   .hud { flex-direction: column; align-items: center; gap: var(--s2); margin-bottom: var(--s3); }
   .hud .score-row, .hud .row { flex-wrap: wrap; justify-content: center; }
+  /* stacked and centred here, so drop the auto margin that holds the right edge */
+  .hud > :last-child { margin-inline-start: 0; }
   /* Size boards to the CONTAINER (respecting its padding), not the viewport,
      so nothing spills off the right edge; also height-cap so they fit. */
   .game-fit { width: min(100%, 60vh, var(--gmax, 620px)); }
@@ -913,6 +923,25 @@ del { background: var(--bad-wash); color: var(--bad); border-radius: 4px; paddin
      second so browsers without svh keep the vh line above. */
   .game-fit { width: min(100%, 60svh, var(--gmax, 620px)); }
   .game { max-width: 100%; }
+}
+
+/* A short laptop window, not a phone. .game-fit takes its WIDTH from the
+   viewport HEIGHT (72vh, above), so a shallow window narrows the board, and
+   with it the HUD, until the scores and the buttons no longer fit on one line.
+   They then wrap while still justified space-between, which drops the buttons
+   to a second line hard against the left edge: it reads as broken rather than
+   as stacked. Tighten the row first so it keeps one line further down, then
+   fall back to the same centred stack the phone layout uses. Taller windows
+   match none of this and are left exactly as they were. */
+@media (min-width: 641px) and (max-height: 700px) {
+  .hud { gap: var(--s2); }
+  .score-box { padding-inline: var(--s3); }
+  .hud .btn { padding-inline: var(--s4); }
+}
+@media (min-width: 641px) and (max-height: 575px) {
+  .hud { flex-direction: column; align-items: center; }
+  .hud .score-row, .hud .row { flex-wrap: wrap; justify-content: center; }
+  .hud > :last-child { margin-inline-start: 0; }
 }
 
 /* ============================================================
