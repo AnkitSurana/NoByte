@@ -34,6 +34,7 @@ const els = {
   nameSize: document.getElementById("qr-name-size"),
   nameFont: document.getElementById("qr-name-font"),
   nameAlign: document.getElementById("qr-name-align"),
+  logoAlign: document.getElementById("qr-logo-align"),
 };
 const logoInput = document.getElementById("qr-logo");
 const logoName = document.getElementById("qr-logo-name");
@@ -41,6 +42,9 @@ const logoClear = document.getElementById("qr-logo-clear");
 const logoThumb = document.getElementById("qr-logo-thumb");
 const fieldLabel = document.getElementById("f-label");
 const fieldAccent = document.getElementById("f-accent");
+const fieldLockup = document.getElementById("f-lockup");
+const fieldLogoAlign = document.getElementById("f-logo-align");
+const fieldNameAlign = document.getElementById("f-name-align");
 
 let activeType = "text";
 let currentModules = null; // { count, dark: boolean[][] }
@@ -69,7 +73,12 @@ const brand = {
   logoScale: () => brand.on ? Number(els.logoSize.value) / 100 : 1,
   nameScale: () => brand.on ? Number(els.nameSize.value) / 100 : 1,
   nameFace:  () => (brand.on && FONTS[els.nameFont.value]) || FONTS.display,
-  nameAlign: () => brand.on ? els.nameAlign.value : "center",
+  // Where the name and the logo sit. What the value means depends on the shape
+  // the brand is being placed in, which is what syncShapeControls() keeps the
+  // two selects honest about: an x offset on the flat shapes, an angle on the
+  // round ones.
+  namePlace: () => brand.on ? els.nameAlign.value : "center",
+  logoPlace: () => brand.on ? els.logoAlign.value : "center",
 };
 
 /* ---------- payload ---------- */
@@ -264,6 +273,9 @@ function hasBrand() {
 const LOGO_CUT = { none: 0, panel: 0, rounded: 0.22, round: 0.5, ring: 0.5, badge: 0.22 };
 const logoRadius = (size) => size * (LOGO_CUT[brand.frame()] ?? 0);
 
+// Where a badge sits on a round shape's ring, measured from the centre.
+const BADGE_ANGLE = { top: -Math.PI / 2, bottom: Math.PI / 2, left: Math.PI, right: 0 };
+
 /** The customer's logo and name, laid out as one centred row and scaled to fit
  *  the space it has been given. Returned in coordinates relative to (0,0), so
  *  the caller can drop it into a strip or into the top of a ring. */
@@ -360,12 +372,25 @@ function scene() {
     const cnt = currentModules.count;
     const codeR = cnt * 0.708 + 3; // a few modules past the matrix corners
     const labelled = kind === "ring";
-    const both = Boolean(logo && name);
+    /* On a round shape the brand lives on the ring, so a position is an angle:
+     * the name runs along the top or the bottom arc, and the logo is a badge
+     * anywhere on the circle. The label is arc text too, and there are only two
+     * arcs, so it takes whichever one the name did not: putting the name along
+     * the bottom moves "SCAN ME" to the top rather than stacking the two. */
+    const nameTop = brand.namePlace() === "top";
+    const badgeAt = brand.logoPlace();
+    const labelTop = Boolean(name) && !nameTop;
+    const arcOf = (top) => (top ? "top" : "bottom");
+    const wordy = (side) =>
+      (Boolean(name) && side === arcOf(nameTop)) || (labelled && side === arcOf(labelTop));
+    // A badge landing on an arc that already carries words sinks inside them,
+    // which needs a deeper band than a badge sitting on the ring by itself.
+    const stacked = Boolean(logo) && (badgeAt === "top" || badgeAt === "bottom") && wordy(badgeAt);
     /* Words and a badge need more room than the loose modules leave, so they go
      * in a band outside the circle: the accent colour carrying a label on
      * "round with label", the plain background on "round", which has no outline
      * at all and so reads as loose as the plain shape does. */
-    const band = labelled ? codeR * (both ? 0.44 : 0.32) : hasBrand() ? codeR * 0.32 : 0;
+    const band = labelled || hasBrand() ? codeR * (stacked ? 0.44 : 0.32) : 0;
     const R = codeR + band;
     // The plain circle has no card behind it, so a hairline rim is what gives
     // it an edge. The labelled one already has the accent band for that.
@@ -384,24 +409,31 @@ function scene() {
     const mid = codeR + band / 2;
     const arc = (text, r, maxH, top) =>
       items.push({ t: "arctext", top, cx, cy, r, size: fitSize(text, maxH, r * 2.1), text, fill: onBand });
-    /** A round badge sunk into the band, the way a profile picture sits on a
-     *  scan code. Its backing keeps it clear of anything it overlaps. */
-    const badge = (r, lr) => {
-      items.push({ t: "path", d: circlePath(cx, cy - r, lr * 1.24), fill: labelled ? accent : bg });
-      items.push({ t: "image", x: cx - lr, y: cy - r - lr, w: lr * 2, h: lr * 2, img: logo.img, src: logo.src, radius: lr });
+    /** A round badge sunk into the band at `angle`, the way a profile picture
+     *  sits on a scan code. Its backing keeps it clear of anything it overlaps. */
+    const badge = (r, lr, angle) => {
+      const bx = cx + r * Math.cos(angle), by = cy + r * Math.sin(angle);
+      items.push({ t: "path", d: circlePath(bx, by, lr * 1.24), fill: labelled ? accent : bg });
+      items.push({ t: "image", x: bx - lr, y: by - lr, w: lr * 2, h: lr * 2, img: logo.img, src: logo.src, radius: lr });
     };
+    /* Arc text keeps the same height whether or not the band was deepened to
+     * take a badge, so putting the logo on one arc does not resize the words on
+     * the other. An arc sharing its side with a badge gives up the inner part of
+     * the band and moves out to the rim. */
+    const line = codeR * 0.176;
+    const shared = (side) => stacked && badgeAt === side;
+    const arcR = (side) => (shared(side) ? codeR + band * 0.74 : mid);
+    const arcH = (side) => (shared(side) ? line * 0.85 : line);
 
     if (labelled) {
-      arc((els.label.value || "SCAN ME").toUpperCase(), mid, band * (both ? 0.4 : 0.55), false);
-      // Both asked for: the name takes the outer part of the top and the badge
-      // the inner part, so they stack instead of landing on each other.
-      if (both) { arc(name, codeR + band * 0.74, band * 0.34, true); badge(codeR + band * 0.28, band * 0.2); }
-      else if (logo) badge(mid, band * 0.34);
-      else if (name) arc(name, mid, band * 0.55, true);
-    } else if (hasBrand()) {
-      if (logo) badge(mid, band * 0.34);
-      if (name) arc(name, mid, band * 0.55, false); // along the bottom, opposite the badge
+      const side = arcOf(labelTop);
+      arc((els.label.value || "SCAN ME").toUpperCase(), arcR(side), arcH(side), labelTop);
     }
+    if (name) {
+      const side = arcOf(nameTop);
+      arc(name, arcR(side), arcH(side), nameTop);
+    }
+    if (logo) badge(stacked ? codeR + band * 0.28 : mid, band * (stacked ? 0.2 : 0.34), BADGE_ANGLE[badgeAt]);
   } else {
     const bar = kind === "badge" ? total * 0.18 : 0;
     // The code's own clear margin is not breathing room: without a gap the
@@ -427,9 +459,17 @@ function scene() {
       const size = fitSize(label, bar * 0.56, W - total * 0.14);
       items.push({ t: "text", x: W / 2, y: card - bar / 2 - STROKE / 2, size, fit: textWidth(label, size), text: label, fill: onAccent });
     }
-    // The mark, centred in the band above the code.
+    /* Both strips are aligned the same way. Which control drives which depends
+     * on the lockup: "split" puts the logo in the top strip and the name in the
+     * bottom one, so each takes its own position, while the other two lockups
+     * are a single row of both and take the one position between them. */
+    const strips = W * 0.82;
+    const alignX = (grp, a) =>
+      a === "left" ? W / 2 - strips / 2 + grp.w / 2 : a === "right" ? W / 2 + strips / 2 - grp.w / 2 : W / 2;
+    // The mark, in the band above the code.
     if (logoStrip) {
-      items.push(...shift(brandGroup(W * 0.82, logoStrip * 0.66, fg, topParts), W / 2, f.pad + logoStrip / 2));
+      const grp = brandGroup(strips, logoStrip * 0.66, fg, topParts);
+      items.push(...shift(grp, alignX(grp, lock === "split" ? brand.logoPlace() : brand.namePlace()), f.pad + logoStrip / 2));
     }
     // The name sits high in the room below the code rather than centred in it.
     // The code already carries four blank modules of quiet zone along its
@@ -440,11 +480,8 @@ function scene() {
       const top = oy + total, bottom = card - bar - STROKE;
       // Aligned inside the same 82% band the group is measured against, so
       // "left" lands on the code's left edge rather than the card's.
-      const grp = brandGroup(W * 0.82, strip * 0.66, fg, bottomParts);
-      const half = (W * 0.82) / 2;
-      const a = brand.nameAlign();
-      const ax = a === "left" ? W / 2 - half + grp.w / 2 : a === "right" ? W / 2 + half - grp.w / 2 : W / 2;
-      items.push(...shift(grp, ax, top + (bottom - top) * 0.34));
+      const grp = brandGroup(strips, strip * 0.66, fg, bottomParts);
+      items.push(...shift(grp, alignX(grp, brand.namePlace()), top + (bottom - top) * 0.34));
     }
   }
 
@@ -672,6 +709,69 @@ addEventListener("resize", () => {
   resizeTimer = setTimeout(() => currentModules && draw(), 120);
 });
 
+/* Placement means two different things, because the two families of shape hold
+ * the brand in two different coordinate systems. On the flat shapes it sits in
+ * horizontal strips above and below the code, so a position is an x offset and
+ * left/centre/right is the whole of it. On the round ones it sits on the ring,
+ * as arc text and a badge, so a position is an angle: top and bottom are the
+ * two arcs, and "left" is not something the geometry can honour. Rather than
+ * leave a select offering both vocabularies and quietly ignoring half of them,
+ * each shape is handed the options it can actually draw. */
+const PLACEMENT = {
+  flat: {
+    logo: [["center", "Centre"], ["left", "Left"], ["right", "Right"]],
+    name: [["center", "Centre"], ["left", "Left"], ["right", "Right"]],
+  },
+  round: {
+    logo: [["top", "Top"], ["bottom", "Bottom"], ["left", "Left"], ["right", "Right"]],
+    name: [["top", "Top arc"], ["bottom", "Bottom arc"]],
+  },
+};
+
+/* Every shape remembers its own placement, so flipping between two of them to
+ * compare does not overwrite what was set on the last one. Seeded with the
+ * arrangement each reads best in: on the ring the bottom arc is where a label
+ * belongs, so a name there goes along the top and pushes the label down. */
+const placement = {
+  none:    { logo: "center", name: "center" },
+  panel:   { logo: "center", name: "center" },
+  rounded: { logo: "center", name: "center" },
+  badge:   { logo: "center", name: "center" },
+  round:   { logo: "top", name: "bottom" },
+  ring:    { logo: "top", name: "top" },
+};
+
+function options(select, list, value) {
+  select.replaceChildren(...list.map(([v, text]) => new Option(text, v)));
+  select.value = value;
+}
+
+let held = els.frame.value; // the shape whose placement the two selects hold
+
+/** Repopulate the placement selects for the shape in use, carrying each shape's
+ *  own choice in and out, and label them in that shape's terms. */
+function syncShapeControls() {
+  const kind = els.frame.value;
+  const round = Boolean((FRAMES[kind] || FRAMES.none).round);
+  const mine = placement[kind] || placement.none;
+  const was = placement[held];
+  if (was) { was.logo = els.logoAlign.value; was.name = els.nameAlign.value; }
+  if (kind !== held) {
+    const set = PLACEMENT[round ? "round" : "flat"];
+    options(els.logoAlign, set.logo, mine.logo);
+    options(els.nameAlign, set.name, mine.name);
+    held = kind;
+  }
+  // "Split" is the only flat lockup that keeps the logo and the name in strips
+  // of their own; the other two are one row of both, positioned together.
+  const split = els.lockup.value === "split";
+  fieldLockup.hidden = round;
+  fieldLogoAlign.hidden = !userImg || (!round && !split);
+  fieldLogoAlign.querySelector("label").textContent = round ? "Logo badge at" : "Logo position";
+  fieldNameAlign.querySelector("label").textContent =
+    round ? "Name on" : !split && userImg ? "Brand position" : "Name position";
+}
+
 /** Show only the controls that apply to the shape in use, and keep the logo
  *  thumbnail cut to the same shape the logo will take in the code. */
 function syncControls() {
@@ -684,6 +784,7 @@ function syncControls() {
     logoThumb.style.backgroundImage = `url("${userImg.src}")`;
     logoThumb.style.borderRadius = `${(LOGO_CUT[els.frame.value] ?? 0) * 100}%`;
   }
+  syncShapeControls();
 }
 
 

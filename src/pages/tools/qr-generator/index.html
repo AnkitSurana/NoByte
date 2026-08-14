@@ -71,11 +71,18 @@
             </div>
 
             <div class="row row-wrap mt-4" style="gap:var(--s4);">
-              <div class="field"><label for="qr-lockup">Layout</label>
+              <div class="field" id="f-lockup"><label for="qr-lockup">Layout</label>
                 <select class="select" id="qr-lockup">
                   <option value="split" selected>Logo above, name below</option>
                   <option value="above">Both above the code</option>
                   <option value="below">Both below the code</option>
+                </select>
+              </div>
+              <div class="field" id="f-logo-align" hidden><label for="qr-logo-align">Logo position</label>
+                <select class="select" id="qr-logo-align">
+                  <option value="center" selected>Centre</option>
+                  <option value="left">Left</option>
+                  <option value="right">Right</option>
                 </select>
               </div>
               <div class="field"><label for="qr-logo-size">Logo size <span class="hint" id="qr-logo-size-val">100%</span></label>
@@ -91,7 +98,7 @@
                   <option value="mono">Mono</option>
                 </select>
               </div>
-              <div class="field"><label for="qr-name-align">Name position</label>
+              <div class="field" id="f-name-align"><label for="qr-name-align">Name position</label>
                 <select class="select" id="qr-name-align">
                   <option value="center" selected>Centre</option>
                   <option value="left">Left</option>
