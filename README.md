@@ -31,7 +31,7 @@ The parts worth reading the source for:
 
 - 63 tools, nearly all of which work offline once the page has loaded
 - A Games category with 13 games (2048, Snake, Minesweeper, Sudoku, Connect Four, a Tetris-style stacker, an F1-style reaction test and more), each with local high scores
-- No tracking, no analytics, no advertising scripts
+- No cookies and no advertising scripts; nothing you enter into a tool is recorded
 - Light and dark themes, with the OS preference respected
 - One HTML page per tool, so every page is crawlable and loads fast
 - Third-party libraries are vendored and pinned, not loaded from a CDN
