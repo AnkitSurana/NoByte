@@ -6,7 +6,11 @@
       <div class="row row-wrap" style="gap:var(--s2);">
         <label class="label" for="rb-template" style="align-self:center;">Start from</label>
         <select class="select" id="rb-template" style="width:auto;">
-          <option value="">Template…</option>
+          <!-- Picking one replaces the sections and the control returns to this
+               line, because it performs an action rather than holding a setting:
+               staying on "Minimal" would keep claiming that after the sections
+               were edited away from it, and would block re-applying the same one. -->
+          <option value="">Choose a template…</option>
           <option value="minimal">Minimal</option>
           <option value="oss">Open-source project</option>
           <option value="library">Library / API</option>

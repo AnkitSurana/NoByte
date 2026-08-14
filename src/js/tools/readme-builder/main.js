@@ -245,6 +245,9 @@ el.template.addEventListener("change", () => {
   const t = TEMPLATES[el.template.value];
   if (!t) return;
   state.cards = t.map((defId) => ({ uid: uid++, defId, collapsed: false, values: {} }));
+  // Back to the placeholder: this is an action, not a stored setting. Holding
+  // the name would go stale the moment a section is edited, and picking the
+  // same entry twice fires no change event, so it could not be re-applied.
   el.template.value = "";
   switchMode("builder");
   renderDoc();

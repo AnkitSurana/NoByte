@@ -36,14 +36,14 @@ export const SECTIONS = [
   {
     id: "description",
     label: "Description",
-    icon: "align-left",
+    icon: "file-text",
     fields: [{ name: "text", label: "Description", type: "textarea", placeholder: "What the project does and who it is for." }],
     toMarkdown: (v) => (v.text ? `## Overview\n\n${v.text}\n` : ""),
   },
   {
     id: "toc",
     label: "Table of contents",
-    icon: "table",
+    icon: "align-left",
     fields: [{ name: "items", label: "Entries (one per line)", type: "lines", placeholder: "Installation\nUsage\nContributing" }],
     toMarkdown: (v) => {
       const items = lines(v.items);
@@ -54,7 +54,7 @@ export const SECTIONS = [
   {
     id: "features",
     label: "Features",
-    icon: "check",
+    icon: "lightbulb",
     fields: [{ name: "items", label: "Features (one per line)", type: "lines", placeholder: "Fast\nZero config\nWorks offline" }],
     toMarkdown: (v) => {
       const items = lines(v.items);
@@ -74,7 +74,7 @@ export const SECTIONS = [
   {
     id: "techstack",
     label: "Tech stack",
-    icon: "braces",
+    icon: "network",
     fields: [{ name: "items", label: "Technologies (one per line)", type: "lines", placeholder: "React\nNode.js\nPostgreSQL" }],
     toMarkdown: (v) => {
       const items = lines(v.items);
@@ -115,7 +115,7 @@ export const SECTIONS = [
   {
     id: "env",
     label: "Environment variables",
-    icon: "sliders",
+    icon: "key",
     fields: [{ name: "items", label: "VARIABLE = description (one per line)", type: "lines", placeholder: "API_KEY = your API key\nPORT = server port" }],
     toMarkdown: (v) => {
       const items = lines(v.items);
@@ -130,7 +130,7 @@ export const SECTIONS = [
   {
     id: "roadmap",
     label: "Roadmap",
-    icon: "check",
+    icon: "trending-up",
     fields: [{ name: "items", label: "Items (one per line)", type: "lines", placeholder: "Dark mode\nPlugin API" }],
     toMarkdown: (v) => {
       const items = lines(v.items);
@@ -140,7 +140,7 @@ export const SECTIONS = [
   {
     id: "contributing",
     label: "Contributing",
-    icon: "user",
+    icon: "git-compare",
     fields: [{ name: "text", label: "Contributing notes", type: "textarea", placeholder: "Pull requests are welcome. For major changes, open an issue first." }],
     toMarkdown: (v) => `## Contributing\n\n${v.text || "Pull requests are welcome. For major changes, open an issue first to discuss what you would like to change."}\n`,
   },
@@ -168,7 +168,7 @@ export const SECTIONS = [
   {
     id: "acknowledgements",
     label: "Acknowledgements",
-    icon: "check",
+    icon: "star",
     fields: [{ name: "items", label: "Credits (one per line)", type: "lines", placeholder: "shields.io\nA helpful tutorial" }],
     toMarkdown: (v) => {
       const items = lines(v.items);
@@ -178,7 +178,7 @@ export const SECTIONS = [
   {
     id: "author",
     label: "Author",
-    icon: "user",
+    icon: "fingerprint",
     fields: [
       { name: "name", label: "Name", type: "text", placeholder: "Your name" },
       { name: "link", label: "Link (site or profile)", type: "text", placeholder: "https://github.com/you" },
@@ -214,7 +214,7 @@ export const SECTIONS = [
   {
     id: "custom",
     label: "Custom section",
-    icon: "align-left",
+    icon: "plus",
     fields: [
       { name: "heading", label: "Heading", type: "text", placeholder: "Section title" },
       { name: "body", label: "Content (Markdown)", type: "textarea", placeholder: "Anything you like." },
