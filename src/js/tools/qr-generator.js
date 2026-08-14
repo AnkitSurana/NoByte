@@ -308,6 +308,42 @@ const logoRadius = (size) => size * (LOGO_CUT[brand.frame()] ?? 0);
 // Where a badge sits on a round shape's ring, measured from the centre.
 const BADGE_ANGLE = { top: -Math.PI / 2, bottom: Math.PI / 2, left: Math.PI, right: 0 };
 
+/* The watermark: the name set on the diagonal and repeated across the card's
+ * background, filled with a colour that shifts as the pattern marches across it
+ * so it catches like foil. Drawn into the file rather than added by the page,
+ * so a download and a print carry it.
+ *
+ * It never crosses the code. The whole pattern is clipped to the background
+ * with the code's box, quiet zone included, punched out, because a phone camera
+ * thresholds an image hard and any ink over the modules is contrast the scanner
+ * does not get back. Letters cut off at that edge are the point rather than a
+ * flaw: a watermark is meant to pass behind whatever is sitting on it, and the
+ * code reads as an object on the paper because its letters stop at its edge. */
+const HOLO = [
+  [0,    "56,189,248",  0.20],
+  [0.25, "167,139,250", 0.22],
+  [0.5,  "244,114,182", 0.20],
+  [0.75, "251,191,36",  0.20],
+  [1,    "52,211,153",  0.20],
+];
+const HOLO_TEXT = "NoByte";
+const HOLO_TILT = -30 * (Math.PI / 180);
+
+/** Where each repeat of the wordmark lands, on a staggered grid covering `w` by
+ *  `h`. Laid out square and tilted in place rather than along a rotated lattice:
+ *  the rows stay parallel to the card, so the pattern reads as even however the
+ *  card is proportioned, and it costs one rotation per repeat instead of a
+ *  change of basis for the whole thing. */
+function holoGrid(w, h, size) {
+  const run = textWidth(HOLO_TEXT, size, FONTS.display);
+  const dx = run * 1.7, dy = size * 3.1;
+  const at = [];
+  for (let row = 0, y = -dy; y < h + dy; row++, y += dy) {
+    for (let x = -dx + (row % 2 ? dx / 2 : 0); x < w + dx; x += dx) at.push({ x, y });
+  }
+  return { at, size, run };
+}
+
 /** The customer's logo and name, laid out as one centred row and scaled to fit
  *  the space it has been given. Returned in coordinates relative to (0,0), so
  *  the caller can drop it into a strip or into the top of a ring. */
@@ -385,6 +421,16 @@ function scene() {
   // yellow bite out of it.
   const outlines = [];
   let W, H, ox = 0, oy = 0;
+  /** Lay the watermark over a background shape, with the code's box cut out of
+   *  it. Called once the shape's own fill is down and before anything is drawn
+   *  on top, so it sits in the paper rather than over the artwork. */
+  const holo = (d, w, h) =>
+    items.push({
+      t: "holo", rule: "evenodd", tilt: HOLO_TILT,
+      d: d + rectPath(ox, oy, total, total),
+      x1: 0, y1: 0, x2: w, y2: h,
+      ...holoGrid(w, h, total * 0.085),
+    });
   /* On the flat shapes the branding straddles the code rather than sitting in
    * one strip beneath it: the mark goes above, the name below. It frames the
    * code instead of hanging off it, and it stops a wide logo and a long name
@@ -456,6 +502,9 @@ function scene() {
 
     if (labelled) items.push({ t: "path", d: circlePath(cx, cy, R), fill: accent });
     items.push({ t: "path", d: circlePath(cx, cy, codeR), fill: bg });
+    // Over the background disc only. The accent band already carries a colour
+    // of its own, and a second one laid across it just muddies both.
+    holo(circlePath(cx, cy, codeR), W, W);
     items.push({ t: "path", d: decorPath(ox, oy, cx, cy, codeR, 1), fill: fg });
     if (rim) outlines.push({ t: "path", d: circlePath(cx, cy, R + rim * 0.55), stroke: fg, width: 0.13, opacity: 0.4 });
 
@@ -517,17 +566,18 @@ function scene() {
      * proportional margin around it comes out to almost nothing and it sits on
      * the border. What the eye is judging is the gap to the edge, and that gap
      * should not shrink just because the artwork is a letterbox. */
-    const airEdge = total * 0.07;    // least room between a mark and the card
-    const airCode = total * 0.015;   // and between a mark and the code itself
-    const depth = (grp) => (grp ? grp.band + airEdge + airCode : 0);
-    /* Both strips are then cut to the same depth, the deeper of the two, so the
-     * code sits as far from the top of the card as it does from the bottom. A
-     * logo and a name are rarely the same height, and strips each sized to
-     * their own contents leave the code visibly off centre in its card. The
-     * side with less in it keeps the slack against the card's edge, so the two
-     * marks stay the same short distance from the code and the extra room ends
-     * up in the margins where it reads as deliberate. */
-    const even = Math.max(depth(topGrp), depth(botGrp));
+    const airEdge = total * 0.07;    // room between a mark and the card's edge
+    const airCode = total * 0.015;   // least room between a mark and the code
+    /* Both strips are cut to the same depth, the deeper of the two, so the code
+     * sits as far from the top of the card as it does from the bottom. Each
+     * mark is then held that same fixed distance in from its own border, and
+     * the slack from evening out the strips falls on the code side. A logo and
+     * a name are rarely the same height, so the alternative, holding each the
+     * same distance from the code, hands the whole difference to the margins
+     * and leaves the taller of the two visibly nearer its edge. The border is
+     * the line the eye actually measures against. */
+    const deepest = Math.max(topGrp ? topGrp.band : 0, botGrp ? botGrp.band : 0);
+    const even = deepest + airEdge + airCode;
     const logoStrip = topGrp ? even : 0;
     const strip = botGrp ? even : 0;
     const card = W + logoStrip + strip + gap + bar; // everything above the credit line
@@ -538,8 +588,10 @@ function scene() {
     if (f.pad) {
       items.push({ t: "path", d: rectPath(...box, [r, r, r, r]), fill: bg });
       outlines.push({ t: "path", d: rectPath(...box, [r, r, r, r]), stroke: fg });
+      holo(rectPath(...box, [r, r, r, r]), W, card);
     } else {
       items.push({ t: "path", d: rectPath(0, 0, W, card), fill: bg });
+      holo(rectPath(0, 0, W, card), W, card);
     }
     if (bar) {
       const br = Math.max(0, r - STROKE);
@@ -552,17 +604,16 @@ function scene() {
      * on the lockup: "split" puts the logo in the top strip and the name in the
      * bottom one, so each takes its own position, while the other two lockups
      * are a single row of both and take the one position between them. */
-    /* Each mark hangs off the code rather than off the card, at the same short
-     * distance on both sides. The code's own four-module quiet zone already
-     * sits between them, so this reads as a comfortable gap rather than a tight
-     * one, and whatever slack the evened-out strip has left over stays outside
-     * the mark, against the card's edge. */
+    /* Measured off the ink rather than the line box the strip was sized from: a
+     * logo fills its box exactly, a line of text sits inside one with air above
+     * and below it, and squaring the two by their boxes leaves the text looking
+     * further from the edge than the logo is. */
     if (topGrp) {
-      const y = oy - airCode - topGrp.band / 2;
+      const y = f.pad + airEdge + topGrp.h / 2;
       items.push(...shift(topGrp, alignX(topGrp, lock === "split" ? brand.logoPlace() : brand.namePlace()), y));
     }
     if (botGrp) {
-      const y = oy + total + airCode + botGrp.band / 2;
+      const y = oy + total + strip - airEdge - botGrp.h / 2;
       items.push(...shift(botGrp, alignX(botGrp, brand.namePlace()), y));
     }
   }
@@ -649,6 +700,24 @@ function paint(target, cell) {
       g.restore();
     } else if (it.t === "arctext") {
       arcText(g, it, cell);
+    } else if (it.t === "holo") {
+      g.save();
+      g.scale(cell, cell);
+      g.clip(new Path2D(it.d), it.rule);
+      const grad = g.createLinearGradient(it.x1, it.y1, it.x2, it.y2);
+      for (const [stop, rgb, a] of HOLO) grad.addColorStop(stop, `rgba(${rgb},${a})`);
+      g.fillStyle = grad;
+      g.font = `700 ${it.size}px ${DISPLAY}`;
+      g.textAlign = "center";
+      g.textBaseline = "middle";
+      for (const p of it.at) {
+        g.save();
+        g.translate(p.x, p.y);
+        g.rotate(it.tilt);
+        g.fillText(HOLO_TEXT, 0, 0);
+        g.restore();
+      }
+      g.restore();
     }
   }
   return target.width;
@@ -687,9 +756,21 @@ function toSvg() {
   if (!currentModules) return "";
   const s = scene();
   const crisp = brand.style() === "square" && brand.eyeStyle() === "square" && brand.frame() === "none";
-  let body = "", defs = "", ring = 0, clip = 0;
+  let body = "", defs = "", ring = 0, clip = 0, holos = 0;
   for (const it of s.items) {
-    if (it.t === "path") {
+    if (it.t === "holo") {
+      const gid = `holo${holos}`, cid = `holoclip${holos++}`;
+      const stops = HOLO.map(([stop, rgb, a]) => `<stop offset="${stop}" stop-color="rgb(${rgb})" stop-opacity="${a}"/>`).join("");
+      defs += `<linearGradient id="${gid}" gradientUnits="userSpaceOnUse" x1="${n(it.x1)}" y1="${n(it.y1)}" x2="${n(it.x2)}" y2="${n(it.y2)}">${stops}</linearGradient>`;
+      defs += `<clipPath id="${cid}" clipPathUnits="userSpaceOnUse"><path d="${it.d}" clip-rule="${it.rule}"/></clipPath>`;
+      const deg = n((it.tilt * 180) / Math.PI);
+      const runs = it.at.map((p) =>
+        `<text transform="translate(${n(p.x)} ${n(p.y)}) rotate(${deg})" font-size="${n(it.size)}" text-anchor="middle" dominant-baseline="central">${HOLO_TEXT}</text>`
+      ).join("");
+      // crispEdges on the root would step the gradient and the glyph edges, so
+      // the watermark opts out of it.
+      body += `<g clip-path="url(#${cid})" fill="url(#${gid})" font-family="${DISPLAY}" font-weight="700" shape-rendering="auto">${runs}</g>`;
+    } else if (it.t === "path") {
       const stroke = it.stroke
         ? ` stroke="${it.stroke}" stroke-width="${n(it.width ?? STROKE * 2)}"${it.opacity != null ? ` stroke-opacity="${it.opacity}"` : ""}`
         : "";
@@ -1014,5 +1095,9 @@ loadBrandMark();
 build();
 
 
+
+
+
+window.__scene = scene; // TEMP
 
 
