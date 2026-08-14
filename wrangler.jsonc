@@ -1,8 +1,10 @@
 {
   "name": "nobyte",
   "compatibility_date": "2025-01-01",
+  "main": "src/worker.js",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
   }
 }
