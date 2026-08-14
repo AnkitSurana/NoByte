@@ -400,7 +400,7 @@
     "description": "Slide and combine the tiles to reach 2048.",
     "category": "games",
     "path": "/tools/game-2048/",
-    "icon": "hash",
+    "icon": "plus",
     "featured": true,
     "popularity": 4,
     "keywords": [
@@ -498,7 +498,7 @@
     "description": "Build a README by dragging sections into place, with a live preview.",
     "category": "developer",
     "path": "/tools/readme-builder/",
-    "icon": "book",
+    "icon": "github",
     "featured": false,
     "metaDescription": "Build a GitHub README by dragging sections into place. Live Markdown preview, templates, and one-click download. Runs in your browser.",
     "keywords": [
@@ -705,7 +705,7 @@
     "description": "Line up four in a row against the computer.",
     "category": "games",
     "path": "/tools/game-connect-four/",
-    "icon": "gamepad",
+    "icon": "arrow-down",
     "featured": false,
     "popularity": 3,
     "keywords": [
@@ -737,7 +737,7 @@
     "description": "Find every matching pair in as few moves as you can.",
     "category": "games",
     "path": "/tools/game-memory/",
-    "icon": "shuffle",
+    "icon": "copy",
     "featured": false,
     "popularity": 3,
     "keywords": [
@@ -753,7 +753,7 @@
     "description": "Rotate and drop shapes to clear full lines.",
     "category": "games",
     "path": "/tools/game-falling-blocks/",
-    "icon": "gamepad",
+    "icon": "chevrons-down",
     "featured": false,
     "popularity": 3,
     "keywords": [
@@ -803,7 +803,7 @@
     "description": "Turn an image into a data URL with ready-made HTML and CSS.",
     "category": "image",
     "path": "/tools/image-to-base64/",
-    "icon": "binary",
+    "icon": "upload",
     "metaDescription": "Convert an image to a Base64 data URL, with copy-ready <img> and CSS snippets. Runs in your browser.",
     "keywords": [
       "image to base64",
@@ -940,7 +940,7 @@
     "description": "Flip cells and their neighbors to turn every light off.",
     "category": "games",
     "path": "/tools/game-lights-out/",
-    "icon": "gamepad",
+    "icon": "lightbulb",
     "featured": false,
     "popularity": 2,
     "keywords": [
@@ -956,7 +956,7 @@
     "description": "Slide the numbered tiles into order.",
     "category": "games",
     "path": "/tools/game-sliding-puzzle/",
-    "icon": "table",
+    "icon": "arrow-right-left",
     "featured": false,
     "popularity": 2,
     "keywords": [
