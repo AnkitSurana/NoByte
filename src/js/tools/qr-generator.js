@@ -319,29 +319,61 @@ const BADGE_ANGLE = { top: -Math.PI / 2, bottom: Math.PI / 2, left: Math.PI, rig
  * does not get back. Letters cut off at that edge are the point rather than a
  * flaw: a watermark is meant to pass behind whatever is sitting on it, and the
  * code reads as an object on the paper because its letters stop at its edge. */
+/* Strong enough to actually read as a watermark, which a few percent of tint
+ * never does once a file has been through a printer. It still has to clear the
+ * quiet zone it runs across: what that owes a scanner is a light field, and at
+ * this strength the palest of these leaves the paper around 215 of 255, well
+ * clear of the middle where a camera splits dark from light. Nothing here goes
+ * over the modules themselves at any strength. */
 const HOLO = [
-  [0,    "56,189,248",  0.20],
-  [0.25, "167,139,250", 0.22],
-  [0.5,  "244,114,182", 0.20],
-  [0.75, "251,191,36",  0.20],
-  [1,    "52,211,153",  0.20],
+  [0,    "56,189,248",  0.26],
+  [0.25, "167,139,250", 0.28],
+  [0.5,  "244,114,182", 0.26],
+  [0.75, "251,191,36",  0.27],
+  [1,    "52,211,153",  0.26],
 ];
-const HOLO_TEXT = "NoByte";
 const HOLO_TILT = -30 * (Math.PI / 180);
 
-/** Where each repeat of the wordmark lands, on a staggered grid covering `w` by
- *  `h`. Laid out square and tilted in place rather than along a rotated lattice:
- *  the rows stay parallel to the card, so the pattern reads as even however the
- *  card is proportioned, and it costs one rotation per repeat instead of a
- *  change of basis for the whole thing. */
-function holoGrid(w, h, size) {
-  const run = textWidth(HOLO_TEXT, size, FONTS.display);
-  const dx = run * 1.7, dy = size * 3.1;
+/* The shapes that carry no outline get a shadow instead, so the card still has
+ * an edge to sit on. Without it the watermark has nothing to belong to and the
+ * marks read as stray ink on the page. In module units, like everything else
+ * here, so it holds at any export size. */
+const SHADOW = { color: "rgba(15,18,25,0.22)", blur: 0.7, dy: 0.28, sd: 0.35 };
+/* The real wordmark, not the name typed out in one of the fonts here. The
+ * lettering is the brand; Outfit set to the same six characters is just a word.
+ * Loaded as the outline rather than as a picture so the gradient can fill the
+ * glyphs directly, which also means one copy of the path serves every repeat:
+ * the canvas stamps it through a matrix, the SVG points a <use> at it. */
+let wordmark = null; // { d, cx, cy, w, h }
+
+async function loadWordmark() {
+  try {
+    const svg = await fetch("/assets/nobyte-wordmark.svg").then((r) => r.text());
+    const d = svg.match(/\sd="([^"]+)"/)?.[1];
+    const box = svg.match(/viewBox="([^"]+)"/)?.[1].trim().split(/[\s,]+/).map(Number);
+    if (!d || box?.length !== 4) return;
+    const [x, y, w, h] = box;
+    wordmark = { d, cx: x + w / 2, cy: y + h / 2, w, h };
+    draw();
+  } catch {}
+}
+
+/** Where the repeats of the wordmark land: a staggered lattice run right across
+ *  the card and off all four sides, so the background is covered edge to edge
+ *  rather than in the few places a whole mark happened to fit. What the card's
+ *  own outline does not take, the clip does; the code takes its own bite out of
+ *  the middle, and a watermark passing behind the thing printed on top of it is
+ *  what tells you it is a watermark and not a decoration. */
+function holoGrid(w, h, tileW, tileH, tilt) {
+  const cos = Math.abs(Math.cos(tilt)), sin = Math.abs(Math.sin(tilt));
+  const bw = tileW * cos + tileH * sin;   // what one covers once turned
+  const bh = tileW * sin + tileH * cos;
+  const dx = bw * 1.12, dy = bh * 1.06;
   const at = [];
-  for (let row = 0, y = -dy; y < h + dy; row++, y += dy) {
-    for (let x = -dx + (row % 2 ? dx / 2 : 0); x < w + dx; x += dx) at.push({ x, y });
+  for (let row = 0, y = -bh / 2; y < h + bh; row++, y += dy) {
+    for (let x = -bw / 2 + (row % 2 ? dx / 2 : 0); x < w + bw; x += dx) at.push({ x, y });
   }
-  return { at, size, run };
+  return at;
 }
 
 /** The customer's logo and name, laid out as one centred row and scaled to fit
@@ -398,12 +430,9 @@ function brandGroup(maxW, maxH, fill, parts = "both") {
     x += logoW + gap;
   }
   if (textW) items.push({ t: "text", x: x + textW / 2, y: 0, size, fit: textW, text: name, fill, font: face.family, weight: face.weight });
-  /* `band` is the maxH this content ended up worth: the value that, fed back
-   * in, would produce exactly what was just laid out. A caller sizing a strip
-   * around the group reads that rather than the ink height, so a row of text
-   * and a row of logo of the same weight get strips of the same depth, and a
-   * row shrunk to fit its width gets a shallower one to match. */
-  return { items, w, h: Math.max(logoH, size), band: Math.max(logoH, size / 0.72) };
+  // `h` is the ink: what the group actually covers once it has been fitted.
+  // Callers size the strip around it and measure their gaps from it.
+  return { items, w, h: Math.max(logoH, size) };
 }
 
 const shift = (group, dx, dy) => group.items.map((it) => ({ ...it, x: it.x + dx, y: it.y + dy }));
@@ -424,13 +453,25 @@ function scene() {
   /** Lay the watermark over a background shape, with the code's box cut out of
    *  it. Called once the shape's own fill is down and before anything is drawn
    *  on top, so it sits in the paper rather than over the artwork. */
-  const holo = (d, w, h) =>
+  const holo = (d, w, h) => {
+    if (!wordmark) return; // the artwork has not arrived yet; draw() runs again when it does
+    const scale = (total * 0.2) / wordmark.w;
+    const tileW = wordmark.w * scale, tileH = wordmark.h * scale;
+    /* Cut around the modules themselves, not around the whole code box. The box
+     * includes the four-module quiet zone, and on these shapes that zone is most
+     * of the white the eye reads as "around the code": excluding it left the
+     * watermark stranded in the strips with a bare ring in the middle. What the
+     * quiet zone owes a scanner is to stay light, not to stay empty, and this is
+     * pale ink. A module of true white is still left hard against the matrix so
+     * the code's own edge stays crisp. */
+    const cx0 = ox + QUIET - 1, cy0 = oy + QUIET - 1, cn = currentModules.count + 2;
     items.push({
-      t: "holo", rule: "evenodd", tilt: HOLO_TILT,
-      d: d + rectPath(ox, oy, total, total),
+      t: "holo", rule: "evenodd", tilt: HOLO_TILT, scale,
+      d: d + rectPath(cx0, cy0, cn, cn),
       x1: 0, y1: 0, x2: w, y2: h,
-      ...holoGrid(w, h, total * 0.085),
+      at: holoGrid(w, h, tileW, tileH, HOLO_TILT),
     });
+  };
   /* On the flat shapes the branding straddles the code rather than sitting in
    * one strip beneath it: the mark goes above, the name below. It frames the
    * code instead of hanging off it, and it stops a wide logo and a long name
@@ -500,11 +541,14 @@ function scene() {
     ox = oy = R + rim - total / 2;
     const cx = R + rim, cy = R + rim;
 
-    if (labelled) items.push({ t: "path", d: circlePath(cx, cy, R), fill: accent });
-    items.push({ t: "path", d: circlePath(cx, cy, codeR), fill: bg });
-    // Over the background disc only. The accent band already carries a colour
-    // of its own, and a second one laid across it just muddies both.
-    holo(circlePath(cx, cy, codeR), W, W);
+    // The outermost disc is what the shadow belongs to: on the plain round
+    // shape that is the code's own circle, which otherwise has nothing but a
+    // hairline to separate it from the page.
+    if (labelled) items.push({ t: "path", d: circlePath(cx, cy, R), fill: accent, shadow: true });
+    items.push({ t: "path", d: circlePath(cx, cy, codeR), fill: bg, shadow: !labelled });
+    // The whole face of the shape, label band included, so a round card is
+    // covered corner to corner the way a flat one is.
+    holo(circlePath(cx, cy, labelled ? R : codeR), W, W);
     items.push({ t: "path", d: decorPath(ox, oy, cx, cy, codeR, 1), fill: fg });
     if (rim) outlines.push({ t: "path", d: circlePath(cx, cy, R + rim * 0.55), stroke: fg, width: 0.13, opacity: 0.4 });
 
@@ -542,9 +586,13 @@ function scene() {
     if (logo) badge(stacked ? codeR + band * 0.28 : mid, unit * brand.logoScale() * (stacked ? 0.275 : 0.34), BADGE_ANGLE[badgeAt]);
   } else {
     const bar = kind === "badge" ? total * 0.18 : 0;
-    // The code's own clear margin is not breathing room: without a gap the
-    // label bar reads as if it is jammed against the bottom of the code.
-    const gap = bar ? total * 0.07 : 0;
+    /* The code's own clear margin is not breathing room: without a gap the
+     * label bar reads as if it is jammed against the bottom of the code. It is
+     * only wanted when the bar meets the code directly, though. Put a name
+     * between them and the strip already ends in the same air every other mark
+     * gets, so keeping the gap as well stacks the two and leaves the name
+     * floating further off the ribbon than it sits from the code. */
+    const gap = bar && !below ? total * 0.07 : 0;
     const r = kind === "panel" ? 0 : total * 0.08;
     W = total + f.pad * 2;
     // Aligned inside the same band the groups are measured against, so "left"
@@ -566,20 +614,25 @@ function scene() {
      * proportional margin around it comes out to almost nothing and it sits on
      * the border. What the eye is judging is the gap to the edge, and that gap
      * should not shrink just because the artwork is a letterbox. */
-    const airEdge = total * 0.07;    // room between a mark and the card's edge
-    const airCode = total * 0.015;   // least room between a mark and the code
-    /* Both strips are cut to the same depth, the deeper of the two, so the code
-     * sits as far from the top of the card as it does from the bottom. Each
-     * mark is then held that same fixed distance in from its own border, and
-     * the slack from evening out the strips falls on the code side. A logo and
-     * a name are rarely the same height, so the alternative, holding each the
-     * same distance from the code, hands the whole difference to the margins
-     * and leaves the taller of the two visibly nearer its edge. The border is
-     * the line the eye actually measures against. */
-    const deepest = Math.max(topGrp ? topGrp.band : 0, botGrp ? botGrp.band : 0);
-    const even = deepest + airEdge + airCode;
-    const logoStrip = topGrp ? even : 0;
-    const strip = botGrp ? even : 0;
+    /* The gap the eye judges on the code's side is not the gap to the code's
+     * box. The box carries four blank modules of quiet zone inside its edge, so
+     * a mark set hard against the box still reads as four modules clear of the
+     * code, and every arrangement measured against the box came out looking
+     * bottom-weighted no matter what the numbers said. Every measurement here
+     * is to the ink: the card's edge on one side, the outermost module on the
+     * other.
+     *
+     * Making those two equal fixes the strip. Sitting `slip` clear of the box
+     * puts the mark `slip + QUIET` from the modules, so the card's edge has to
+     * be that same distance away, and the strip is the mark plus the two. The
+     * quiet zone is thus paid for out of the card rather than out of the gap,
+     * which is what pulls the mark down towards the code instead of stranding
+     * it against the border. */
+    const slip = total * 0.012;      // a hair of daylight before the code's box
+    const airEdge = slip + QUIET;    // and the matching gap at the card's edge
+    const deep = (grp) => (grp ? airEdge + grp.h + slip : 0);
+    const logoStrip = deep(topGrp);
+    const strip = deep(botGrp);
     const card = W + logoStrip + strip + gap + bar; // everything above the credit line
     H = card + foot;
     ox = f.pad;
@@ -590,7 +643,10 @@ function scene() {
       outlines.push({ t: "path", d: rectPath(...box, [r, r, r, r]), stroke: fg });
       holo(rectPath(...box, [r, r, r, r]), W, card);
     } else {
-      items.push({ t: "path", d: rectPath(0, 0, W, card), fill: bg });
+      // No border to give this one an edge, so it gets a shadow instead: without
+      // one the watermark reads as loose marks on the page rather than as a
+      // surface the code is printed on.
+      items.push({ t: "path", d: rectPath(0, 0, W, card), fill: bg, shadow: true });
       holo(rectPath(0, 0, W, card), W, card);
     }
     if (bar) {
@@ -604,10 +660,6 @@ function scene() {
      * on the lockup: "split" puts the logo in the top strip and the name in the
      * bottom one, so each takes its own position, while the other two lockups
      * are a single row of both and take the one position between them. */
-    /* Measured off the ink rather than the line box the strip was sized from: a
-     * logo fills its box exactly, a line of text sits inside one with air above
-     * and below it, and squaring the two by their boxes leaves the text looking
-     * further from the edge than the logo is. */
     if (topGrp) {
       const y = f.pad + airEdge + topGrp.h / 2;
       items.push(...shift(topGrp, alignX(topGrp, lock === "split" ? brand.logoPlace() : brand.namePlace()), y));
@@ -667,6 +719,20 @@ function paint(target, cell) {
   g.imageSmoothingQuality = "high";
   for (const it of s.items) {
     if (it.t === "path") {
+      /* Shadowed fills are drawn through a scaled path rather than under a
+       * scaled context: canvas transforms the shadow's offset but not its blur,
+       * so blurring inside the scale would come out cell-times too tight. */
+      if (it.shadow) {
+        g.save();
+        const p = new Path2D();
+        p.addPath(new Path2D(it.d), new DOMMatrix().scale(cell));
+        g.shadowColor = SHADOW.color;
+        g.shadowBlur = SHADOW.blur * cell;
+        g.shadowOffsetY = SHADOW.dy * cell;
+        g.fillStyle = it.fill;
+        g.fill(p, it.rule || "nonzero");
+        g.restore();
+      }
       g.save();
       g.scale(cell, cell);
       const p = new Path2D(it.d);
@@ -707,16 +773,17 @@ function paint(target, cell) {
       const grad = g.createLinearGradient(it.x1, it.y1, it.x2, it.y2);
       for (const [stop, rgb, a] of HOLO) grad.addColorStop(stop, `rgba(${rgb},${a})`);
       g.fillStyle = grad;
-      g.font = `700 ${it.size}px ${DISPLAY}`;
-      g.textAlign = "center";
-      g.textBaseline = "middle";
+      // Every repeat is stamped from the one outline through its own matrix and
+      // collected into a single path, so the gradient is laid across the whole
+      // pattern in one fill rather than restarting inside each mark.
+      const stamp = new Path2D(wordmark.d);
+      const all = new Path2D();
+      const deg = (it.tilt * 180) / Math.PI;
       for (const p of it.at) {
-        g.save();
-        g.translate(p.x, p.y);
-        g.rotate(it.tilt);
-        g.fillText(HOLO_TEXT, 0, 0);
-        g.restore();
+        all.addPath(stamp, new DOMMatrix()
+          .translate(p.x, p.y).rotate(deg).scale(it.scale).translate(-wordmark.cx, -wordmark.cy));
       }
+      g.fill(all, "evenodd");
       g.restore();
     }
   }
@@ -759,22 +826,35 @@ function toSvg() {
   let body = "", defs = "", ring = 0, clip = 0, holos = 0;
   for (const it of s.items) {
     if (it.t === "holo") {
-      const gid = `holo${holos}`, cid = `holoclip${holos++}`;
+      const k = holos++;
+      const gid = `holo${k}`, cid = `holoclip${k}`, mid = `holomark${k}`;
       const stops = HOLO.map(([stop, rgb, a]) => `<stop offset="${stop}" stop-color="rgb(${rgb})" stop-opacity="${a}"/>`).join("");
       defs += `<linearGradient id="${gid}" gradientUnits="userSpaceOnUse" x1="${n(it.x1)}" y1="${n(it.y1)}" x2="${n(it.x2)}" y2="${n(it.y2)}">${stops}</linearGradient>`;
       defs += `<clipPath id="${cid}" clipPathUnits="userSpaceOnUse"><path d="${it.d}" clip-rule="${it.rule}"/></clipPath>`;
       const deg = n((it.tilt * 180) / Math.PI);
+      // One copy of the outline in the defs, pointed at once per repeat. Inlined
+      // instead, the wordmark's own path data would ride the file forty times
+      // over and dwarf the code it is sitting behind.
+      defs += `<path id="${mid}" d="${wordmark.d}"/>`;
       const runs = it.at.map((p) =>
-        `<text transform="translate(${n(p.x)} ${n(p.y)}) rotate(${deg})" font-size="${n(it.size)}" text-anchor="middle" dominant-baseline="central">${HOLO_TEXT}</text>`
+        `<use href="#${mid}" transform="translate(${n(p.x)} ${n(p.y)}) rotate(${deg}) scale(${n(it.scale)}) translate(${n(-wordmark.cx)} ${n(-wordmark.cy)})"/>`
       ).join("");
       // crispEdges on the root would step the gradient and the glyph edges, so
       // the watermark opts out of it.
-      body += `<g clip-path="url(#${cid})" fill="url(#${gid})" font-family="${DISPLAY}" font-weight="700" shape-rendering="auto">${runs}</g>`;
+      body += `<g clip-path="url(#${cid})" fill="url(#${gid})" fill-rule="evenodd" shape-rendering="auto">${runs}</g>`;
     } else if (it.t === "path") {
       const stroke = it.stroke
         ? ` stroke="${it.stroke}" stroke-width="${n(it.width ?? STROKE * 2)}"${it.opacity != null ? ` stroke-opacity="${it.opacity}"` : ""}`
         : "";
-      body += `<path d="${it.d}" fill="${it.fill || "none"}" fill-rule="${it.rule || "nonzero"}"${stroke}/>`;
+      let drop = "";
+      if (it.shadow) {
+        const id = `drop${holos++}`;
+        // The region has to be opened up or the blur is clipped to the bounds.
+        defs += `<filter id="${id}" x="-15%" y="-15%" width="130%" height="130%">` +
+          `<feDropShadow dx="0" dy="${n(SHADOW.dy)}" stdDeviation="${n(SHADOW.sd)}" flood-color="#0f1219" flood-opacity="0.22"/></filter>`;
+        drop = ` filter="url(#${id})"`;
+      }
+      body += `<path d="${it.d}" fill="${it.fill || "none"}" fill-rule="${it.rule || "nonzero"}"${stroke}${drop}/>`;
     } else if (it.t === "image") {
       let attr = "";
       if (it.radius) {
@@ -1092,12 +1172,17 @@ document.getElementById("qr-svg").addEventListener("click", () => {
 });
 
 loadBrandMark();
+loadWordmark();
 build();
 
 
 
 
 
-window.__scene = scene; // TEMP
+
+
+
+
+
 
 
