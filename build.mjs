@@ -87,6 +87,92 @@ function icon(name, cls = "icon") {
   return `<svg class="${cls}" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#${name}"></use></svg>`;
 }
 
+/* ---------- icon sprite ----------
+ * Icons are authored as one sprite and referenced as /assets/icons.svg#id, but
+ * that makes every icon on the site hang off a single extra request: if it is
+ * slow, 404s, or is stripped by a proxy that distrusts SVG (they can carry
+ * script, so filters often do), all of them vanish at once while the page
+ * around them renders normally.
+ *
+ * So each page now carries only the symbols it actually uses and the reference
+ * becomes a local #id. A tool page uses about five icons and pays a few hundred
+ * bytes for them, against a 9KB file plus a round trip; the two index pages use
+ * most of the set and come out roughly even, minus the request. */
+const SPRITE_SYMBOLS = (() => {
+  const src = read(join(SRC, "assets/icons.svg"));
+  const map = new Map();
+  for (const m of src.matchAll(/<symbol id="([^"]+)"[\s\S]*?<\/symbol>/g)) map.set(m[1], m[0]);
+  return map;
+})();
+
+/* Scripts draw icons too, so a page needs the symbols its JS can reach as well
+ * as the ones in its markup. Names built from a variable (card.js renders any
+ * tool's icon) cannot be known here, so a script that does that marks the page
+ * as needing the whole set. Import edges are followed because the two dynamic
+ * callers, search.js and favourites.js, reach it through card.js. */
+const JS_ICONS = (() => {
+  const dir = join(SRC, "js");
+  const files = existsSync(dir) ? walk(dir).filter((f) => f.endsWith(".js")) : [];
+  const own = new Map();
+  for (const file of files) {
+    const src = read(file);
+    const fixed = new Set();
+    let dynamic = false;
+    // <use> only: a bare href="#..." in a script is as likely to be an anchor,
+    // or the <textPath> the QR generator points at its own curved path.
+    for (const m of src.matchAll(/<use\s+href="#([^"`']*)"/g)) {
+      if (m[1].includes("${")) dynamic = true;
+      else if (m[1]) fixed.add(m[1]);
+    }
+    const imports = [...src.matchAll(/from\s+"([^"]+\.js)"/g)].map((m) =>
+      m[1].startsWith("/") ? join(SRC, m[1].slice(1)) : join(dirname(file), m[1])
+    );
+    own.set(file, { fixed, dynamic, imports });
+  }
+  /* Fixed names flatten through imports, but "dynamic" deliberately does not.
+     card.js draws an arbitrary tool's icon, yet it is only ever reached through
+     an import, and its callers render a card solely where a grid exists to
+     render into: /tools/ and /favourites/. Propagating the flag would drag the
+     whole sprite onto all 63 tool pages, which load favourites.js just to hang
+     a star on the header. Those two grid pages are matched by hook below. */
+  const resolve = (file, seen = new Set()) => {
+    if (seen.has(file) || !own.has(file)) return { fixed: new Set(), dynamic: false };
+    seen.add(file);
+    const node = own.get(file);
+    const fixed = new Set(node.fixed);
+    for (const dep of node.imports) resolve(dep, seen).fixed.forEach((i) => fixed.add(i));
+    return { fixed, dynamic: node.dynamic };
+  };
+  const out = new Map();
+  for (const file of files) out.set("/" + relative(SRC, file).replace(/\\/g, "/"), resolve(file));
+  return out;
+})();
+
+function inlineSprite(html) {
+  const used = new Set();
+  const rewritten = html.replace(/href="\/assets\/icons\.svg#([A-Za-z0-9_-]+)"/g, (_, id) => {
+    if (!SPRITE_SYMBOLS.has(id)) throw new Error(`icon: no symbol "${id}" in assets/icons.svg`);
+    used.add(id);
+    return `href="#${id}"`;
+  });
+  // These two grids are filled with cards for arbitrary tools at runtime, so
+  // the icon set cannot be known from the markup: they take the lot.
+  let needsAll = /data-search-results|data-fav-grid/.test(rewritten);
+  for (const m of rewritten.matchAll(/<script[^>]+src="(\/js\/[^"?]+)/g)) {
+    const entry = JS_ICONS.get(m[1]);
+    if (!entry) continue;
+    entry.fixed.forEach((id) => SPRITE_SYMBOLS.has(id) && used.add(id));
+    needsAll = needsAll || entry.dynamic;
+  }
+  if (needsAll) SPRITE_SYMBOLS.forEach((_, id) => used.add(id));
+  if (!used.size) return rewritten;
+  // Emitted in sprite order rather than order of first use, so a given set of
+  // icons produces the same bytes on every page and the output stays diffable.
+  const symbols = [...SPRITE_SYMBOLS.keys()].filter((id) => used.has(id)).map((id) => SPRITE_SYMBOLS.get(id));
+  const block = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">${symbols.join("")}</svg>`;
+  return rewritten.replace(/(<body[^>]*>)/, `$1${block}`);
+}
+
 // showTag is off inside category groups, where the heading already says it.
 // data-cat drives the tile colour, so colour carries meaning
 // Popularity meter: 5 segments, first `p` filled. Curated demand estimate,
@@ -401,6 +487,37 @@ function writeSitemap(paths) {
   writeFileSync(join(DIST, "robots.txt"), robots.replace(/Sitemap:.*/g, "").trimEnd() + `\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 }
 
+/* ---------- inline SVG masks into the CSS ----------
+ * The wordmark is painted as a mask over the theme ink, so if the SVG behind it
+ * never arrives the header does not lose a logo, it gains a solid ink block:
+ * the element keeps its box and its background with nothing masking it. That is
+ * a worse failure than a missing image, and a filtering proxy is enough to
+ * cause it. Carrying it inside the stylesheet removes the request.
+ *
+ * Percent-encoded rather than base64: base64 would add about a third to a file
+ * that is already 12KB, and encodes worse under gzip. Only the characters that
+ * would end the url() or be read as a fragment are escaped. */
+const encodeSvgForCss = (svg) =>
+  svg
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/"/g, "'")
+    .replace(/[%#<>?[\]^`{|}]/g, (c) => "%" + c.charCodeAt(0).toString(16).toUpperCase());
+
+function inlineCssMasks() {
+  const cssDir = join(DIST, "css");
+  if (!existsSync(cssDir)) return;
+  for (const file of walk(cssDir)) {
+    if (!file.endsWith(".css")) continue;
+    const src = read(file);
+    const out = src.replace(/url\((\/assets\/[A-Za-z0-9._-]+\.svg)\)/g, (m, p) => {
+      const abs = join(SRC, p.slice(1));
+      return existsSync(abs) ? `url("data:image/svg+xml,${encodeSvgForCss(read(abs))}")` : m;
+    });
+    if (out !== src) writeFileSync(file, out);
+  }
+}
+
 /* ---------- generate category pages from data ---------- */
 function categoryPagesFromData(categories) {
   // returns [{relPath, meta, body}] for each category not already backed by a file
@@ -443,6 +560,9 @@ function build() {
     const from = join(SRC, dir);
     if (existsSync(from)) cpSync(from, join(DIST, dir), { recursive: true });
   }
+
+  // Before anything is hashed, so the stamped hash covers the final bytes.
+  inlineCssMasks();
 
   /* Version assets in dependency order, so every hash is taken from the exact
      bytes that get served: assets first (nothing references anything), then
@@ -497,7 +617,9 @@ function build() {
   const emit = (relPath, meta, body) => {
     const outPath = join(DIST, relPath);
     mkdirSync(dirname(outPath), { recursive: true });
-    writeFileSync(outPath, versionAssets(renderPage(layout, partials, data, meta, body)));
+    // inlineSprite runs first: it consumes the /assets/icons.svg#id form, which
+    // versionAssets would otherwise have stamped a ?v= into.
+    writeFileSync(outPath, versionAssets(inlineSprite(renderPage(layout, partials, data, meta, body))));
     emitted.add(relPath.replace(/\\/g, "/"));
     if (meta.path && meta.path !== "/404" && meta.noindex !== "1") {
       const post = data.blog.find((p) => `/blog/${p.slug}/` === meta.path);

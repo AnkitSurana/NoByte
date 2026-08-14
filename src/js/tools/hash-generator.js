@@ -11,7 +11,7 @@ function renderRows(values) {
   results.innerHTML = ALGOS.map((a) => `
     <div class="card">
       <div class="row between mb-2"><strong class="small">${a}</strong>
-        <button class="btn btn--sm copy-btn" data-algo="${a}"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
+        <button class="btn btn--sm copy-btn" data-algo="${a}"><svg class="icon icon-copy" aria-hidden="true"><use href="#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="#check"></use></svg></button>
       </div>
       <div class="output-box" data-out="${a}" style="font-size:var(--t-xs);">${values[a] || "—"}</div>
     </div>`).join("");

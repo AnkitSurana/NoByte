@@ -10,7 +10,7 @@ export async function loadTools() {
 
 export const escapeHtml = (s = "") => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-const icon = (name) => `<svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#${name}"></use></svg>`;
+const icon = (name) => `<svg class="icon" aria-hidden="true"><use href="#${name}"></use></svg>`;
 
 function popMeter(p = 0) {
   const segs = Array.from({ length: 5 }, (_, i) => `<i${i < p ? ' class="on"' : ""}></i>`).join("");

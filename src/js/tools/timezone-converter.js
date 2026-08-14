@@ -71,7 +71,7 @@ function addRow(tz) {
   row.innerHTML = `
     <select class="select select--sm" data-tz-target aria-label="Target time zone">${optionList}</select>
     <span class="tz-row__out"><span class="mono val" data-tz-out>—</span>
-    <button class="icon-btn icon-btn--sm" type="button" data-tz-remove aria-label="Remove zone"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#x"></use></svg></button></span>`;
+    <button class="icon-btn icon-btn--sm" type="button" data-tz-remove aria-label="Remove zone"><svg class="icon" aria-hidden="true"><use href="#x"></use></svg></button></span>`;
   row.querySelector("[data-tz-target]").value = tz;
   row.querySelector("[data-tz-target]").addEventListener("change", update);
   row.querySelector("[data-tz-remove]").addEventListener("click", () => { row.remove(); });

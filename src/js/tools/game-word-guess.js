@@ -78,7 +78,7 @@ function buildKeys() {
       if (action) {
         b.className = "gkey wide";
         b.setAttribute("aria-label", action.label);
-        b.innerHTML = `<svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#${action.icon}"></use></svg>`;
+        b.innerHTML = `<svg class="icon" aria-hidden="true"><use href="#${action.icon}"></use></svg>`;
       } else {
         b.className = "gkey";
         b.textContent = ch;

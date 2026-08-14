@@ -121,7 +121,7 @@ function buildPad() {
   // a sprite icon, not the ⌫ character: that glyph comes from a fallback font
   // and never matches the weight of the digits beside it
   erase.setAttribute("aria-label", "Erase");
-  erase.innerHTML = '<svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#delete"></use></svg>';
+  erase.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#delete"></use></svg>';
   erase.addEventListener("click", () => place(0));
   padEl.appendChild(erase);
 }

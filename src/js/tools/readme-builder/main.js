@@ -59,7 +59,7 @@ function renderPalette() {
   SECTIONS.forEach((def) => {
     const b = document.createElement("button");
     b.type = "button";
-    b.innerHTML = `<svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#${def.icon}"></use></svg> ${def.label}`;
+    b.innerHTML = `<svg class="icon" aria-hidden="true"><use href="#${def.icon}"></use></svg> ${def.label}`;
     b.addEventListener("click", () => addCard(def.id));
     el.palette.appendChild(b);
   });
@@ -99,10 +99,10 @@ function renderDoc() {
     node.dataset.uid = card.uid;
     node.innerHTML = `
       <div class="rb-card__head">
-        <span class="rb-card__handle" aria-label="Drag to reorder"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#grip-vertical"></use></svg></span>
+        <span class="rb-card__handle" aria-label="Drag to reorder"><svg class="icon" aria-hidden="true"><use href="#grip-vertical"></use></svg></span>
         <span class="rb-card__title">${def.label}</span>
-        <button class="icon-btn icon-btn--sm" data-collapse aria-label="Collapse"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#chevron-down"></use></svg></button>
-        <button class="icon-btn icon-btn--sm" data-delete aria-label="Remove section"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#trash"></use></svg></button>
+        <button class="icon-btn icon-btn--sm" data-collapse aria-label="Collapse"><svg class="icon" aria-hidden="true"><use href="#chevron-down"></use></svg></button>
+        <button class="icon-btn icon-btn--sm" data-delete aria-label="Remove section"><svg class="icon" aria-hidden="true"><use href="#trash"></use></svg></button>
       </div>
       <div class="rb-card__body">${def.fields.map((f) => fieldControl(card, f)).join("")}</div>`;
 

@@ -19,9 +19,9 @@ function renderImages() {
       <span class="file-name">${escapeHtml(item.file.name)}</span>
       <span class="file-size">${humanBytes(item.file.size)}</span>
       <span class="file-actions">
-        <button class="icon-btn icon-btn--sm" data-up ${i === 0 ? "disabled" : ""} aria-label="Move up"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#chevron-down" style="transform:rotate(180deg);transform-origin:center"></use></svg></button>
-        <button class="icon-btn icon-btn--sm" data-down ${i === images.length - 1 ? "disabled" : ""} aria-label="Move down"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#chevron-down"></use></svg></button>
-        <button class="icon-btn icon-btn--sm" data-remove aria-label="Remove"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#x"></use></svg></button>
+        <button class="icon-btn icon-btn--sm" data-up ${i === 0 ? "disabled" : ""} aria-label="Move up"><svg class="icon" aria-hidden="true"><use href="#chevron-down" style="transform:rotate(180deg);transform-origin:center"></use></svg></button>
+        <button class="icon-btn icon-btn--sm" data-down ${i === images.length - 1 ? "disabled" : ""} aria-label="Move down"><svg class="icon" aria-hidden="true"><use href="#chevron-down"></use></svg></button>
+        <button class="icon-btn icon-btn--sm" data-remove aria-label="Remove"><svg class="icon" aria-hidden="true"><use href="#x"></use></svg></button>
       </span>`;
     li.querySelector("[data-up]").addEventListener("click", () => { if (i > 0) { [images[i - 1], images[i]] = [images[i], images[i - 1]]; renderImages(); } });
     li.querySelector("[data-down]").addEventListener("click", () => { if (i < images.length - 1) { [images[i + 1], images[i]] = [images[i], images[i + 1]]; renderImages(); } });
@@ -113,13 +113,13 @@ function renderMerge() {
   mergeFiles.forEach((file, i) => {
     const li = document.createElement("li");
     li.innerHTML = `
-      <svg class="icon" aria-hidden="true" style="width:22px;height:22px;color:var(--ink-3)"><use href="/assets/icons.svg#file-type"></use></svg>
+      <svg class="icon" aria-hidden="true" style="width:22px;height:22px;color:var(--ink-3)"><use href="#file-type"></use></svg>
       <span class="file-name">${escapeHtml(file.name)}</span>
       <span class="file-size">${humanBytes(file.size)}</span>
       <span class="file-actions">
-        <button class="icon-btn icon-btn--sm" data-up ${i === 0 ? "disabled" : ""} aria-label="Move up"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#chevron-down" style="transform:rotate(180deg);transform-origin:center"></use></svg></button>
-        <button class="icon-btn icon-btn--sm" data-down ${i === mergeFiles.length - 1 ? "disabled" : ""} aria-label="Move down"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#chevron-down"></use></svg></button>
-        <button class="icon-btn icon-btn--sm" data-remove aria-label="Remove"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#x"></use></svg></button>
+        <button class="icon-btn icon-btn--sm" data-up ${i === 0 ? "disabled" : ""} aria-label="Move up"><svg class="icon" aria-hidden="true"><use href="#chevron-down" style="transform:rotate(180deg);transform-origin:center"></use></svg></button>
+        <button class="icon-btn icon-btn--sm" data-down ${i === mergeFiles.length - 1 ? "disabled" : ""} aria-label="Move down"><svg class="icon" aria-hidden="true"><use href="#chevron-down"></use></svg></button>
+        <button class="icon-btn icon-btn--sm" data-remove aria-label="Remove"><svg class="icon" aria-hidden="true"><use href="#x"></use></svg></button>
       </span>`;
     li.querySelector("[data-up]").addEventListener("click", () => { if (i > 0) { [mergeFiles[i - 1], mergeFiles[i]] = [mergeFiles[i], mergeFiles[i - 1]]; renderMerge(); } });
     li.querySelector("[data-down]").addEventListener("click", () => { if (i < mergeFiles.length - 1) { [mergeFiles[i + 1], mergeFiles[i]] = [mergeFiles[i], mergeFiles[i + 1]]; renderMerge(); } });
