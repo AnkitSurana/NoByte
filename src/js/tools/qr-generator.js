@@ -511,19 +511,25 @@ function scene() {
     const held = total * 0.15 * 0.66;   // what a strip carries at 100%
     const topGrp = above ? brandGroup(strips, held, fg, topParts) : null;
     const botGrp = below ? brandGroup(strips, held, fg, bottomParts) : null;
-    /* The mark's clearance from the card's edge is a fixed distance rather than
-     * a share of its own strip. A share looks right for a tall logo and fails
-     * for a flat one: a wide banner mark is only a couple of modules high, so a
+    /* A mark's clearance from the card's edge is a fixed distance rather than a
+     * share of its own strip. A share looks right for a tall logo and fails for
+     * a flat one: a wide banner mark is only a couple of modules high, so a
      * proportional margin around it comes out to almost nothing and it sits on
      * the border. What the eye is judging is the gap to the edge, and that gap
-     * should not shrink just because the artwork is a letterbox.
-     *
-     * Below the mark it is nearly nothing on purpose, because the code's own
-     * four-module quiet zone is already sitting there doing the same job. */
-    const airAbove = total * 0.07;
-    const airBelow = total * 0.01;
-    const logoStrip = topGrp ? topGrp.band + airAbove + airBelow : 0;
-    const strip = botGrp ? botGrp.band / 0.66 : 0;
+     * should not shrink just because the artwork is a letterbox. */
+    const airEdge = total * 0.07;    // least room between a mark and the card
+    const airCode = total * 0.015;   // and between a mark and the code itself
+    const depth = (grp) => (grp ? grp.band + airEdge + airCode : 0);
+    /* Both strips are then cut to the same depth, the deeper of the two, so the
+     * code sits as far from the top of the card as it does from the bottom. A
+     * logo and a name are rarely the same height, and strips each sized to
+     * their own contents leave the code visibly off centre in its card. The
+     * side with less in it keeps the slack against the card's edge, so the two
+     * marks stay the same short distance from the code and the extra room ends
+     * up in the margins where it reads as deliberate. */
+    const even = Math.max(depth(topGrp), depth(botGrp));
+    const logoStrip = topGrp ? even : 0;
+    const strip = botGrp ? even : 0;
     const card = W + logoStrip + strip + gap + bar; // everything above the credit line
     H = card + foot;
     ox = f.pad;
@@ -546,20 +552,18 @@ function scene() {
      * on the lockup: "split" puts the logo in the top strip and the name in the
      * bottom one, so each takes its own position, while the other two lockups
      * are a single row of both and take the one position between them. */
-    // The mark, dropped clear of the card's edge and left to sit just above the
-    // code's quiet zone rather than centred between the two.
+    /* Each mark hangs off the code rather than off the card, at the same short
+     * distance on both sides. The code's own four-module quiet zone already
+     * sits between them, so this reads as a comfortable gap rather than a tight
+     * one, and whatever slack the evened-out strip has left over stays outside
+     * the mark, against the card's edge. */
     if (topGrp) {
-      const y = f.pad + airAbove + topGrp.band / 2;
+      const y = oy - airCode - topGrp.band / 2;
       items.push(...shift(topGrp, alignX(topGrp, lock === "split" ? brand.logoPlace() : brand.namePlace()), y));
     }
-    // The name sits high in the room below the code rather than centred in it.
-    // The code already carries four blank modules of quiet zone along its
-    // bottom edge, so centring in what is left counts that emptiness twice and
-    // leaves the name looking adrift. Nothing moves into the quiet zone, which
-    // must stay clear; the name just stops floating below it.
     if (botGrp) {
-      const top = oy + total, bottom = card - bar - STROKE;
-      items.push(...shift(botGrp, alignX(botGrp, brand.namePlace()), top + (bottom - top) * 0.34));
+      const y = oy + total + airCode + botGrp.band / 2;
+      items.push(...shift(botGrp, alignX(botGrp, brand.namePlace()), y));
     }
   }
 
@@ -1008,6 +1012,7 @@ document.getElementById("qr-svg").addEventListener("click", () => {
 
 loadBrandMark();
 build();
+
 
 
 
