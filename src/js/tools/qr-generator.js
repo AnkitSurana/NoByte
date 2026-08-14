@@ -455,7 +455,12 @@ function scene() {
    *  on top, so it sits in the paper rather than over the artwork. */
   const holo = (d, w, h) => {
     if (!wordmark) return; // the artwork has not arrived yet; draw() runs again when it does
-    const scale = (total * 0.2) / wordmark.w;
+    /* Small enough that a repeat fits between the cuts. The pattern runs edge
+     * to edge and the code takes its bite out of the middle, so the bigger each
+     * mark is the likelier any given one is to land across that edge and come
+     * out as a fragment. At this size most of them sit whole in the space they
+     * are given and the name is readable wherever you look. */
+    const scale = (total * 0.12) / wordmark.w;
     const tileW = wordmark.w * scale, tileH = wordmark.h * scale;
     /* Cut around the modules themselves, not around the whole code box. The box
      * includes the four-module quiet zone, and on these shapes that zone is most
@@ -1174,6 +1179,7 @@ document.getElementById("qr-svg").addEventListener("click", () => {
 loadBrandMark();
 loadWordmark();
 build();
+
 
 
 
