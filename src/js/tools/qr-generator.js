@@ -112,13 +112,32 @@ const n = (v) => Math.round(v * 1000) / 1000;
  * so it lands the same on a machine that has never heard of Outfit. */
 const gauge = document.createElement("canvas").getContext("2d");
 const DISPLAY = "Outfit, system-ui, sans-serif";
-/* The three faces the site already ships, so a chosen font is one that is
- * actually loaded rather than whatever the viewer happens to have. */
+/* Every face here is one the site ships, so a chosen font is one that really
+ * arrives rather than whatever the viewer happens to have installed. The last
+ * five exist only for this control and are fetched the moment one is picked,
+ * which is what ensureFace() waits for before trusting a measurement. */
 const FONTS = {
-  display: { family: DISPLAY, weight: 700 },
-  text:    { family: "Inter, system-ui, sans-serif", weight: 500 },
-  mono:    { family: "'JetBrains Mono', ui-monospace, monospace", weight: 500 },
+  display:   { family: DISPLAY, weight: 700 },
+  text:      { family: "Inter, system-ui, sans-serif", weight: 500 },
+  mono:      { family: "'JetBrains Mono', ui-monospace, monospace", weight: 500 },
+  serif:     { family: "'Playfair Display', Georgia, serif", weight: 700 },
+  condensed: { family: "Oswald, 'Arial Narrow', sans-serif", weight: 600 },
+  script:    { family: "Caveat, 'Segoe Script', cursive", weight: 700 },
+  rounded:   { family: "Quicksand, system-ui, sans-serif", weight: 700 },
+  heavy:     { family: "'Archivo Black', Impact, sans-serif", weight: 400 },
 };
+
+/* A face nothing has used yet is not in the browser until it is asked for, so
+ * the draw that follows picking one would measure and paint the fallback. Each
+ * is loaded once, on first use, and the code redrawn when it lands: a beat of
+ * the old face rather than a preview that quietly lies about the font. */
+const asked = new Set();
+function ensureFace(face) {
+  const key = `${face.weight} ${face.family}`;
+  if (asked.has(key) || !document.fonts?.load) return;
+  asked.add(key);
+  document.fonts.load(`${face.weight} 32px ${face.family}`).then(() => draw()).catch(() => {});
+}
 const FONT = (size) => `700 ${size}px ${DISPLAY}`;
 /* Measured in the face it will be drawn in: a width taken from one family and
  * applied to another is what makes textLength stretch the glyphs to reach it. */
@@ -130,6 +149,19 @@ function textWidth(text, size, face) {
 function fitSize(text, size, max, face) {
   const w = textWidth(text, size, face);
   return w > max ? (size * max) / w : size;
+}
+
+/** The same, for text bent around a ring, which has no second line to fall back
+ *  on. A long name is shrunk to fit the arc it has, but only so far: past the
+ *  point where it would print too small to read it is cut instead, the way the
+ *  strips on the flat shapes cut theirs. */
+function fitArc(text, size, max, face) {
+  const fitted = fitSize(text, size, max, face);
+  const floor = size * 0.62;
+  if (fitted >= floor) return { text, size: fitted };
+  let cut = text;
+  while (cut.length > 1 && textWidth(cut + "…", floor, face) > max) cut = cut.slice(0, -1);
+  return { text: cut + "…", size: floor };
 }
 
 const inFinder = (r, c, count) =>
@@ -290,8 +322,10 @@ function brandGroup(maxW, maxH, fill, parts = "both") {
     logoW = logoH * ratio;
   }
   // A wide logo is capped rather than left to eat the whole row, so a banner
-  // logo and a name can still sit side by side.
-  const logoCap = name ? maxW * 0.42 : maxW;
+  // logo and a name can still sit side by side. The cap moves with the size
+  // that was asked for, though: turning the logo up and watching nothing happen
+  // because it was already against the cap is worse than a tight row.
+  const logoCap = name ? Math.min(maxW, maxW * 0.42 * brand.logoScale()) : maxW;
   if (logoW > logoCap) { logoH *= logoCap / logoW; logoW = logoCap; }
 
   const face = brand.nameFace();
@@ -302,7 +336,10 @@ function brandGroup(maxW, maxH, fill, parts = "both") {
     // Shrink the row as a whole so the logo and the name stay in proportion,
     // but never past the point of being readable.
     const k = maxW / w;
-    const floor = maxH * 0.42;
+    // The floor moves with the size that was asked for: someone who turned the
+    // name up wants it big, so a long one is cut sooner rather than quietly
+    // set back at the same size it would have been at 100%.
+    const floor = maxH * 0.42 * brand.nameScale();
     if (size * k >= floor) {
       logoW *= k; logoH *= k; size *= k; textW *= k;
     } else {
@@ -325,7 +362,12 @@ function brandGroup(maxW, maxH, fill, parts = "both") {
     x += logoW + gap;
   }
   if (textW) items.push({ t: "text", x: x + textW / 2, y: 0, size, fit: textW, text: name, fill, font: face.family, weight: face.weight });
-  return { items, w, h: Math.max(logoH, size) };
+  /* `band` is the maxH this content ended up worth: the value that, fed back
+   * in, would produce exactly what was just laid out. A caller sizing a strip
+   * around the group reads that rather than the ink height, so a row of text
+   * and a row of logo of the same weight get strips of the same depth, and a
+   * row shrunk to fit its width gets a shallower one to match. */
+  return { items, w, h: Math.max(logoH, size), band: Math.max(logoH, size / 0.72) };
 }
 
 const shift = (group, dx, dy) => group.items.map((it) => ({ ...it, x: it.x + dx, y: it.y + dy }));
@@ -355,8 +397,6 @@ function scene() {
   // name, or a logo that wants to sit with it.
   const above = lock === "above" ? hasBrand() : lock === "split" && Boolean(brand.logo());
   const below = lock === "below" ? hasBrand() : lock === "split" && Boolean(brand.name());
-  const logoStrip = flat && above ? total * 0.15 : 0;
-  const strip = flat && below ? total * 0.15 : 0;
   const topParts = lock === "split" ? "logo" : "both";
   const bottomParts = lock === "split" ? "name" : "both";
   const onAccent = light(accent) ? "#1D1A16" : bg;
@@ -389,8 +429,22 @@ function scene() {
     /* Words and a badge need more room than the loose modules leave, so they go
      * in a band outside the circle: the accent colour carrying a label on
      * "round with label", the plain background on "round", which has no outline
-     * at all and so reads as loose as the plain shape does. */
-    const band = labelled || hasBrand() ? codeR * (stacked ? 0.44 : 0.32) : 0;
+     * at all and so reads as loose as the plain shape does.
+     *
+     * The band is measured from what has to go in it rather than fixed, which
+     * is what makes the two size sliders mean something here. Held to a fixed
+     * depth the ring can only ever clamp a name that was asked to be bigger,
+     * so the slider moves and the code does not. */
+    const unit = codeR * 0.32;   // the band a name and a badge want at 100%
+    const nameH = codeR * 0.176 * brand.nameScale();
+    const labelH = codeR * 0.176;
+    const byText = Math.max(labelled ? labelH : 0, name ? nameH : 0) / 0.55;
+    const byBadge = logo ? unit * brand.logoScale() : 0;
+    // Stacked, the words and the badge share one side of the band, so the pair
+    // needs about a third less than the two would laid end to end.
+    const band = labelled || hasBrand()
+      ? (stacked ? (byText + byBadge) * 0.6875 : Math.max(byText, byBadge))
+      : 0;
     const R = codeR + band;
     // The plain circle has no card behind it, so a hairline rim is what gives
     // it an edge. The labelled one already has the accent band for that.
@@ -407,8 +461,10 @@ function scene() {
 
     const onBand = labelled ? onAccent : fg;
     const mid = codeR + band / 2;
-    const arc = (text, r, maxH, top) =>
-      items.push({ t: "arctext", top, cx, cy, r, size: fitSize(text, maxH, r * 2.1), text, fill: onBand });
+    const arc = (text, r, maxH, top, face = FONTS.display) => {
+      const fit = fitArc(text, maxH, r * 2.1, face);
+      items.push({ t: "arctext", top, cx, cy, r, size: fit.size, text: fit.text, fill: onBand, font: face.family, weight: face.weight });
+    };
     /** A round badge sunk into the band at `angle`, the way a profile picture
      *  sits on a scan code. Its backing keeps it clear of anything it overlaps. */
     const badge = (r, lr, angle) => {
@@ -416,24 +472,25 @@ function scene() {
       items.push({ t: "path", d: circlePath(bx, by, lr * 1.24), fill: labelled ? accent : bg });
       items.push({ t: "image", x: bx - lr, y: by - lr, w: lr * 2, h: lr * 2, img: logo.img, src: logo.src, radius: lr });
     };
-    /* Arc text keeps the same height whether or not the band was deepened to
-     * take a badge, so putting the logo on one arc does not resize the words on
-     * the other. An arc sharing its side with a badge gives up the inner part of
-     * the band and moves out to the rim. */
-    const line = codeR * 0.176;
+    /* Arc text is set at the height it asked for whether or not the band was
+     * deepened to take a badge, so putting the logo on one arc does not resize
+     * the words on the other. An arc sharing its side with a badge gives up the
+     * inner part of the band and moves out to the rim. */
     const shared = (side) => stacked && badgeAt === side;
     const arcR = (side) => (shared(side) ? codeR + band * 0.74 : mid);
-    const arcH = (side) => (shared(side) ? line * 0.85 : line);
+    const arcH = (side, h) => (shared(side) ? h * 0.85 : h);
 
     if (labelled) {
       const side = arcOf(labelTop);
-      arc((els.label.value || "SCAN ME").toUpperCase(), arcR(side), arcH(side), labelTop);
+      arc((els.label.value || "SCAN ME").toUpperCase(), arcR(side), arcH(side, labelH), labelTop);
     }
     if (name) {
       const side = arcOf(nameTop);
-      arc(name, arcR(side), arcH(side), nameTop);
+      arc(name, arcR(side), arcH(side, nameH), nameTop, brand.nameFace());
     }
-    if (logo) badge(stacked ? codeR + band * 0.28 : mid, band * (stacked ? 0.2 : 0.34), BADGE_ANGLE[badgeAt]);
+    // Sized from the slider rather than from the band, so a big name deepening
+    // the band does not drag the badge up with it.
+    if (logo) badge(stacked ? codeR + band * 0.28 : mid, unit * brand.logoScale() * (stacked ? 0.275 : 0.34), BADGE_ANGLE[badgeAt]);
   } else {
     const bar = kind === "badge" ? total * 0.18 : 0;
     // The code's own clear margin is not breathing room: without a gap the
@@ -441,6 +498,21 @@ function scene() {
     const gap = bar ? total * 0.07 : 0;
     const r = kind === "panel" ? 0 : total * 0.08;
     W = total + f.pad * 2;
+    // Aligned inside the same band the groups are measured against, so "left"
+    // lands on the code's left edge rather than the card's.
+    const strips = W * 0.82;
+    const alignX = (grp, a) =>
+      a === "left" ? W / 2 - strips / 2 + grp.w / 2 : a === "right" ? W / 2 + strips / 2 - grp.w / 2 : W / 2;
+    /* Each strip is as deep as what goes in it rather than a fixed slice of the
+     * card. Held to a fixed depth, a logo turned up past what the strip holds
+     * grows straight out of it and into the border, and the padding that was
+     * meant to centre it disappears from one side; sized this way the logo can
+     * be scaled freely and the room around it stays in proportion. */
+    const held = total * 0.15 * 0.66;   // what a strip carries at 100%
+    const topGrp = above ? brandGroup(strips, held, fg, topParts) : null;
+    const botGrp = below ? brandGroup(strips, held, fg, bottomParts) : null;
+    const logoStrip = topGrp ? topGrp.band / 0.66 : 0;
+    const strip = botGrp ? botGrp.band / 0.66 : 0;
     const card = W + logoStrip + strip + gap + bar; // everything above the credit line
     H = card + foot;
     ox = f.pad;
@@ -463,25 +535,18 @@ function scene() {
      * on the lockup: "split" puts the logo in the top strip and the name in the
      * bottom one, so each takes its own position, while the other two lockups
      * are a single row of both and take the one position between them. */
-    const strips = W * 0.82;
-    const alignX = (grp, a) =>
-      a === "left" ? W / 2 - strips / 2 + grp.w / 2 : a === "right" ? W / 2 + strips / 2 - grp.w / 2 : W / 2;
     // The mark, in the band above the code.
-    if (logoStrip) {
-      const grp = brandGroup(strips, logoStrip * 0.66, fg, topParts);
-      items.push(...shift(grp, alignX(grp, lock === "split" ? brand.logoPlace() : brand.namePlace()), f.pad + logoStrip / 2));
+    if (topGrp) {
+      items.push(...shift(topGrp, alignX(topGrp, lock === "split" ? brand.logoPlace() : brand.namePlace()), f.pad + logoStrip / 2));
     }
     // The name sits high in the room below the code rather than centred in it.
     // The code already carries four blank modules of quiet zone along its
     // bottom edge, so centring in what is left counts that emptiness twice and
     // leaves the name looking adrift. Nothing moves into the quiet zone, which
     // must stay clear; the name just stops floating below it.
-    if (strip) {
+    if (botGrp) {
       const top = oy + total, bottom = card - bar - STROKE;
-      // Aligned inside the same 82% band the group is measured against, so
-      // "left" lands on the code's left edge rather than the card's.
-      const grp = brandGroup(strips, strip * 0.66, fg, bottomParts);
-      items.push(...shift(grp, alignX(grp, brand.namePlace()), top + (bottom - top) * 0.34));
+      items.push(...shift(botGrp, alignX(botGrp, brand.namePlace()), top + (bottom - top) * 0.34));
     }
   }
 
@@ -578,7 +643,7 @@ function paint(target, cell) {
 function arcText(g, it, cell) {
   g.save();
   g.fillStyle = it.fill;
-  g.font = `700 ${it.size * cell}px Outfit, system-ui, sans-serif`;
+  g.font = `${it.weight || 700} ${it.size * cell}px ${it.font || DISPLAY}`;
   g.textAlign = "center";
   g.textBaseline = "middle";
   const r = it.r * cell, cx = it.cx * cell, cy = it.cy * cell;
@@ -630,7 +695,7 @@ function toSvg() {
       const id = `ring${ring++}`;
       // sweep 0 runs left to right under the circle, sweep 1 over the top
       defs += `<path id="${id}" fill="none" d="M${n(it.cx - it.r)} ${n(it.cy)}A${n(it.r)} ${n(it.r)} 0 0 ${it.top ? 1 : 0} ${n(it.cx + it.r)} ${n(it.cy)}"/>`;
-      body += `<text font-family="Outfit, system-ui, sans-serif" font-weight="700" font-size="${n(it.size)}" fill="${it.fill}" letter-spacing="${n(it.size * 0.06)}"><textPath href="#${id}" startOffset="50%" text-anchor="middle">${xmlEsc(it.text)}</textPath></text>`;
+      body += `<text font-family="${it.font || DISPLAY}" font-weight="${it.weight || 700}" font-size="${n(it.size)}" fill="${it.fill}" letter-spacing="${n(it.size * 0.06)}"><textPath href="#${id}" startOffset="50%" text-anchor="middle">${xmlEsc(it.text)}</textPath></text>`;
     }
   }
   // The viewBox grows by the margin on all four sides and the drawing is
@@ -643,6 +708,7 @@ function toSvg() {
 /* ---------- build ---------- */
 function build() {
   syncControls();
+  ensureFace(brand.nameFace());
   const data = payload();
   if (!data) {
     errorEl.textContent = activeType === "wifi" ? "Enter a network name." : "Enter text or a URL.";
@@ -929,3 +995,4 @@ document.getElementById("qr-svg").addEventListener("click", () => {
 
 loadBrandMark();
 build();
+

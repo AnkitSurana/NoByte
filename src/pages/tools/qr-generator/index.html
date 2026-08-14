@@ -58,8 +58,30 @@
           </div>
 
           <div id="qr-brand-body" hidden>
+            <!-- Shape comes first: it decides which of the controls below mean
+                 anything at all, so choosing it last is choosing it backwards. -->
             <div class="row row-wrap mt-4" style="gap:var(--s4);">
-              <div class="field"><label for="qr-brand-name">Your brand name</label><input class="input" id="qr-brand-name" maxlength="22" placeholder="Optional" /></div>
+              <div class="field"><label for="qr-frame">Shape</label>
+                <select class="select" id="qr-frame">
+                  <option value="none" selected>Plain</option>
+                  <option value="panel">Square card</option>
+                  <option value="rounded">Rounded card</option>
+                  <option value="round">Round</option>
+                  <option value="ring">Round with label</option>
+                  <option value="badge">Card with label</option>
+                </select>
+              </div>
+              <div class="field" id="f-label" hidden><label for="qr-label">Label</label><input class="input" id="qr-label" value="SCAN ME" maxlength="24" /></div>
+              <div class="field"><label for="qr-style">Module shape</label>
+                <select class="select" id="qr-style"><option value="square" selected>Squares</option><option value="rounded">Rounded</option><option value="dots">Dots</option></select>
+              </div>
+              <div class="field"><label for="qr-eye-style">Corner squares</label>
+                <select class="select" id="qr-eye-style"><option value="square" selected>Square</option><option value="rounded">Rounded</option><option value="circle">Circle</option></select>
+              </div>
+            </div>
+
+            <div class="row row-wrap mt-4" style="gap:var(--s4);">
+              <div class="field"><label for="qr-brand-name">Your brand name</label><input class="input" id="qr-brand-name" maxlength="40" placeholder="Optional" /></div>
               <div class="field"><label for="qr-logo">Your logo</label>
                 <input class="input" type="file" id="qr-logo" accept="image/*" />
                 <div class="qr-logo-row">
@@ -96,6 +118,11 @@
                   <option value="display" selected>Display</option>
                   <option value="text">Text</option>
                   <option value="mono">Mono</option>
+                  <option value="serif">Serif</option>
+                  <option value="condensed">Condensed</option>
+                  <option value="rounded">Rounded</option>
+                  <option value="heavy">Heavy</option>
+                  <option value="script">Handwritten</option>
                 </select>
               </div>
               <div class="field" id="f-name-align"><label for="qr-name-align">Name position</label>
@@ -107,26 +134,6 @@
               </div>
               <div class="field"><label for="qr-name-size">Name size <span class="hint" id="qr-name-size-val">100%</span></label>
                 <input type="range" id="qr-name-size" min="50" max="170" value="100" step="5" />
-              </div>
-            </div>
-
-            <div class="row row-wrap mt-4" style="gap:var(--s4);">
-              <div class="field"><label for="qr-frame">Shape</label>
-                <select class="select" id="qr-frame">
-                  <option value="none" selected>Plain</option>
-                  <option value="panel">Square card</option>
-                  <option value="rounded">Rounded card</option>
-                  <option value="round">Round</option>
-                  <option value="ring">Round with label</option>
-                  <option value="badge">Card with label</option>
-                </select>
-              </div>
-              <div class="field" id="f-label" hidden><label for="qr-label">Label</label><input class="input" id="qr-label" value="SCAN ME" maxlength="24" /></div>
-              <div class="field"><label for="qr-style">Module shape</label>
-                <select class="select" id="qr-style"><option value="square" selected>Squares</option><option value="rounded">Rounded</option><option value="dots">Dots</option></select>
-              </div>
-              <div class="field"><label for="qr-eye-style">Corner squares</label>
-                <select class="select" id="qr-eye-style"><option value="square" selected>Square</option><option value="rounded">Rounded</option><option value="circle">Circle</option></select>
               </div>
             </div>
 

@@ -375,6 +375,9 @@ mark, .hl { background: var(--hl); color: var(--on-color); padding: 0 .12em; bor
    textareas below them line up. */
 .tool-layout--split .field > label,
 .tool-layout--split .field > .row { min-height: 34px; display: flex; align-items: center; }
+/* A label laying itself out as a flex row drops the whitespace it was written
+   with, so "Logo size <span>100%</span>" comes back reading "Logo size100%". */
+.tool-layout--split .field > label { gap: .35em; }
 
 /* ---------- buttons ---------- */
 .btn {

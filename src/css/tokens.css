@@ -13,6 +13,17 @@
 @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("/assets/fonts/jbmono-latin-400.woff2") format("woff2"); }
 @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("/assets/fonts/jbmono-latin-500.woff2") format("woff2"); }
 
+/* Faces the QR generator offers for a brand name, and nothing else on the site
+   uses. Declaring one costs nothing: a browser only fetches the file once
+   something on the page is actually set in it, so a visitor who never opens the
+   tool, or opens it and keeps the default, downloads none of these. They are
+   deliberately left out of the preloads in layout.html for the same reason. */
+@font-face { font-family: "Playfair Display"; font-style: normal; font-weight: 700; font-display: swap; src: url("/assets/fonts/playfair-latin-700.woff2") format("woff2"); }
+@font-face { font-family: "Oswald"; font-style: normal; font-weight: 600; font-display: swap; src: url("/assets/fonts/oswald-latin-600.woff2") format("woff2"); }
+@font-face { font-family: "Caveat"; font-style: normal; font-weight: 700; font-display: swap; src: url("/assets/fonts/caveat-latin-700.woff2") format("woff2"); }
+@font-face { font-family: "Quicksand"; font-style: normal; font-weight: 700; font-display: swap; src: url("/assets/fonts/quicksand-latin-700.woff2") format("woff2"); }
+@font-face { font-family: "Archivo Black"; font-style: normal; font-weight: 400; font-display: swap; src: url("/assets/fonts/archivoblack-latin-400.woff2") format("woff2"); }
+
 :root {
   --font-display: "Outfit", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
