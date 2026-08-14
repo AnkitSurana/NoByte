@@ -511,7 +511,18 @@ function scene() {
     const held = total * 0.15 * 0.66;   // what a strip carries at 100%
     const topGrp = above ? brandGroup(strips, held, fg, topParts) : null;
     const botGrp = below ? brandGroup(strips, held, fg, bottomParts) : null;
-    const logoStrip = topGrp ? topGrp.band / 0.66 : 0;
+    /* The mark's clearance from the card's edge is a fixed distance rather than
+     * a share of its own strip. A share looks right for a tall logo and fails
+     * for a flat one: a wide banner mark is only a couple of modules high, so a
+     * proportional margin around it comes out to almost nothing and it sits on
+     * the border. What the eye is judging is the gap to the edge, and that gap
+     * should not shrink just because the artwork is a letterbox.
+     *
+     * Below the mark it is nearly nothing on purpose, because the code's own
+     * four-module quiet zone is already sitting there doing the same job. */
+    const airAbove = total * 0.07;
+    const airBelow = total * 0.01;
+    const logoStrip = topGrp ? topGrp.band + airAbove + airBelow : 0;
     const strip = botGrp ? botGrp.band / 0.66 : 0;
     const card = W + logoStrip + strip + gap + bar; // everything above the credit line
     H = card + foot;
@@ -535,9 +546,11 @@ function scene() {
      * on the lockup: "split" puts the logo in the top strip and the name in the
      * bottom one, so each takes its own position, while the other two lockups
      * are a single row of both and take the one position between them. */
-    // The mark, in the band above the code.
+    // The mark, dropped clear of the card's edge and left to sit just above the
+    // code's quiet zone rather than centred between the two.
     if (topGrp) {
-      items.push(...shift(topGrp, alignX(topGrp, lock === "split" ? brand.logoPlace() : brand.namePlace()), f.pad + logoStrip / 2));
+      const y = f.pad + airAbove + topGrp.band / 2;
+      items.push(...shift(topGrp, alignX(topGrp, lock === "split" ? brand.logoPlace() : brand.namePlace()), y));
     }
     // The name sits high in the room below the code rather than centred in it.
     // The code already carries four blank modules of quiet zone along its
@@ -995,4 +1008,6 @@ document.getElementById("qr-svg").addEventListener("click", () => {
 
 loadBrandMark();
 build();
+
+
 
