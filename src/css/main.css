@@ -116,23 +116,29 @@ mark, .hl { background: var(--hl); color: var(--on-color); padding: 0 .12em; bor
    pop-in and float animations, which both own `transform` */
 .sticker { position: absolute; font-family: var(--font-display); font-weight: 700; font-size: var(--t-xs); padding: 7px 14px; border-radius: var(--radius-full); border: var(--bw) solid var(--on-color); box-shadow: 3px 3px 0 var(--on-color); white-space: nowrap; color: var(--on-color); transform: rotate(var(--rot, 0deg)); }
 /* prose pages (About, Privacy): centre the text column and scatter the
-   capsules down BOTH sides so they fill the width instead of clustering in
-   one corner. Odd numbers go left, even numbers go right. */
+   capsules down BOTH sides of it. Odd numbers go left, even numbers right.
+   Beyond that the placement is deliberately irregular, because the tidy
+   version of this reads as two columns: a near-constant inset down each side,
+   tops stepping by the same amount every time, and the tilt flipping sign on
+   every capsule. Here the inset swings across most of the gutter, the vertical
+   gaps are uneven, no left capsule sits level with a right one, and the tilts
+   vary in size as well as direction. The values look arbitrary because they
+   are: they are picked to avoid rhythm, so there is nothing to round off. */
 .has-stickers { position: relative; }
 .has-stickers .prose { position: relative; z-index: 1; max-width: 40rem; margin-inline: auto; }
-.has-stickers .sticker--1  { left: 3%;  right: auto; top: 3%;  --rot: 6deg; }
-.has-stickers .sticker--3  { left: 8%;  right: auto; top: 20%; --rot: -5deg; }
-.has-stickers .sticker--5  { left: 2%;  right: auto; top: 38%; --rot: 4deg; }
-.has-stickers .sticker--7  { left: 8%;  right: auto; top: 56%; --rot: -6deg; }
-.has-stickers .sticker--9  { left: 3%;  right: auto; top: 73%; --rot: 5deg; }
-.has-stickers .sticker--11 { left: 7%;  right: auto; top: 90%; --rot: -4deg; }
-.has-stickers .sticker--2  { right: 4%; left: auto;  top: 6%;  --rot: -6deg; }
-.has-stickers .sticker--4  { right: 7%; left: auto;  top: 22%; --rot: 5deg; }
-.has-stickers .sticker--6  { right: 3%; left: auto;  top: 40%; --rot: -4deg; }
-.has-stickers .sticker--8  { right: 8%; left: auto;  top: 57%; --rot: 6deg; }
-.has-stickers .sticker--10 { right: 4%; left: auto;  top: 74%; --rot: -5deg; background: var(--c-game); --in: 800ms; --bob: 5.1s; }
+.has-stickers .sticker--1  { left: 4.5%;  right: auto; top: 4%;  --rot: 7deg; }
+.has-stickers .sticker--3  { left: 10%;   right: auto; top: 19%; --rot: -3deg; }
+.has-stickers .sticker--5  { left: 1.5%;  right: auto; top: 31%; --rot: 5deg; }
+.has-stickers .sticker--7  { left: 9%;    right: auto; top: 55%; --rot: -8deg; }
+.has-stickers .sticker--9  { left: 2.5%;  right: auto; top: 67%; --rot: 2deg; }
+.has-stickers .sticker--11 { left: 7.5%;  right: auto; top: 88%; --rot: -6deg; }
+.has-stickers .sticker--2  { right: 6%;   left: auto;  top: 11%; --rot: -5deg; }
+.has-stickers .sticker--4  { right: 1.5%; left: auto;  top: 24%; --rot: 4deg; }
+.has-stickers .sticker--6  { right: 9.5%; left: auto;  top: 44%; --rot: -2deg; }
+.has-stickers .sticker--8  { right: 3.5%; left: auto;  top: 61%; --rot: 9deg; }
+.has-stickers .sticker--10 { right: 8.5%; left: auto;  top: 79%; --rot: -4deg; background: var(--c-game); --in: 800ms; --bob: 5.1s; }
 .has-stickers .sticker--11 { background: var(--c-day); --in: 880ms; --bob: 4.8s; }
-.has-stickers .sticker--12 { right: 7%; left: auto;  top: 91%; --rot: 4deg; background: var(--c-img); --in: 960ms; --bob: 5.4s; }
+.has-stickers .sticker--12 { right: 2%;   left: auto;  top: 93%; --rot: 6deg; background: var(--c-img); --in: 960ms; --bob: 5.4s; }
 /* capsules are desktop-only decoration; hide them where the gutters get tight */
 @media (max-width: 1200px) { .has-stickers .sticker { display: none; } }
 /* Hero scatter. The headline fills the left ~70% up top, so stickers beside it
@@ -140,15 +146,15 @@ mark, .hl { background: var(--hl); color: var(--on-color); padding: 0 .12em; bor
    headline, where the left column narrows. Nothing drops low enough to crowd
    the category chips beneath the hero. Slight irregularity keeps it from
    reading as two rigid columns. */
-.sticker--1 { --rot: 7deg;  background: var(--c-img);  top: 3%;  right: 6%; }
-.sticker--2 { --rot: -6deg; background: var(--c-dev);  top: 13%; right: 17%; }
-.sticker--3 { --rot: 4deg;  background: var(--c-fin);  top: 25%; right: 4%; }
-.sticker--4 { --rot: -8deg; background: var(--c-day);  top: 37%; right: 15%; }
-.sticker--5 { --rot: 5deg;  background: var(--c-game); top: 60%; right: 26%; }
-.sticker--6 { --rot: -4deg; background: var(--c-doc);  top: 49%; right: 7%; }
-.sticker--7 { --rot: 6deg;  background: var(--c-fin);  top: 71%; right: 29%; }
-.sticker--8 { --rot: -7deg; background: var(--c-img);  top: 63%; right: 6%; }
-.sticker--9 { --rot: 3deg;  background: var(--c-dev);  top: 75%; right: 17%; }
+.sticker--1 { --rot: 7deg;  background: var(--c-img);  top: 4%;  right: 7%; }
+.sticker--2 { --rot: -5deg; background: var(--c-dev);  top: 15%; right: 19.5%; }
+.sticker--3 { --rot: 4deg;  background: var(--c-fin);  top: 29%; right: 3%; }
+.sticker--4 { --rot: -8deg; background: var(--c-day);  top: 36%; right: 13%; }
+.sticker--5 { --rot: 6deg;  background: var(--c-game); top: 58%; right: 25%; }
+.sticker--6 { --rot: -3deg; background: var(--c-doc);  top: 47%; right: 5.5%; }
+.sticker--7 { --rot: 5deg;  background: var(--c-fin);  top: 69%; right: 30%; }
+.sticker--8 { --rot: -7deg; background: var(--c-img);  top: 62%; right: 9%; }
+.sticker--9 { --rot: 2deg;  background: var(--c-dev);  top: 78%; right: 17.5%; }
 @media (max-width: 1200px) { .sticker--7, .sticker--8, .sticker--9 { display: none; } }
 @media (max-width: 1000px) { .sticker--4, .sticker--5, .sticker--6 { display: none; } }
 @media (max-width: 900px) { .sticker { display: none; } }
