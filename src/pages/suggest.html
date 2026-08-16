@@ -11,6 +11,12 @@
         <div class="card">
           <div class="stack">
             <div class="field">
+              <label for="sg-title">The idea</label>
+              <input class="input" id="sg-title" type="text" maxlength="100" placeholder="e.g. Bulk-rename files by a pattern" autocomplete="off" />
+              <p class="hint">The tools that fit best are ones your browser can do alone, like converting a file or cleaning up text. Ones that need a login or the live internet aren't a fit for us.</p>
+            </div>
+
+            <div class="field">
               <label for="sg-cat">Which corner?</label>
               <select class="select" id="sg-cat">
                 <option selected>Not sure</option>
@@ -23,9 +29,8 @@
             </div>
 
             <div class="field">
-              <label for="sg-idea">The pitch</label>
-              <textarea class="textarea" id="sg-idea" maxlength="1200" placeholder="What should it do, and how would you use it? e.g. bulk-rename my downloads folder so the files sort by date. Skip anything personal."></textarea>
-              <p class="hint">The tools that fit best are ones your browser can do alone, like converting a file or cleaning up text. Ones that need a login or the live internet aren't a fit for us.</p>
+              <label for="sg-details">The pitch <span class="muted" style="font-weight: 500;">(optional)</span></label>
+              <textarea class="textarea" id="sg-details" maxlength="1200" placeholder="A bit more: what it should do, how you'd use it, or how you do it now. Skip anything personal."></textarea>
             </div>
           </div>
 
