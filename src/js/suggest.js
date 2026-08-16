@@ -10,21 +10,19 @@ const TO = "hello@nobyte.in";
 
 const idea = document.getElementById("sg-idea");
 const cat = document.getElementById("sg-cat");
-const why = document.getElementById("sg-why");
 const mail = document.getElementById("sg-mail");
 const copy = document.getElementById("sg-copy");
 
+// A short subject from the first line of the pitch, so the inbox is readable.
 function subject() {
-  const t = idea.value.trim();
+  const t = idea.value.trim().split("\n")[0].trim();
   return t ? `Tool idea: ${t}` : "Tool idea for NoByte";
 }
 
 // The readable heart of the message, shared by the email body and the copy.
 function body() {
-  const lines = [`The pitch: ${idea.value.trim() || "(add a line here)"}`];
-  if (cat.value) lines.push(`Category: ${cat.value}`);
-  const extra = why.value.trim();
-  if (extra) lines.push("", extra);
+  const lines = [idea.value.trim() || "(describe the tool here)"];
+  if (cat.value) lines.push("", `Category: ${cat.value}`);
   return lines.join("\n");
 }
 
@@ -40,5 +38,5 @@ function sync() {
   copy.setAttribute("data-copy-text", plainMessage());
 }
 
-[idea, cat, why].forEach((el) => el.addEventListener("input", sync));
+[idea, cat].forEach((el) => el.addEventListener("input", sync));
 sync();
