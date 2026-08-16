@@ -20,9 +20,11 @@ function subject() {
 }
 
 // The readable heart of the message, shared by the email body and the copy.
+// "Not sure" is the default corner and carries no information, so it is left
+// out of the message; a real category is added when one is chosen.
 function body() {
   const lines = [idea.value.trim() || "(describe the tool here)"];
-  if (cat.value) lines.push("", `Category: ${cat.value}`);
+  if (cat.value && cat.value !== "Not sure") lines.push("", `Category: ${cat.value}`);
   return lines.join("\n");
 }
 
