@@ -463,6 +463,25 @@ input[type="color"] { width: 52px; height: 44px; padding: 3px; border: var(--bw)
 .copy-btn[data-copied="true"] .icon-check { display: inline-block; }
 .copy-btn[data-copied="true"] { background: var(--ok-wash); color: var(--ok); }
 
+/* ---------- suggest a tool ---------- */
+.suggest { max-width: 44rem; margin-inline: auto; }
+/* the title sits outside .prose, so give it the same title-to-body gap the
+   About and Privacy pages get from `.prose .page-title` */
+.suggest .page-title { margin-bottom: var(--s5); }
+.suggest__intro { font-size: var(--t-md); line-height: var(--lead-body); color: var(--ink-2); margin-bottom: var(--s6); }
+/* the two capsules straddle the card's corners like the About page badges,
+   drawn from the same .sticker primitive so they match everywhere else */
+.suggest__card { position: relative; }
+.suggest__card .sticker { z-index: 2; }
+.suggest__card .sticker--a { background: var(--c-fin); top: -17px; right: 26px; --rot: 6deg; }
+.suggest__card .sticker--b { background: var(--c-img); bottom: -17px; left: 22px; --rot: -5deg; }
+.suggest__actions { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s5); }
+.suggest__note { display: flex; gap: var(--s3); align-items: flex-start; margin-top: var(--s5); }
+.suggest__note .icon { flex: none; margin-top: 2px; color: var(--ink-3); }
+/* the .sticker primitive already hides itself below 900px (desktop-only
+   decoration, like the About and hero badges), so the corner capsules need
+   no separate breakpoint here */
+
 /* tabs — chunky segmented control */
 .tabs { display: inline-flex; gap: 0; background: var(--surface); border: var(--bw) solid var(--ink); border-radius: var(--radius-full); padding: 4px; box-shadow: var(--hard-sm); }
 .tab { padding: var(--s2) var(--s5); border-radius: var(--radius-full); font-family: var(--font-display); font-weight: 700; font-size: var(--t-sm); color: var(--ink-2); transition: background var(--t-fast) ease, color var(--t-fast) ease, transform var(--t-fast) var(--pop); }
