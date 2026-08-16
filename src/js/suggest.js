@@ -1,9 +1,10 @@
 // Suggest a tool.
 //
 // The page never talks to a server. As the visitor types, this builds a plain
-// email out of the fields and keeps two things in sync: the mailto link (which
-// opens their own mail app) and the copy button's text (for anyone without one
-// set up). The message only leaves the device when the visitor sends it.
+// message from the fields and keeps two things in sync: the mailto link (which
+// opens their own mail app, pre-filled) and the copy button's text (a clean,
+// paste-anywhere version for anyone without a mail app). The message only
+// leaves the device when the visitor sends it.
 
 const TO = "hello@nobyte.in";
 
@@ -18,18 +19,20 @@ function subject() {
   return t ? `Tool idea: ${t}` : "Tool idea for NoByte";
 }
 
+// The readable heart of the message, shared by the email body and the copy.
 function body() {
-  const lines = [`What it should do: ${idea.value.trim() || "(add a line here)"}`];
-  if (cat.value) lines.push(`Closest category: ${cat.value}`);
+  const lines = [`The pitch: ${idea.value.trim() || "(add a line here)"}`];
+  if (cat.value) lines.push(`Category: ${cat.value}`);
   const extra = why.value.trim();
   if (extra) lines.push("", extra);
   return lines.join("\n");
 }
 
-// The copy button carries the whole message, headed with the address so a
-// visitor pasting it into a fresh email knows where to send it.
+// Plain, paste-anywhere version. No "To:/Subject:" header noise: just the
+// message and a reminder of where it goes, so pasting it into any email or
+// note makes sense on its own.
 function plainMessage() {
-  return `To: ${TO}\nSubject: ${subject()}\n\n${body()}`;
+  return `${body()}\n\nSend to: ${TO}`;
 }
 
 function sync() {
