@@ -472,9 +472,12 @@ input[type="color"] { width: 52px; height: 44px; padding: 3px; border: var(--bw)
 /* the two capsules straddle the card's corners like the About page badges,
    drawn from the same .sticker primitive so they match everywhere else */
 .suggest__card { position: relative; }
+/* a little more room inside so the corner capsules never sit over the copy */
+.suggest__card .card { padding: var(--s6); }
 .suggest__card .sticker { z-index: 2; }
-.suggest__card .sticker--a { background: var(--c-fin); top: -17px; right: 26px; --rot: 6deg; }
-.suggest__card .sticker--b { background: var(--c-img); bottom: -17px; left: 22px; --rot: -5deg; }
+/* hug the outer corners (poking into the page margin), not the text */
+.suggest__card .sticker--a { background: var(--c-fin); top: -16px; right: -6px; --rot: 6deg; }
+.suggest__card .sticker--b { background: var(--c-img); bottom: -16px; left: -6px; --rot: -5deg; }
 .suggest__actions { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s5); }
 .suggest__note { display: flex; gap: var(--s3); align-items: flex-start; margin-top: var(--s5); }
 .suggest__note .icon { flex: none; margin-top: 2px; color: var(--ink-3); }
