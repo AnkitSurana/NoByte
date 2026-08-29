@@ -630,6 +630,36 @@ details.notice p, details.notice ul { font-size: var(--t-sm); }
 .badge--danger { background: var(--bad-wash); color: var(--bad); }
 .badge--muted { background: var(--paper-2); color: var(--ink-2); }
 
+/* Avro & Parquet schema viewer (tools/avro-parquet-viewer) */
+.drop-zone {
+  border: var(--bw) dashed var(--ink);
+  background: var(--paper-2);
+  cursor: pointer;
+  text-align: center;
+  padding: var(--s8) var(--s5);
+  border-radius: var(--radius-lg);
+  transition: transform var(--t-fast) var(--pop), background var(--t-fast) ease;
+}
+.drop-zone:hover, .drop-zone:focus-visible { transform: translateY(-2px); outline: none; }
+.drop-zone--over { background: var(--c-dev); transform: scale(1.01); }
+
+.tree { font-size: var(--t-sm); line-height: 1.45; }
+.tree-node > summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center;
+  gap: var(--s2); flex-wrap: wrap; padding: var(--s1) 0;
+}
+.tree-node > summary::-webkit-details-marker { display: none; }
+.tree-node > summary::before { content: "▸"; color: var(--ink-3); transition: transform var(--t-fast) ease; }
+.tree-node[open] > summary::before { transform: rotate(90deg); }
+.tree-name { font-weight: 600; }
+.tree-children { margin: var(--s1) 0 var(--s2) var(--s4); border-left: 2px solid var(--ink-3); padding-left: var(--s3); }
+.tree-leaf { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; padding: var(--s1) 0; }
+.tree .muted, .tree-leaf .muted { white-space: nowrap; }
+
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--s2) var(--s5); margin: 0; }
+.meta-grid dt { font-family: var(--font-display); font-size: var(--t-xs); color: var(--ink-3); text-transform: uppercase; letter-spacing: var(--track-caps); }
+.meta-grid dd { margin: 0; font-family: var(--font-mono); font-size: var(--t-sm); overflow-wrap: anywhere; }
+
 .strength-meter { height: 14px; border-radius: var(--radius-full); background: var(--surface); border: var(--bw) solid var(--ink); overflow: hidden; }
 .strength-meter span { display: block; height: 100%; width: 0; transition: width var(--t-mid) var(--pop), background var(--t-fast) ease; }
 .strength-meter span[data-level="weak"] { width: 33%; background: var(--bad); }

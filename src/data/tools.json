@@ -1356,5 +1356,24 @@
       "video to audio converter"
     ],
     "popularity": 3
+  },
+  {
+    "id": "avro-parquet-viewer",
+    "name": "Avro & Parquet schema viewer",
+    "description": "Inspect the schema of Avro and Parquet files as a tree and as JSON.",
+    "category": "developer",
+    "path": "/tools/avro-parquet-viewer/",
+    "icon": "table",
+    "featured": false,
+    "metaDescription": "View the schema of .avsc, .avro, and .parquet files — an expandable tree plus the raw schema and footer metadata (row count, compression codec). Runs entirely in your browser; nothing is uploaded.",
+    "keywords": [
+      "avro schema viewer",
+      "parquet schema viewer",
+      "parquet metadata",
+      "avro viewer",
+      "parquet viewer",
+      "avsc"
+    ],
+    "popularity": 1
   }
 ]
