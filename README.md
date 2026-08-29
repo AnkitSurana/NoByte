@@ -4,7 +4,7 @@
 
 ## Overview
 
-NoByte is a static site with 63 small tools across six categories: developer utilities, PDF and image tools, calculators, everyday helpers, and 13 browser games. Almost everything runs entirely in the browser and never sends your data anywhere; only the DNS lookup and the dictionary reach a public service.
+NoByte is a static site with 64 small tools across six categories: developer utilities, PDF and image tools, calculators, everyday helpers, and 13 browser games. Almost everything runs entirely in the browser and never sends your data anywhere; only the DNS lookup and the dictionary reach a public service.
 
 The site is plain HTML, CSS, and JavaScript. There is no framework, no bundler, and no runtime dependency. The only build step is one dependency-free Node script.
 
@@ -29,7 +29,7 @@ The parts worth reading the source for:
 
 ## Features
 
-- 63 tools, nearly all of which work offline once the page has loaded
+- 64 tools, nearly all of which work offline once the page has loaded
 - A Games category with 13 games (2048, Snake, Minesweeper, Sudoku, Connect Four, a Tetris-style stacker, an F1-style reaction test and more), each with local high scores
 - No cookies and no advertising scripts; nothing you enter into a tool is recorded
 - Light and dark themes, with the OS preference respected
