@@ -902,24 +902,6 @@
     "popularity": 2
   },
   {
-    "id": "currency-converter",
-    "name": "Currency converter",
-    "description": "Convert between 30 currencies using ECB reference rates.",
-    "category": "finance",
-    "path": "/tools/currency-converter/",
-    "icon": "coins",
-    "featured": false,
-    "metaDescription": "Convert between 30 currencies using the European Central Bank's daily reference rates. Amounts never leave your browser, and fetched rates are cached on your device so the converter keeps working offline.",
-    "keywords": [
-      "currency converter",
-      "exchange rate",
-      "usd to eur",
-      "money converter",
-      "foreign exchange"
-    ],
-    "popularity": 3
-  },
-  {
     "id": "roman-numerals",
     "name": "Roman numerals",
     "description": "Convert numbers to Roman numerals and back.",
