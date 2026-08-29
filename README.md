@@ -4,7 +4,7 @@
 
 ## Overview
 
-NoByte is a static site with 63 small tools across six categories: developer utilities, PDF and image tools, calculators, everyday helpers, and 13 browser games. Almost everything runs entirely in the browser and never sends your data anywhere; only the DNS lookup and the dictionary reach a public service.
+NoByte is a static site with 64 small tools across six categories: developer utilities, PDF and image tools, calculators, everyday helpers, and 13 browser games. Almost everything runs entirely in the browser and never sends your data anywhere; only the DNS lookup, the dictionary, and the currency converter reach a public service.
 
 The site is plain HTML, CSS, and JavaScript. There is no framework, no bundler, and no runtime dependency. The only build step is one dependency-free Node script.
 
@@ -25,11 +25,11 @@ The parts worth reading the source for:
 
 - **A round QR code is still a square code.** The spec requires a square grid with a quiet margin, so the QR generator draws a round code the way real ones are made: the square matrix in the middle, with loose non-data modules packed out to the circle's edge. The PNG export renders at roughly a 4K longest side but clamps by total canvas area, because mobile Safari silently drops a canvas past about 16.7 million pixels.
 
-- **Honest scope.** Tools that cannot be done truthfully in a browser were left out on purpose: a speed test (a browser cannot measure a fast link accurately) and a live currency converter (free rate feeds go stale). The two tools that must reach the network say so and are [listed explicitly](#tools-that-use-a-third-party-service).
+- **Honest scope.** Tools that cannot be done truthfully in a browser were left out on purpose: a speed test (a browser cannot measure a fast link accurately) and a minute-by-minute currency feed (the free rate feeds update once a day). The currency converter is honest about what it can do: it fetches the European Central Bank's daily reference rates, stamps every result with the rate date, caches the rates locally so it keeps working offline, and says when it is showing a cached copy. The tools that must reach the network say so and are [listed explicitly](#tools-that-use-a-third-party-service).
 
 ## Features
 
-- 63 tools, nearly all of which work offline once the page has loaded
+- 64 tools, nearly all of which work offline once the page has loaded
 - A Games category with 13 games (2048, Snake, Minesweeper, Sudoku, Connect Four, a Tetris-style stacker, an F1-style reaction test and more), each with local high scores
 - No cookies and no advertising scripts; nothing you enter into a tool is recorded
 - Light and dark themes, with the OS preference respected
@@ -123,8 +123,9 @@ Only these reach the network. Everything else is local:
 | --- | --- | --- |
 | DNS lookup | Google and Cloudflare DNS-over-HTTPS | A DNS query has to ask a resolver |
 | Dictionary | dictionaryapi.dev | Word definitions come from a public dictionary; the looked-up word is sent to it |
+| Currency converter | Frankfurter (api.frankfurter.dev) | Exchange rates are the European Central Bank's daily reference rates; only a currency code is sent, the amount never is, and fetched rates are cached on the device so conversions still work offline |
 
-Tools that could not be done honestly in a browser were deliberately left out: an internet speed test (a browser cannot measure a fast link accurately) and a live currency converter (free rate feeds update once a day and go stale).
+Tools that could not be done honestly in a browser were deliberately left out: an internet speed test (a browser cannot measure a fast link accurately), and a truly live currency ticker (free rate feeds update once a day). The currency converter never pretends to be that — it sticks to the ECB's daily reference rates and stamps every result with the rate's date.
 
 ## Vendored libraries
 

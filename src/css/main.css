@@ -571,6 +571,11 @@ details.notice p, details.notice ul { font-size: var(--t-sm); }
 .tz-row__out { display: inline-flex; align-items: center; gap: var(--s3); flex-wrap: wrap; justify-content: flex-end; }
 .tz-daydiff { font-family: var(--font-display); font-weight: 700; font-size: var(--t-xs); color: var(--bad); white-space: nowrap; }
 
+/* currency converter rows — same shape as the time zone rows */
+.ccx-row { gap: var(--s3); }
+.ccx-row > .select { flex: 1 1 12rem; max-width: 20rem; }
+.ccx-row__out { display: inline-flex; align-items: center; gap: var(--s3); flex-wrap: wrap; justify-content: flex-end; }
+
 /* countdown timer display */
 .cd-display { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s3); }
 .cd-unit { background: var(--surface); border: var(--bw) solid var(--ink); border-radius: var(--radius); padding: var(--s4) var(--s2); }
@@ -923,6 +928,9 @@ del { background: var(--bad-wash); color: var(--bad); border-radius: 4px; paddin
   .tz-row { flex-wrap: wrap; }
   .tz-row > .select { flex: 1 1 100%; max-width: none; }
   .tz-row__out { width: 100%; justify-content: flex-start; }
+  .ccx-row { flex-wrap: wrap; }
+  .ccx-row > .select { flex: 1 1 100%; max-width: none; }
+  .ccx-row__out { width: 100%; justify-content: flex-start; }
   /* four columns of header text plus 12px cell padding is wider than a small
      phone; the checkboxes stay 22px, only the chrome shrinks */
   .chmod-grid th, .chmod-grid td { padding: var(--s2) var(--s1); }

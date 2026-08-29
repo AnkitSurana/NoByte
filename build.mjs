@@ -133,7 +133,7 @@ const JS_ICONS = (() => {
      card.js draws an arbitrary tool's icon, yet it is only ever reached through
      an import, and its callers render a card solely where a grid exists to
      render into: /tools/ and /favourites/. Propagating the flag would drag the
-     whole sprite onto all 63 tool pages, which load favourites.js just to hang
+     whole sprite onto all 64 tool pages, which load favourites.js just to hang
      a star on the header. Those two grid pages are matched by hook below. */
   const resolve = (file, seen = new Set()) => {
     if (seen.has(file) || !own.has(file)) return { fixed: new Set(), dynamic: false };
