@@ -17,7 +17,7 @@ function calc() {
   }
   const valueEl = document.getElementById("bmi-value");
   const catEl = document.getElementById("bmi-category");
-  if (!Number.isFinite(bmi)) { valueEl.textContent = "—"; catEl.textContent = "—"; catEl.className = "badge badge--muted"; return; }
+  if (!Number.isFinite(bmi)) { valueEl.textContent = "-"; catEl.textContent = "-"; catEl.className = "badge badge--muted"; return; }
   valueEl.textContent = bmi.toFixed(1);
   let label, cls;
   if (bmi < 18.5) { label = "Underweight"; cls = "badge--muted"; }

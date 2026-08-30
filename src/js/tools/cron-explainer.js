@@ -8,11 +8,11 @@ const fieldsBody = document.querySelector("#ce-fields tbody");
 
 // Display info for the field-by-field breakdown, in cron order.
 const FIELD_INFO = [
-  { label: "Minute", range: "0–59" },
-  { label: "Hour", range: "0–23" },
-  { label: "Day of month", range: "1–31" },
-  { label: "Month", range: "1–12" },
-  { label: "Day of week", range: "0–6 (Sun–Sat)" },
+  { label: "Minute", range: "0-59" },
+  { label: "Hour", range: "0-23" },
+  { label: "Day of month", range: "1-31" },
+  { label: "Month", range: "1-12" },
+  { label: "Day of week", range: "0-6 (Sun-Sat)" },
 ];
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -54,7 +54,7 @@ function parseField(raw, field) {
     }
     // Cron allows 7 as Sunday in the day-of-week field, so validation tolerates it.
     const hiBound = field.name === "dow" ? 7 : field.max;
-    if (lo < field.min || hi > hiBound || lo > hi) throw new Error(`${field.name} value out of range (${field.min}–${field.max})`);
+    if (lo < field.min || hi > hiBound || lo > hi) throw new Error(`${field.name} value out of range (${field.min}-${field.max})`);
     for (let v = lo; v <= hi; v += step) set.add(v);
   }
   // Normalise Sunday-as-7 to 0.
@@ -166,14 +166,14 @@ function run() {
   const expr = input.value.trim();
   errEl.textContent = "";
   input.classList.remove("input--invalid");
-  if (!expr) { textEl.textContent = "—"; runsEl.innerHTML = ""; fieldsBody.innerHTML = ""; return; }
+  if (!expr) { textEl.textContent = "-"; runsEl.innerHTML = ""; fieldsBody.innerHTML = ""; return; }
   let parsed;
   try {
     parsed = parse(expr);
   } catch (e) {
     input.classList.add("input--invalid");
     errEl.textContent = e.message;
-    textEl.textContent = "—";
+    textEl.textContent = "-";
     runsEl.innerHTML = "";
     fieldsBody.innerHTML = "";
     return;

@@ -2,20 +2,25 @@
 {{tool-hero:uuid-generator}}
 <section class="section--tight">
   <div class="container" style="max-width:720px;">
-    <div class="row row-wrap mb-4" style="gap:var(--s4);align-items:end;">
-      <div class="field"><label for="uu-count">How many</label><input class="input mono" id="uu-count" type="number" min="1" max="100" value="5" style="width:110px;" /></div>
-      <label class="switch"><input type="checkbox" id="uu-upper" /><span class="switch__track"></span> Uppercase</label>
-      <label class="switch"><input type="checkbox" id="uu-nodash" /><span class="switch__track"></span> No hyphens</label>
-      <button class="btn btn--primary" id="uu-gen"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#refresh"></use></svg> Generate</button>
-    </div>
-    <div class="row between mb-2">
-      <span class="label">Result</span>
-      <button class="btn btn--sm copy-btn" data-copy="#uu-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy all</button>
+    <div class="row row-wrap items-center mb-4">
+      <label for="uu-count" class="label">How many</label>
+      <input class="input mono" id="uu-count" type="number" min="1" max="100" value="5" style="width:88px;height:44px;" />
+      <label for="uu-format" class="label">Format</label>
+      <select class="select select--sm" id="uu-format" style="height:44px;">
+        <option value="lower">Lowercase</option>
+        <option value="upper">Uppercase</option>
+        <option value="lower-nodash">No hyphens</option>
+        <option value="upper-nodash">Uppercase, no hyphens</option>
+      </select>
+      <span class="row gap-2 ml-auto">
+        <button class="btn btn--icon-lg btn--soft" id="uu-gen" title="New set" aria-label="Generate a new set"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#refresh"></use></svg></button>
+        <button class="btn btn--icon-lg btn--soft copy-btn" data-copy="#uu-out" title="Copy all" aria-label="Copy all UUIDs"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
+      </span>
     </div>
     <textarea class="textarea mono" id="uu-out" readonly style="min-height:220px;" aria-label="Generated UUIDs"></textarea>
-    <div class="notice notice--info mt-4">
+    <div class="notice notice--info mt-5">
       <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
-      <div>Version 4 UUIDs from <code>crypto.randomUUID</code>, generated in your browser.</div>
+      <div>Version 4 UUIDs are random identifiers, generated in your browser with <code>crypto.randomUUID</code> so nothing is sent anywhere. The list updates as you change the count or format. Use the refresh button for a fresh set, and the copy button to grab the whole list.</div>
     </div>
   </div>
 </section>

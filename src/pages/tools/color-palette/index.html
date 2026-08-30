@@ -2,14 +2,16 @@
 {{tool-hero:color-palette}}
 <section class="section--tight">
   <div class="container" style="max-width:820px;">
-    <div class="row row-wrap" style="gap:var(--s4);align-items:end;">
+    <div class="row row-wrap">
       <div class="field"><label for="pl-picker">Base color</label><input type="color" id="pl-picker" value="#2563EB" /></div>
       <div class="field"><label for="pl-hex">Hex</label><input class="input mono" id="pl-hex" value="#2563EB" maxlength="7" style="width:9rem;text-transform:uppercase;" /></div>
-      <p class="field-error" id="pl-error" style="align-self:center;"></p>
+      <p class="field-error" id="pl-error"></p>
     </div>
 
+    <p class="muted xs mt-4">Click any swatch to copy its hex.</p>
+
     <div class="mt-5">
-      <span class="label">Tints and shades <span class="muted xs">click a swatch to copy its hex</span></span>
+      <span class="label">Tints and shades</span>
       <div class="pal-row mt-2" id="pl-scale"></div>
     </div>
 

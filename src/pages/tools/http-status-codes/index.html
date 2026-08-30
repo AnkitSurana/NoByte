@@ -1,0 +1,15 @@
+<!-- meta tool="1" title="HTTP status codes: searchable reference | NoByte" description="Look up any HTTP status code and what it means, from 100 to 511, grouped by class. Runs in your browser." path="/tools/http-status-codes/" keywords="http status codes, 404 meaning, 500 error, http response codes, status code list" -->
+{{tool-hero:http-status-codes}}
+<section class="section--tight">
+  <div class="container">
+    <input class="input" id="hs-search" placeholder="Search by code or name, e.g. 404 or forbidden" autocomplete="off" spellcheck="false" />
+    <p class="muted small mt-2" id="hs-count"></p>
+    <div id="hs-list" class="status-list mt-3"></div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Every HTTP response starts with a status code that says how the request went. They fall into five classes: <code>1xx</code> informational, <code>2xx</code> success, <code>3xx</code> redirection, <code>4xx</code> client errors, and <code>5xx</code> server errors. Search by number (like <code>404</code>) or name (like <code>forbidden</code>), all in your browser, and click any row to copy the code and its name.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/http-status-codes.js"></script>

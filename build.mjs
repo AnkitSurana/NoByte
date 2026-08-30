@@ -209,18 +209,36 @@ function toolCard(t, span) {
       </span>
     </div>`;
 }
-
-// Pinboard rhythm: rows of three spans that always sum to 12.
-// A partial last row widens to fill (1 leftover -> 12, 2 -> 6+6).
-const SPAN_PATTERN = [5, 3, 4, 4, 5, 3];
-function spanFor(i, total) {
-  const leftover = total % 3;
-  if (leftover === 1 && i === total - 1) return 12;
-  if (leftover === 2 && i >= total - 2) return 6;
-  return SPAN_PATTERN[i % SPAN_PATTERN.length];
+// Pinboard rhythm: every row of three cards uses the spans {5,4,3} (always sums
+// to 12, so the varied widths stay), but the WIDEST span goes to the longest
+// title in that row and the narrowest to the shortest. That stops a long name
+// landing in a narrow card (title wrapping to three lines) while a short name
+// sits in a wide one with dead space. A partial last row widens to fill
+// (1 leftover -> 12, 2 -> 6+6).
+// Pinboard rhythm: each full row of three uses the spans {5,4,3} (sums to 12).
+// Every row is the previous row rotated by 1 or 2 places (chosen by a seeded
+// PRNG), so EVERY column changes width from the row above and nothing stacks
+// into a straight column. The seed is fixed, so the layout looks scattered yet
+// is identical on every build and matches applySpans() in card.js. Keep the two
+// functions byte-for-byte in step.
+function spansFor(list) {
+  const total = list.length, leftover = total % 3, full = total - leftover;
+  const spans = new Array(total).fill(4);
+  let seed = 1;
+  const rand = () => (seed = (seed * 48271) % 0x7fffffff) / 0x7fffffff;
+  let row = [5, 4, 3];
+  for (let r = 0; r < full; r += 3) {
+    const shift = 1 + Math.floor(rand() * 2); // rotate 1 or 2 => no shared column
+    row = row.slice(shift).concat(row.slice(0, shift));
+    row.forEach((s, k) => (spans[r + k] = s));
+  }
+  if (leftover === 1) spans[total - 1] = 12;
+  else if (leftover === 2) spans[total - 2] = spans[total - 1] = 6;
+  return spans;
 }
 function cardGrid(list) {
-  return list.map((t, i) => toolCard(t, spanFor(i, list.length))).join("\n");
+  const spans = spansFor(list);
+  return list.map((t, i) => toolCard(t, spans[i])).join("\n");
 }
 
 function catChips(categories, tools) {
@@ -245,7 +263,7 @@ function toolHero(id, tools, categories) {
   // data-cat lets CSS treat a game page differently from a tool page: a game
   // needs its board and controls on one phone screen, so its header gets
   // compressed on small viewports in a way a form-based tool does not need.
-  return `<div class="container">
+  return `<div class="container tool-head-wrap">
   <header class="tool-head" data-cat="${t.category}">
     <nav class="crumbs"><a href="/">Home</a> / ${crumb}<span>${esc(t.name)}</span></nav>
     <div class="tool-head__row">
@@ -270,11 +288,12 @@ const BLOG_CAT_LABEL = {
   image: "Image",
   "daily-use": "Daily use",
   games: "Games",
+  audio: "Audio",
   privacy: "Privacy",
   guide: "Guide",
 };
 // Chip order; only categories that actually have posts are shown.
-const BLOG_CAT_ORDER = ["developer", "productivity", "finance", "image", "daily-use", "games", "privacy", "guide"];
+const BLOG_CAT_ORDER = ["developer", "productivity", "finance", "image", "daily-use", "games", "audio", "privacy", "guide"];
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 function dateLabel(iso) {
   const [y, m, d] = iso.split("-").map(Number);
@@ -433,6 +452,27 @@ function renderPage(layout, partials, data, meta, body) {
         { name: "Blog", item: `${SITE_URL}/blog/` },
         { name: post.title, item: canonical },
       ]),
+    ];
+    structured = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@graph": graph })}</script>`;
+  } else if (path === "/") {
+    // Home page: WebSite with a SearchAction (the /tools/?q= filter is a real
+    // search, so the sitelinks search box points somewhere that works) plus the
+    // Organization that publishes the site.
+    const org = { "@type": "Organization", name: "NoByte", url: SITE_URL + "/", logo: SITE_URL + "/assets/apple-touch-icon.png" };
+    const graph = [
+      {
+        "@type": "WebSite",
+        name: "NoByte",
+        url: SITE_URL + "/",
+        description,
+        publisher: { "@type": "Organization", name: "NoByte" },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: { "@type": "EntryPoint", urlTemplate: `${SITE_URL}/tools/?q={search_term_string}` },
+          "query-input": "required name=search_term_string",
+        },
+      },
+      org,
     ];
     structured = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@graph": graph })}</script>`;
   }

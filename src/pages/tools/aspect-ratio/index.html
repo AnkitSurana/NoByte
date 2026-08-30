@@ -14,21 +14,34 @@
           <option value="custom">Custom…</option>
         </select>
       </div>
-      <div class="row row-wrap mb-4 hidden" id="ar-custom-wrap" style="gap:var(--s3);">
-        <div class="field"><label for="ar-rw">Ratio width</label><input class="input mono" id="ar-rw" type="number" min="1" value="16" style="width:110px;" /></div>
-        <div class="field"><label for="ar-rh">Ratio height</label><input class="input mono" id="ar-rh" type="number" min="1" value="9" style="width:110px;" /></div>
+      <div class="row row-wrap mb-4 hidden gap-3" id="ar-custom-wrap">
+        <div class="field"><label for="ar-rw">Ratio width</label><input class="input mono ar-rnum" id="ar-rw" type="number" min="1" value="16" /></div>
+        <div class="field"><label for="ar-rh">Ratio height</label><input class="input mono ar-rnum" id="ar-rh" type="number" min="1" value="9" /></div>
       </div>
-      <div class="row row-wrap" style="gap:var(--s3);">
-        <div class="field"><label for="ar-w">Width (px)</label><input class="input mono" id="ar-w" type="number" min="1" value="1920" style="width:140px;" /></div>
-        <div class="field"><label for="ar-h">Height (px)</label><input class="input mono" id="ar-h" type="number" min="1" value="1080" style="width:140px;" /></div>
+      <div class="row row-wrap gap-3">
+        <div class="field"><label for="ar-w">Width (px)</label><input class="input mono ar-dnum" id="ar-w" type="number" min="1" value="1920" /></div>
+        <div class="field"><label for="ar-h">Height (px)</label><input class="input mono ar-dnum" id="ar-h" type="number" min="1" value="1080" /></div>
       </div>
       <p class="hint mt-2">Edit either box and the other follows the ratio.</p>
     </div>
     <div class="result-panel text-center mt-4">
-      <div class="result-value" id="ar-result">—</div>
+      <div class="result-value" id="ar-result">-</div>
       <div class="muted small" id="ar-simplified"></div>
-      <div id="ar-visual" style="margin:var(--s5) auto 0;background:var(--paper-2);border:var(--bw) solid var(--ink);border-radius:var(--radius);max-width:100%;"></div>
+      <div class="row justify-center mt-3">
+        <button class="btn copy-btn" data-copy="#ar-result" aria-label="Copy dimensions"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+      </div>
+      <div id="ar-visual" class="ar-visual"></div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Pick a ratio or set a custom one, then type a width or height and the other side follows to keep the ratio. The preview shows the shape, and the result also shows the ratio simplified. Everything runs in your browser.</div>
     </div>
   </div>
 </section>
+<style>
+  .ar-rnum { width: 110px; }
+  .ar-dnum { width: 140px; }
+  .ar-visual { margin: var(--s5) auto 0; background: var(--paper-2); border: var(--bw) solid var(--ink); border-radius: var(--radius); max-width: 100%; }
+</style>
 <script type="module" src="/js/tools/aspect-ratio.js"></script>

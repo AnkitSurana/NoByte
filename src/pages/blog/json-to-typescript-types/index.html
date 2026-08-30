@@ -1,0 +1,46 @@
+<!-- meta title="How to turn JSON into TypeScript types | NoByte" description="Get TypeScript interfaces from a sample of JSON, including nested objects, arrays, unions, and optional fields. How the inference works and where it helps." path="/blog/json-to-typescript-types/" keywords="json to typescript, generate typescript types, json to interface, typescript from json, api types" -->
+<section class="section">
+  <div class="container container-wide has-stickers">
+    <span class="sticker sticker--1">paste json</span>
+    <span class="sticker sticker--2">get interfaces</span>
+    <span class="sticker sticker--3">nested types</span>
+    <span class="sticker sticker--4">optional fields</span>
+    <span class="sticker sticker--5">unions too</span>
+    <span class="sticker sticker--6">in your browser</span>
+    <span class="sticker sticker--7">no uploads</span>
+    <span class="sticker sticker--8">no account</span>
+    <span class="sticker sticker--9">copy and go</span>
+    <span class="sticker sticker--10">open source</span>
+    <span class="sticker sticker--11">works offline</span>
+    <span class="sticker sticker--12">type safe</span>
+    <article class="post-wrap">
+      <header class="post__head">
+        <nav class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>JSON to TypeScript</span></nav>
+        {{blog-meta:json-to-typescript-types}}
+        <h1 class="page-title post__title">How to turn JSON into TypeScript types</h1>
+        <p class="page-lead">When you get JSON back from an API, writing the TypeScript types by hand is tedious and easy to get wrong. A sample of the JSON already contains almost everything the types need. Here is how that inference works, and where it saves time.</p>
+      </header>
+
+      <div class="prose post__body">
+        <h2>Why a sample is enough</h2>
+        <p>A response like <code>{ "id": 1, "name": "Ada", "tags": ["a", "b"] }</code> tells you the shape directly. <code>id</code> is a number, <code>name</code> is a string, <code>tags</code> is an array of strings. The <a href="/tools/json-to-typescript/">JSON to TypeScript</a> tool reads that structure and writes the matching interface, so you paste the JSON and copy the types out.</p>
+        <p>The value of doing it from a real sample is that it matches what the server actually sends, rather than what a stale document says it sends.</p>
+
+        <h2>The parts it works out for you</h2>
+        <ul>
+          <li><strong>Nested objects</strong> become their own named interfaces, so a <code>profile</code> object turns into a <code>Profile</code> interface referenced from the parent.</li>
+          <li><strong>Arrays</strong> get an element type. An array of objects is merged into one interface rather than repeated for every item.</li>
+          <li><strong>Optional fields</strong> are marked with a <code>?</code>. When the tool sees several objects in an array and a key is missing from some of them, it treats that key as optional, which is usually what a real API means.</li>
+          <li><strong>Unions</strong> appear when a field holds more than one type across the sample, for example <code>string | null</code>.</li>
+        </ul>
+
+        <h2>Where it helps, and where to check the result</h2>
+        <p>It is quickest for the boring middle of the work: turning a fresh API response into a starting set of interfaces you can refine. It saves the typing and catches the obvious shape.</p>
+        <p>A sample cannot know two things, so glance over the output for these. A field that happens to be <code>null</code> in your sample could be a string in another response, so widen the type where you know more than the sample does. And a number that is really an enum, like a status of <code>1</code>, comes out as <code>number</code>, which you may want to narrow by hand.</p>
+
+        <h2>Try it</h2>
+        <p>Open the <a href="/tools/json-to-typescript/">JSON to TypeScript</a> tool, paste a response, and the interfaces appear next to it. Load the example first if you want to see how nested objects and optional fields come out. The conversion runs in your browser, and the source is on <a href="https://github.com/AnkitSurana/NoByte" rel="noopener">GitHub</a>.</p>
+      </div>
+    </article>
+  </div>
+</section>

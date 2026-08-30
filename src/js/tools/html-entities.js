@@ -32,21 +32,40 @@ function run() {
   output.value = mode === "encode" ? encode(input.value, allBox.checked) : decode(input.value);
 }
 
-function setMode(next) {
-  mode = next;
-  const enc = next === "encode";
-  document.getElementById("he-t-enc").setAttribute("aria-selected", String(enc));
-  document.getElementById("he-t-dec").setAttribute("aria-selected", String(!enc));
-  document.getElementById("he-t-enc").tabIndex = enc ? 0 : -1;
-  document.getElementById("he-t-dec").tabIndex = enc ? -1 : 0;
-  document.getElementById("he-p-enc").hidden = !enc;
-  document.getElementById("he-p-dec").hidden = enc;
-  scopeWrap.style.visibility = enc ? "visible" : "hidden"; // scope toggle only applies to encoding
+const tabs = [document.getElementById("he-t-enc"), document.getElementById("he-t-dec")];
+const encPanel = document.getElementById("he-p-enc");
+const decPanel = document.getElementById("he-p-dec");
+
+// Self-contained tab handling: keeps mode, panels, and the scope toggle in sync
+// for both mouse clicks and arrow-key navigation.
+function selectTab(enc) {
+  mode = enc ? "encode" : "decode";
+  tabs[0].setAttribute("aria-selected", String(enc));
+  tabs[1].setAttribute("aria-selected", String(!enc));
+  tabs[0].tabIndex = enc ? 0 : -1;
+  tabs[1].tabIndex = enc ? -1 : 0;
+  encPanel.hidden = !enc;
+  decPanel.hidden = enc;
+  scopeWrap.classList.toggle("hidden", !enc); // scope toggle only applies to encoding
   input.placeholder = enc ? '<a href="/x">Tom & Jerry</a>' : "&lt;a&gt;Tom &amp; Jerry&lt;/a&gt;";
   run();
 }
-
-document.getElementById("he-t-enc").addEventListener("click", () => setMode("encode"));
-document.getElementById("he-t-dec").addEventListener("click", () => setMode("decode"));
+const EXAMPLES = {
+  encode: '<a href="/x">Tom & Jerry</a> costs 3 < 5',
+  decode: '&lt;a href=&quot;/x&quot;&gt;Tom &amp; Jerry&lt;/a&gt; costs 3 &lt; 5',
+};
+document.getElementById("he-example").addEventListener("click", () => {
+  input.value = EXAMPLES[mode];
+  run();
+});
+tabs[0].addEventListener("click", () => selectTab(true));
+tabs[1].addEventListener("click", () => selectTab(false));
+tabs.forEach((t) => t.addEventListener("keydown", (e) => {
+  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+  e.preventDefault();
+  const enc = e.key === "ArrowLeft";
+  tabs[enc ? 0 : 1].focus();
+  selectTab(enc);
+}));
 [input, allBox].forEach((el) => el.addEventListener("input", run));
-setMode("encode");
+selectTab(true);

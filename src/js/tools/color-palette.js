@@ -45,19 +45,15 @@ function hslToHex(h, s, l) {
   return rgbToHex((r + m) * 255, (g + m) * 255, (b + m) * 255);
 }
 
-// Readable text colour for a swatch, from perceived luminance.
-function textOn(hex) {
-  const { r, g, b } = hexToRgb(hex);
-  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "#1D1A16" : "#FFF8EC";
-}
-
 /* ---- swatches ---- */
+// The colour block stays clean; the harmony label (if any) sits below it with
+// the hex, so every swatch reads the same as the tint/shade scale.
 function swatch(hex, tag) {
   const el = document.createElement("button");
   el.type = "button";
   el.className = "pal-swatch";
   el.dataset.hex = hex;
-  el.innerHTML = `<span class="pal-swatch__color" style="background:${hex};color:${textOn(hex)}">${tag ? `<span class="pal-swatch__tag">${tag}</span>` : ""}</span><span class="pal-swatch__hex">${hex}</span>`;
+  el.innerHTML = `<span class="pal-swatch__color" style="background:${hex}"></span>${tag ? `<span class="pal-swatch__tag">${tag}</span>` : ""}<span class="pal-swatch__hex">${hex}</span>`;
   return el;
 }
 
@@ -65,7 +61,7 @@ function render() {
   const rgb = hexToRgb(hexEl.value);
   if (!rgb) { errEl.textContent = "Enter a 6-digit hex color, like #2563EB."; return; }
   errEl.textContent = "";
-  const { h, s } = rgbToHsl(rgb);
+  const { h, s, l } = rgbToHsl(rgb);
   const baseHex = rgbToHex(rgb.r, rgb.g, rgb.b);
 
   // Lightness scale, base marked. Saturation eases off at the extremes so the
@@ -78,7 +74,6 @@ function render() {
     scaleEl.appendChild(swatch(hex));
   });
 
-  const { l } = rgbToHsl(rgb);
   const harmonies = [
     ["Base", baseHex],
     ["Complementary", hslToHex(h + 180, s, l)],

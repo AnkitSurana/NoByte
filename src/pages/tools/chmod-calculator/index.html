@@ -9,19 +9,19 @@
         </thead>
         <tbody id="cm-body">
           <tr data-who="owner"><th scope="row">Owner</th>
-            <td><input type="checkbox" data-bit="4" aria-label="Owner read" /></td>
-            <td><input type="checkbox" data-bit="2" aria-label="Owner write" /></td>
-            <td><input type="checkbox" data-bit="1" aria-label="Owner execute" /></td>
+            <td><label class="chmod-box"><input type="checkbox" data-bit="4" aria-label="Owner read" /></label></td>
+            <td><label class="chmod-box"><input type="checkbox" data-bit="2" aria-label="Owner write" /></label></td>
+            <td><label class="chmod-box"><input type="checkbox" data-bit="1" aria-label="Owner execute" /></label></td>
           </tr>
           <tr data-who="group"><th scope="row">Group</th>
-            <td><input type="checkbox" data-bit="4" aria-label="Group read" /></td>
-            <td><input type="checkbox" data-bit="2" aria-label="Group write" /></td>
-            <td><input type="checkbox" data-bit="1" aria-label="Group execute" /></td>
+            <td><label class="chmod-box"><input type="checkbox" data-bit="4" aria-label="Group read" /></label></td>
+            <td><label class="chmod-box"><input type="checkbox" data-bit="2" aria-label="Group write" /></label></td>
+            <td><label class="chmod-box"><input type="checkbox" data-bit="1" aria-label="Group execute" /></label></td>
           </tr>
           <tr data-who="others"><th scope="row">Others</th>
-            <td><input type="checkbox" data-bit="4" aria-label="Others read" /></td>
-            <td><input type="checkbox" data-bit="2" aria-label="Others write" /></td>
-            <td><input type="checkbox" data-bit="1" aria-label="Others execute" /></td>
+            <td><label class="chmod-box"><input type="checkbox" data-bit="4" aria-label="Others read" /></label></td>
+            <td><label class="chmod-box"><input type="checkbox" data-bit="2" aria-label="Others write" /></label></td>
+            <td><label class="chmod-box"><input type="checkbox" data-bit="1" aria-label="Others execute" /></label></td>
           </tr>
         </tbody>
       </table>
@@ -29,9 +29,9 @@
 
     <div class="stack mt-4">
       <div class="result-row"><span class="label">Octal</span>
-        <span class="row" style="gap:var(--s2)">
-          <input class="input mono" id="cm-octal" value="000" maxlength="3" inputmode="numeric" style="width:6rem;text-align:center;font-size:var(--t-lg);" aria-label="Octal permission number" />
-          <button class="btn btn--sm copy-btn" data-copy="#cm-octal"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        <span class="row gap-2">
+          <input class="input mono" id="cm-octal" value="000" maxlength="3" inputmode="numeric" style="width:5rem;text-align:center;font-size:var(--t-md);height:42px;min-height:42px;padding-block:0;" aria-label="Octal permission number" />
+          <button class="btn copy-btn" data-copy="#cm-octal"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
         </span>
       </div>
       <div class="result-row"><span class="label">Symbolic</span><span class="mono val" id="cm-symbolic">----------</span></div>

@@ -1,0 +1,118 @@
+<!-- meta tool="1" title="Audio extractor: video to MP3, M4A, WAV, FLAC | NoByte" description="Extract audio from a video to MP3, M4A, WAV, or lossless FLAC, right in your browser. Preview and trim first. Your file never leaves your device." path="/tools/audio-extractor/" keywords="audio extractor, video to mp3, extract audio from video, mp4 to mp3, video to audio, trim audio" -->
+{{tool-hero:audio-extractor}}
+<section class="section--tight">
+  <div class="container" style="max-width:760px;">
+
+    <div class="dropzone" id="ax-drop">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#music"></use></svg>
+      <div><strong>Drop a video here</strong> or click to choose</div>
+      <div class="xs">MP4, MOV, WebM, MKV, AVI, or an audio file. It stays on your device.</div>
+    </div>
+    <p class="muted small mt-3" id="ax-info"></p>
+
+    <div id="ax-controls" class="hidden">
+
+      <div id="ax-preview" class="mt-4 hidden">
+        <video id="ax-video" class="ax-video" controls playsinline preload="metadata"></video>
+        <div id="ax-trim" class="hidden">
+          <div class="ax-trim__track" id="ax-track">
+            <div class="ax-trim__range" id="ax-range"></div>
+            <div class="ax-trim__handle" id="ax-h0" role="slider" tabindex="0" aria-label="Trim start" aria-valuemin="0"></div>
+            <div class="ax-trim__handle" id="ax-h1" role="slider" tabindex="0" aria-label="Trim end" aria-valuemin="0"></div>
+          </div>
+          <div class="row row-wrap mt-3 gap-4 items-end">
+            <div class="field ax-time">
+              <label for="ax-start">Start</label>
+              <input class="input mono" id="ax-start" placeholder="0:00" inputmode="numeric" autocomplete="off" spellcheck="false" />
+            </div>
+            <div class="field ax-time">
+              <label for="ax-end">End</label>
+              <input class="input mono" id="ax-end" placeholder="end" inputmode="numeric" autocomplete="off" spellcheck="false" />
+            </div>
+            <div class="ax-ctrl"><button class="btn ax-play" id="ax-play-sel" type="button"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#video"></use></svg><span class="btn-label">Play selection</span></button></div>
+            <div class="ax-sel-box grow"><span class="mono muted small ax-sel" id="ax-sel">Full clip</span></div>
+          </div>
+          <p class="muted small mt-2">Drag the handles, or scrub the video and type exact times. Leave as-is to keep the whole track.</p>
+        </div>
+      </div>
+
+      <div class="row row-wrap mt-4 gap-4 items-end">
+        <div class="field grow ax-format-field">
+          <label for="ax-format">Output format</label>
+          <select class="select" id="ax-format">
+            <option value="mp3">MP3 (plays everywhere)</option>
+            <option value="m4a">M4A (AAC, high quality, smaller)</option>
+            <option value="wav">WAV (uncompressed, lossless)</option>
+            <option value="flac">FLAC (compressed, lossless)</option>
+          </select>
+        </div>
+        <div class="field ax-bitrate-field" id="ax-bitrate-wrap">
+          <label for="ax-bitrate">Quality</label>
+          <select class="select" id="ax-bitrate">
+            <option value="320">320 kbps (best)</option>
+            <option value="256">256 kbps (high)</option>
+            <option value="192">192 kbps (good)</option>
+            <option value="128">128 kbps (small)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row row-wrap mt-4 gap-4 items-center">
+        <button class="btn btn--primary" id="ax-extract">
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="btn-label"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#music"></use></svg> Extract audio</span>
+        </button>
+        <p class="muted small ax-note" id="ax-format-note"></p>
+      </div>
+    </div>
+
+    <div id="ax-progress-wrap" class="hidden mt-5" role="group" aria-label="Extraction progress">
+      <div class="row between small">
+        <span class="muted" id="ax-stage">Preparing…</span>
+        <span class="mono" id="ax-pct"></span>
+      </div>
+      <div class="progress mt-2" id="ax-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress__fill" id="ax-bar"></div>
+      </div>
+      <button class="btn btn--ghost mt-3" id="ax-cancel">Cancel</button>
+    </div>
+
+    <div id="ax-result" class="hidden mt-5">
+      <div class="notice notice--info items-center">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg>
+        <div class="grow">
+          <strong id="ax-out-name">audio</strong>
+          <div class="muted small mt-1" id="ax-out-meta"></div>
+        </div>
+      </div>
+      <div class="row row-wrap mt-3 gap-3">
+        <button class="btn btn--primary" id="ax-download"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg><span class="btn-label">Download</span></button>
+        <button class="btn btn--ghost" id="ax-again">Extract another</button>
+      </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#lock"></use></svg>
+      <div>Your video is decoded on your own device with WebAssembly. It is never uploaded, and no account is needed. The first extraction downloads a one-time ~32&nbsp;MB engine, which your browser then caches.</div>
+    </div>
+
+  </div>
+</section>
+<style>
+  .ax-time { width: 118px; }
+  /* Centre the label-less controls on the input boxes: the row bottom-aligns, so
+     a box the height of an .input makes the button and text sit at the input's
+     vertical middle instead of hanging at the bottom. */
+  .ax-ctrl { display: flex; align-items: center; min-height: 51px; }
+  .ax-sel-box { display: flex; align-items: center; justify-content: flex-end; min-height: 51px; }
+  /* The selection status sits in a soft, rounded pill so it reads as its own chip. */
+  .ax-sel { background: color-mix(in srgb, var(--ink) 8%, transparent); border-radius: var(--radius-full); padding: var(--s2) var(--s3); white-space: nowrap; }
+  /* The theme's golden highlight so Play selection clearly reads as a button;
+     fixed dark text keeps it legible on the golden in both themes. */
+  .ax-play { background: var(--hl); color: #1D1A16; }
+  .ax-format-field { min-width: 200px; }
+  .ax-bitrate-field { min-width: 130px; }
+  .ax-note { margin: 0; }
+</style>
+<script src="/assets/vendor/ffmpeg/ffmpeg.js"></script>
+<script type="module" src="/js/tools/audio-extractor.js"></script>

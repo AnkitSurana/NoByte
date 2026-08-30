@@ -4,12 +4,14 @@
   <div class="container">
     <div class="tool-layout">
       <div class="field">
-        <label for="wc-input" class="sr-only">Text to analyze</label>
-        <textarea class="textarea mono" id="wc-input" placeholder="Start typing or paste your text…" style="min-height:260px;" autofocus></textarea>
-        <div class="row row-wrap between mt-2">
-          <button class="btn btn--sm" type="button" data-example>Load example</button>
-          <button class="btn btn--sm btn--ghost" type="button" data-clear>Clear</button>
+        <div class="row between mb-2">
+          <label for="wc-input">Text</label>
+          <div class="row gap-2">
+            <button class="btn" type="button" data-example>Load example</button>
+            <button class="btn" type="button" data-clear>Clear</button>
+          </div>
         </div>
+        <textarea class="textarea mono" id="wc-input" placeholder="Start typing or paste your text…" style="min-height:260px;"></textarea>
       </div>
 
       <div class="stat-grid" id="wc-stats">
@@ -20,6 +22,11 @@
         <div class="stat"><span class="stat__value mono" data-stat="paragraphs">0</span><span class="stat__label">Paragraphs</span></div>
         <div class="stat"><span class="stat__value mono" data-stat="readingTime">0s</span><span class="stat__label">Reading time</span></div>
       </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Counts update as you type. A word is any run of non-space characters, a sentence ends at a period, question mark, or exclamation mark, and a paragraph is a block separated by a blank line. Reading time assumes 200 words per minute, a typical adult prose pace. Your text stays in your browser and is never uploaded.</div>
     </div>
   </div>
 </section>

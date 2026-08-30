@@ -2,8 +2,8 @@
 {{tool-hero:html-entities}}
 <section class="section--tight">
   <div class="container">
-    <div class="row row-wrap mb-3" style="gap:var(--s4);align-items:end;">
-      <div class="tabs" data-tabs role="tablist" aria-label="Direction">
+    <div class="tool-toolbar row-wrap mb-4">
+      <div class="tabs" role="tablist" aria-label="Direction">
         <button class="tab" role="tab" id="he-t-enc" aria-controls="he-p-enc" aria-selected="true">Encode</button>
         <button class="tab" role="tab" id="he-t-dec" aria-controls="he-p-dec" aria-selected="false" tabindex="-1">Decode</button>
       </div>
@@ -14,12 +14,15 @@
 
     <div class="tool-layout tool-layout--split">
       <div class="field">
-        <label for="he-input">Input</label>
+        <div class="row between">
+          <label for="he-input">Input</label>
+          <button class="btn" id="he-example">Load example</button>
+        </div>
         <textarea class="textarea mono" id="he-input" spellcheck="false" placeholder="<a href=&quot;/x&quot;>Tom &amp; Jerry</a>" style="min-height:300px;"></textarea>
       </div>
       <div class="field">
         <div class="row between"><label for="he-output">Output</label>
-          <button class="btn btn--sm copy-btn" data-copy="#he-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          <button class="btn copy-btn" data-copy="#he-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
         </div>
         <textarea class="textarea mono" id="he-output" readonly spellcheck="false" style="min-height:300px;"></textarea>
       </div>

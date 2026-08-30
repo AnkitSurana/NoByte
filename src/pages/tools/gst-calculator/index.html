@@ -17,9 +17,14 @@
       <div class="field mt-3 hidden" id="gst-custom-wrap"><label for="gst-custom">Custom rate (%)</label><input class="input mono" id="gst-custom" type="number" min="0" step="0.1" value="7.5" /></div>
     </div>
     <div class="stack mt-4">
-      <div class="result-row"><span class="label">Net (before tax)</span><span class="mono val" id="gst-net">—</span></div>
-      <div class="result-row"><span class="label">Tax</span><span class="mono val" id="gst-tax">—</span></div>
-      <div class="result-row"><span class="label">Gross (including tax)</span><span class="mono val" id="gst-gross">—</span></div>
+      <div class="result-row"><span class="label">Net (before tax)</span><span class="mono val" id="gst-net">-</span><button class="btn copy-btn" data-copy="#gst-net" aria-label="Copy net amount"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
+      <div class="result-row"><span class="label">Tax</span><span class="mono val" id="gst-tax">-</span><button class="btn copy-btn" data-copy="#gst-tax" aria-label="Copy tax amount"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
+      <div class="result-row"><span class="label">Gross (including tax)</span><span class="mono val" id="gst-gross">-</span><button class="btn copy-btn" data-copy="#gst-gross" aria-label="Copy gross amount"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Add tax works from an amount before tax; Remove tax works back from an amount that already includes it. Pick a preset rate or enter a custom one, and the net, tax, and gross update as you type. Everything runs in your browser.</div>
     </div>
   </div>
 </section>

@@ -4,28 +4,34 @@
   <div class="container" style="max-width:720px;">
     <div class="field">
       <label for="sg-input">Text</label>
-      <textarea class="textarea" id="sg-input" spellcheck="false" placeholder="How to Bake Sourdough Bread at Home" style="min-height:96px;"></textarea>
+      <input class="input" id="sg-input" spellcheck="false" placeholder="How to Bake Sourdough Bread at Home" value="How to Bake Sourdough Bread at Home" />
     </div>
 
-    <div class="row row-wrap mt-4" style="gap:var(--s4);align-items:end;">
-      <div class="field"><label for="sg-sep">Separator</label>
-        <select class="select" id="sg-sep"><option value="-">Hyphen ( - )</option><option value="_">Underscore ( _ )</option></select>
-      </div>
+    <div class="row row-wrap items-center mt-6">
+      <label for="sg-sep" class="label">Separator</label>
+      <select class="select select--sm" id="sg-sep"><option value="-">Hyphen ( - )</option><option value="_">Underscore ( _ )</option></select>
       <label class="switch"><input type="checkbox" id="sg-lower" checked /><span class="switch__track"></span> Lowercase</label>
       <label class="switch"><input type="checkbox" id="sg-strip" checked /><span class="switch__track"></span> Strip stop words</label>
     </div>
 
-    <div class="field mt-4">
+    <div class="field mt-6">
       <div class="row between"><label for="sg-output">Slug</label>
-        <button class="btn btn--sm copy-btn" data-copy="#sg-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        <button class="btn copy-btn" data-copy="#sg-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
       </div>
-      <input class="input mono" id="sg-output" readonly value="" aria-label="Generated slug" style="font-size:var(--t-md);" />
+      <input class="input mono" id="sg-output" readonly value="" aria-label="Generated slug" />
       <p class="muted xs" id="sg-len"></p>
     </div>
 
-    <div class="notice notice--info mt-4">
+    <div class="notice notice--info mt-6">
       <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
-      <div>Accented letters are folded to their closest ASCII form (café becomes cafe). Characters outside the Latin alphabet, such as CJK, are dropped rather than transliterated.</div>
+      <div>
+        <p>A slug is the readable tail of a URL, like <code>/blog/how-to-bake-sourdough</code>. Paste a post title, product name, or heading to get a clean slug for your CMS or router, instead of typing one by hand. It all runs in your browser.</p>
+        <ul>
+          <li>Accented letters fold to ASCII, so <code>café</code> becomes <code>cafe</code>.</li>
+          <li>Characters outside the Latin alphabet, such as CJK, are dropped.</li>
+          <li>Strip stop words drops filler like "the", "and", and "of".</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>

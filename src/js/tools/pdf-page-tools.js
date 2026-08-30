@@ -1,5 +1,5 @@
 // PDF page tools — reorder (drag), delete, extract, and split PDF pages.
-import { initDropzone, withPending, download, toast, humanBytes } from "/js/ui.js";
+import { initDropzone, withPending, download, toast } from "/js/ui.js";
 import * as pdfjsLib from "/assets/vendor/pdfjs/pdf.min.js";
 pdfjsLib.GlobalWorkerOptions.workerSrc = "/assets/vendor/pdfjs/pdf.worker.min.js";
 

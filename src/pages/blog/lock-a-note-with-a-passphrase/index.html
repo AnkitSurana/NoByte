@@ -1,0 +1,50 @@
+<!-- meta title="How to lock a note behind a passphrase | NoByte" description="You can encrypt a message with a passphrase in the browser, so only someone who knows the passphrase can read it. How it works, and where it helps." path="/blog/lock-a-note-with-a-passphrase/" keywords="encrypt text, password protect note, encrypt message online, aes encryption, decrypt text" -->
+<section class="section">
+  <div class="container container-wide has-stickers">
+    <span class="sticker sticker--1">passphrase only</span>
+    <span class="sticker sticker--2">on your device</span>
+    <span class="sticker sticker--3">no uploads</span>
+    <span class="sticker sticker--4">AES-GCM</span>
+    <span class="sticker sticker--5">in your browser</span>
+    <span class="sticker sticker--6">no account</span>
+    <span class="sticker sticker--7">nothing stored</span>
+    <span class="sticker sticker--8">your key</span>
+    <span class="sticker sticker--9">open source</span>
+    <span class="sticker sticker--10">check the code</span>
+    <span class="sticker sticker--11">works offline</span>
+    <span class="sticker sticker--12">private by default</span>
+    <article class="post-wrap">
+      <header class="post__head">
+        <nav class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>Lock a note</span></nav>
+        {{blog-meta:lock-a-note-with-a-passphrase}}
+        <h1 class="page-title post__title">How to lock a note behind a passphrase</h1>
+        <p class="page-lead">Sometimes you want to write something down, or send it to someone, without leaving it readable to anyone in between. A passphrase can do that. Here is what encrypting a note really means, and how a browser does it without any of your text leaving the page.</p>
+      </header>
+
+      <div class="prose post__body">
+        <h2>What locking a note with a passphrase means</h2>
+        <p>Encrypting a message turns readable text into a block of scrambled characters. The only way back to the original is the passphrase you chose. Anyone who sees the scrambled block without the passphrase gets nothing useful from it, and there is no button that reverses it for them.</p>
+        <p>That is the whole idea: the security rests on the passphrase, not on hiding the message. You can paste the encrypted block into an email, a chat, or a note in a shared document, and it stays unreadable until someone types the passphrase back in.</p>
+
+        <h2>How the browser does it without uploading anything</h2>
+        <p>Browsers ship with a proper cryptography library built in, called the Web Crypto API. The <a href="/tools/text-encryptor/">text encryptor</a> uses it to do three things on your own device:</p>
+        <ul>
+          <li>It turns your passphrase into an encryption key. A passphrase on its own is not a good key, so it is stretched with a function called PBKDF2 that runs 200,000 rounds. That slowness is on purpose: it makes guessing passphrases by brute force expensive.</li>
+          <li>It encrypts the text with AES-GCM, a standard that both scrambles the message and adds a check so tampering is detected.</li>
+          <li>It packs a random salt and a random starting value together with the result and prints the lot as one base64 block you can copy anywhere.</li>
+        </ul>
+        <p>None of that needs a server. The passphrase is never stored and never sent, so there is nothing to leak later.</p>
+
+        <h2>Where it is genuinely useful</h2>
+        <p>It fits any time the channel is less private than the message. Sending a wifi password or a door code to a family member over chat. Keeping a few recovery notes in a document that other people can also open. Pasting a secret into a ticket that a wider team can read, where only the right person has the passphrase.</p>
+        <p>It is not a replacement for a password manager, and it is not meant for encrypting large files. It is the quickest way to make one piece of text readable to one person.</p>
+
+        <h2>The one rule to remember</h2>
+        <p>There is no recovery. Because the passphrase never leaves your device and is never stored, nobody, including this site, can unlock the message for you if you forget it. Choose a passphrase you can remember or record safely, and share it through a different channel from the encrypted block itself.</p>
+
+        <h2>Try it</h2>
+        <p>Open the <a href="/tools/text-encryptor/">text encryptor</a>, type a message and a passphrase, and press Encrypt. To read one back, paste the encrypted block in, enter the passphrase, and press Decrypt. Everything happens in your browser, and you can read the code on <a href="https://github.com/AnkitSurana/NoByte" rel="noopener">GitHub</a>.</p>
+      </div>
+    </article>
+  </div>
+</section>

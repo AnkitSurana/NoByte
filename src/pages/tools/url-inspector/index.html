@@ -1,0 +1,31 @@
+<!-- meta tool="1" title="URL inspector: parse a URL and its query | NoByte" description="Break a URL into its protocol, host, port, path, and query parameters, and read each decoded value. Runs in your browser, nothing is uploaded." path="/tools/url-inspector/" keywords="url parser, parse url, query string parser, url inspector, decode url parameters" -->
+{{tool-hero:url-inspector}}
+<section class="section--tight">
+  <div class="container">
+    <div class="field">
+      <div class="row between mb-2">
+        <label for="ui-url">URL</label>
+        <button class="btn" id="ui-example">Load example</button>
+      </div>
+      <input class="input mono" id="ui-url" spellcheck="false" autocomplete="off" placeholder="https://example.com/path?q=hello%20world&page=2" value="https://shop.example.com:8443/products/42?q=hello%20world&amp;page=2&amp;sort=price#reviews" />
+      <p class="field-error" id="ui-error"></p>
+    </div>
+
+    <div id="ui-parts" class="mt-4 hidden">
+      <div class="result-panel stack--copy" id="ui-parts-list"></div>
+    </div>
+
+    <div id="ui-query" class="mt-4 hidden">
+      <div class="row between"><label>Query parameters</label><span class="muted small" id="ui-qcount"></span></div>
+      <div class="table-scroll mt-2">
+        <table class="data-table data-table--copy" id="ui-qtable"><thead><tr><th>Key</th><th>Value (decoded)</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Paste any URL to break it into its protocol, host, port, path, query, and fragment, all in your browser. The query string is also split into parameters with each value URL-decoded. Click any row or value to copy it.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/url-inspector.js"></script>

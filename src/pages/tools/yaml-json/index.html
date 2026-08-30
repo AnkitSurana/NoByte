@@ -1,0 +1,38 @@
+<!-- meta tool="1" title="YAML to JSON converter (and back) | NoByte" description="Convert YAML to JSON and JSON to YAML, live, in your browser. Nothing is uploaded." path="/tools/yaml-json/" keywords="yaml to json, json to yaml, yaml converter, convert yaml, yaml parser" -->
+{{tool-hero:yaml-json}}
+<section class="section--tight">
+  <div class="container">
+    <div class="yj-split">
+      <div class="field">
+        <div class="row between">
+          <label for="yj-in" id="yj-in-label">YAML</label>
+          <button class="btn" id="yj-example">Load example</button>
+        </div>
+        <textarea class="textarea mono" id="yj-in" spellcheck="false" style="min-height:340px;">name: NoByte
+tools:
+  - json formatter
+  - yaml to json
+private: true
+count: 72</textarea>
+        <p class="field-error" id="yj-error"></p>
+      </div>
+      <div class="yj-swap">
+        <button class="btn btn--icon-lg btn--soft" id="yj-swap" title="Swap direction" aria-label="Swap YAML and JSON"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-right-left"></use></svg></button>
+      </div>
+      <div class="field">
+        <div class="row between">
+          <label for="yj-out" id="yj-out-label">JSON</label>
+          <button class="btn copy-btn" data-copy="#yj-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="yj-out" readonly spellcheck="false" style="min-height:340px;"></textarea>
+      </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Convert YAML to JSON or JSON to YAML, live in your browser with nothing uploaded. Type or paste on the left and the result appears on the right, ready to copy. Use the swap button between the panes to flip the direction and turn the result back into the input. Any syntax error is shown below the input.</div>
+    </div>
+  </div>
+</section>
+<script src="/assets/vendor/js-yaml.min.js"></script>
+<script type="module" src="/js/tools/yaml-json.js"></script>

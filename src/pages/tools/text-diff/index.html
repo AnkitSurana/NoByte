@@ -6,14 +6,18 @@
       <div class="field"><label for="td-a">Original</label><textarea class="textarea mono" id="td-a" spellcheck="false" style="min-height:200px;">The quick brown fox jumps over the lazy dog.</textarea></div>
       <div class="field"><label for="td-b">Changed</label><textarea class="textarea mono" id="td-b" spellcheck="false" style="min-height:200px;">The quick red fox leaps over the lazy cat.</textarea></div>
     </div>
-    <div class="row row-wrap mt-4" style="gap:var(--s4);align-items:center;">
+    <div class="row row-wrap items-end mt-4">
       <div class="field"><label for="td-mode">Compare by</label>
         <select class="select" id="td-mode"><option value="words">Words</option><option value="lines">Lines</option><option value="chars">Characters</option></select>
       </div>
-      <span class="badge badge--ok" id="td-added">+0</span>
-      <span class="badge badge--danger" id="td-removed">-0</span>
+      <span class="row gap-2 ml-auto"><span class="badge badge--ok" id="td-added">+0</span><span class="badge badge--danger" id="td-removed">-0</span></span>
     </div>
     <div class="output-box mt-4" id="td-result" aria-live="polite"></div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Compares the two texts and highlights what changed, all in your browser. Added text is shown in green, removed text in red. Compare by words, lines, or characters, and the badges count how many were added and removed.</div>
+    </div>
   </div>
 </section>
 <script src="/assets/vendor/diff.min.js"></script>

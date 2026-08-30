@@ -9,7 +9,7 @@
           <div class="score-box"><span class="score-box__label">Solved</span><span class="score-box__val" id="wg-solved">0</span></div>
           <div class="score-box"><span class="score-box__label">Best</span><span class="score-box__val" id="wg-best">0</span></div>
         </div>
-        <div class="row" style="gap:var(--s2);">
+        <div class="row gap-2">
           <select class="select select--sm" id="wg-diff" aria-label="Difficulty">
             <option value="beginner">Beginner</option>
             <option value="intermediate" selected>Intermediate</option>
@@ -17,7 +17,7 @@
           </select>
           <button class="btn btn--sm" id="wg-hint-btn" type="button">
             <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#lightbulb"></use></svg>
-            Hint <span class="wg-cost">−<span id="wg-hint-cost">6</span>s</span>
+            Hint <span class="wg-cost">-<span id="wg-hint-cost">6</span>s</span>
           </button>
           <button class="btn btn--primary btn--sm" id="wg-new" type="button">New</button>
         </div>

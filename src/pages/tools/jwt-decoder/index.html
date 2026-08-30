@@ -2,24 +2,34 @@
 {{tool-hero:jwt-decoder}}
 <section class="section--tight">
   <div class="container">
-    <div class="notice notice--warn mb-4">
-      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#alert-triangle"></use></svg>
-      <div>This decodes only. It does not verify the signature, so it cannot tell you whether a token is genuine. Do not paste production tokens you would not want in your clipboard history.</div>
-    </div>
     <div class="field">
-      <label for="jwt-input">Token</label>
+      <div class="row between">
+        <label for="jwt-input">Token</label>
+        <button class="btn" id="jwt-example">Load example</button>
+      </div>
       <textarea class="textarea mono" id="jwt-input" spellcheck="false" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…" style="min-height:110px;"></textarea>
       <p class="field-error" id="jwt-error"></p>
     </div>
-    <div class="row row-wrap mt-3" style="gap:var(--s3);">
-      <button class="btn btn--sm" id="jwt-example">Load example</button>
-      <span id="jwt-exp-badge"></span>
-    </div>
     <div class="tool-layout tool-layout--split mt-4">
-      <div><div class="label mb-2">Header</div><div class="output-box" id="jwt-header">—</div></div>
-      <div><div class="label mb-2">Payload</div><div class="output-box" id="jwt-payload">—</div></div>
+      <div class="field">
+        <div class="row between"><span class="label">Header</span>
+          <button class="btn btn--icon copy-btn" data-copy="#jwt-header" aria-label="Copy header"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
+        </div>
+        <div class="output-box" id="jwt-header">-</div>
+      </div>
+      <div class="field">
+        <div class="row between">
+          <span class="row gap-2"><span class="label">Payload</span><span id="jwt-exp-badge"></span></span>
+          <button class="btn btn--icon copy-btn" data-copy="#jwt-payload" aria-label="Copy payload"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
+        </div>
+        <div class="output-box" id="jwt-payload">-</div>
+      </div>
     </div>
     <div class="stack mt-4" id="jwt-claims"></div>
+    <div class="notice notice--warn mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#alert-triangle"></use></svg>
+      <div>This decodes only. It does not verify the signature, so it cannot tell you whether a token is genuine. Do not paste production tokens you would not want in your clipboard history.</div>
+    </div>
   </div>
 </section>
 <script type="module" src="/js/tools/jwt-decoder.js"></script>

@@ -17,38 +17,66 @@
           <input type="range" id="lc-term" min="1" max="40" step="1" value="30" />
         </div>
         <div class="field">
-          <label for="lc-currency">Currency symbol</label>
-          <input class="input" id="lc-currency" value="$" maxlength="3" style="max-width:90px;" />
+          <label for="lc-currency">Currency</label>
+          <select class="select lc-cur" id="lc-currency">
+            <option value="$">$ Dollar</option>
+            <option value="&#8364;">&#8364; Euro</option>
+            <option value="&#163;">&#163; Pound</option>
+            <option value="&#8377;">&#8377; Rupee</option>
+            <option value="&#165;">&#165; Yen</option>
+            <option value="&#8361;">&#8361; Won</option>
+            <option value="&#8381;">&#8381; Ruble</option>
+            <option value="R$">R$ Real</option>
+            <option value="A$">A$ Aussie dollar</option>
+            <option value="C$">C$ Canadian dollar</option>
+            <option value="Fr ">Fr Franc</option>
+            <option value="kr ">kr Krona</option>
+          </select>
         </div>
       </div>
 
       <div>
-        <div class="result-panel text-center">
+        <div class="result-panel text-center lc-panel">
           <div class="muted small">Monthly payment</div>
-          <div class="result-value" id="lc-monthly">—</div>
-          <svg id="lc-chart" viewBox="0 0 120 120" width="150" height="150" style="margin:var(--s4) auto 0;" role="img" aria-label="Principal vs interest">
-            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--surface)" stroke-width="16" />
-            <circle id="lc-arc" cx="60" cy="60" r="48" fill="none" stroke="var(--accent)" stroke-width="16" stroke-dasharray="0 999" stroke-linecap="butt" transform="rotate(-90 60 60)" />
+          <div class="result-value" id="lc-monthly">-</div>
+          <div class="row justify-center mt-3">
+            <button class="btn copy-btn" data-copy="#lc-monthly" aria-label="Copy monthly payment"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          </div>
+          <svg id="lc-chart" class="lc-chart" viewBox="0 0 120 120" width="150" height="150" role="img" aria-label="Principal vs interest">
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--seg-interest)" stroke-width="16" />
+            <circle id="lc-arc" cx="60" cy="60" r="48" fill="none" stroke="var(--seg-principal)" stroke-width="16" stroke-dasharray="0 999" stroke-linecap="butt" transform="rotate(-90 60 60)" />
           </svg>
-          <div class="row" style="justify-content:center;gap:var(--s4);">
-            <span class="legend"><i style="background:var(--accent)"></i> Principal</span>
-            <span class="legend"><i style="background:var(--ink-3)"></i> Interest</span>
+          <div class="row justify-center gap-4">
+            <span class="legend"><i style="background:var(--seg-principal)"></i> Principal</span>
+            <span class="legend"><i style="background:var(--seg-interest)"></i> Interest</span>
           </div>
         </div>
         <div class="stack mt-4">
-          <div class="result-row"><span class="label">Total principal</span><span class="mono val" id="lc-principal">—</span></div>
-          <div class="result-row"><span class="label">Total interest</span><span class="mono val" id="lc-interest">—</span></div>
-          <div class="result-row"><span class="label">Total paid</span><span class="mono val" id="lc-total">—</span></div>
+          <div class="result-row"><span class="label">Total principal</span><span class="mono val" id="lc-principal">-</span></div>
+          <div class="result-row"><span class="label">Total interest</span><span class="mono val" id="lc-interest">-</span></div>
+          <div class="result-row"><span class="label">Total paid</span><span class="mono val" id="lc-total">-</span></div>
         </div>
       </div>
     </div>
 
     <details class="card mt-5">
-      <summary style="cursor:pointer;font-weight:600;">Amortization schedule (yearly)</summary>
+      <summary class="lc-summary">Amortization schedule (yearly)</summary>
       <div class="table-scroll mt-3">
         <table class="data-table" id="lc-schedule"></table>
       </div>
     </details>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Set the amount, then drag the rate and term sliders; the monthly payment, totals, and the principal-vs-interest split update as you go. Expand the schedule for a year-by-year breakdown. Change the currency symbol to match your loan. Everything runs in your browser.</div>
+    </div>
   </div>
 </section>
+<style>
+  .lc-cur { max-width: 170px; }
+  /* On-brand pinboard colours so the split reads bright in both themes. */
+  .lc-panel { --seg-principal: var(--c-dev); --seg-interest: var(--c-day); }
+  .lc-chart { display: block; margin: var(--s4) auto 0; }
+  .lc-summary { cursor: pointer; font-weight: 600; }
+</style>
 <script type="module" src="/js/tools/loan-calculator.js"></script>

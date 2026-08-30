@@ -1,0 +1,37 @@
+<!-- meta tool="1" title="Read aloud: text to speech in your browser | NoByte" description="Have your browser read text aloud, with a choice of voice, speed, and pitch. Runs on your device, nothing is uploaded." path="/tools/read-aloud/" keywords="read aloud, text to speech, tts, read text out loud, browser text to speech" -->
+{{tool-hero:read-aloud}}
+<section class="section--tight">
+  <div class="container">
+    <div class="field">
+      <div class="row between items-end mb-2">
+        <label for="ra-text">Text</label>
+        <button class="btn" id="ra-example">Load example</button>
+      </div>
+      <textarea class="textarea" id="ra-text" style="min-height:200px;" placeholder="Type or paste the text you want read aloud"></textarea>
+    </div>
+
+    <div class="row row-wrap items-end mt-4">
+      <div class="field grow" style="min-width:240px;"><label for="ra-voice">Voice</label><select class="select" id="ra-voice"></select></div>
+      <div class="field" style="min-width:150px;">
+        <div class="row between"><label for="ra-rate">Speed</label><span class="mono" id="ra-rate-val">1.0x</span></div>
+        <input type="range" id="ra-rate" min="0.5" max="2" step="0.1" value="1" />
+      </div>
+      <div class="field" style="min-width:150px;">
+        <div class="row between"><label for="ra-pitch">Pitch</label><span class="mono" id="ra-pitch-val">1.0</span></div>
+        <input type="range" id="ra-pitch" min="0" max="2" step="0.1" value="1" />
+      </div>
+    </div>
+
+    <div class="row row-wrap gap-2 mt-4">
+      <button class="btn btn--primary" id="ra-play"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#volume-2"></use></svg> Read aloud</button>
+      <button class="btn" id="ra-pause">Pause</button>
+      <button class="btn" id="ra-stop">Stop</button>
+    </div>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#volume-2"></use></svg>
+      <div>This uses the voices built into your browser and operating system, so nothing is uploaded. The available voices differ from device to device.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/read-aloud.js"></script>

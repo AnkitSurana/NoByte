@@ -9,22 +9,22 @@
     </div>
 
     <div id="pp-workspace" hidden>
-      <div class="row between mt-4 mb-3" style="flex-wrap:wrap;gap:var(--s3);">
+      <div class="row between row-wrap mt-4 mb-3">
         <span class="muted small" id="pp-info"></span>
-        <span class="row" style="gap:var(--s2);">
-          <button class="btn btn--sm" type="button" id="pp-selall">Select all</button>
-          <button class="btn btn--sm" type="button" id="pp-clear">Clear</button>
+        <span class="row gap-2">
+          <button class="btn" type="button" id="pp-selall">Select all</button>
+          <button class="btn" type="button" id="pp-clear">Clear</button>
         </span>
       </div>
       <p class="muted xs mb-3">Drag a page to reorder. Tick pages to select them for delete or extract.</p>
 
       <div class="pp-grid" id="pp-pages"></div>
 
-      <div class="row row-wrap mt-5" style="gap:var(--s3);">
+      <div class="row row-wrap mt-5">
         <button class="btn" type="button" id="pp-delete" disabled>Delete selected</button>
         <button class="btn" type="button" id="pp-extract" disabled>Extract selected</button>
         <button class="btn" type="button" id="pp-split">Split to ZIP</button>
-        <button class="btn btn--primary" type="button" id="pp-download" style="margin-left:auto;">
+        <button class="btn btn--primary ml-auto" type="button" id="pp-download">
           <span class="spinner"></span><span class="btn-label">Download PDF</span>
         </button>
       </div>

@@ -8,11 +8,11 @@
       <div class="xs">PNG, JPG, or WebP</div>
     </div>
     <p class="muted small mt-3" id="cv-info"></p>
-    <div class="row row-wrap mt-4" style="gap:var(--s4);align-items:end;">
+    <div class="row row-wrap mt-4 gap-4 items-end">
       <div class="field"><label for="cv-format">Convert to</label>
         <select class="select" id="cv-format"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option></select>
       </div>
-      <div class="field grow" style="min-width:180px;" id="cv-quality-wrap">
+      <div class="field grow cv-quality-wrap" id="cv-quality-wrap">
         <div class="row between"><label for="cv-quality">Quality</label><span class="mono" id="cv-quality-val">92%</span></div>
         <input type="range" id="cv-quality" min="10" max="100" value="92" />
       </div>
@@ -24,6 +24,14 @@
       <div>JPG has no transparency. Transparent areas are filled with white.</div>
     </div>
     <img class="img-preview mt-4 hidden" id="cv-preview" alt="Converted preview" />
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Drop in a PNG, JPG, or WebP and pick a format to convert to; the quality slider applies to JPG and WebP. Converting to JPG flattens any transparency onto white. Everything runs in your browser, so the image is never uploaded.</div>
+    </div>
   </div>
 </section>
+<style>
+  .cv-quality-wrap { min-width: 180px; }
+</style>
 <script type="module" src="/js/tools/image-converter.js"></script>

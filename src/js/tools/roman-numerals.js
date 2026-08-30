@@ -46,6 +46,9 @@ numEl.addEventListener("input", () => {
   editing = false;
 });
 
+// Show the prefilled example on load.
+if (numEl.value.trim()) numEl.dispatchEvent(new Event("input"));
+
 romEl.addEventListener("input", () => {
   if (editing) return;
   editing = true;

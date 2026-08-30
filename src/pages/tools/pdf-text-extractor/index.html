@@ -1,0 +1,29 @@
+<!-- meta tool="1" title="PDF text extractor: get the text out of a PDF | NoByte" description="Pull the text out of a PDF and copy it or save it as a .txt file. Runs in your browser, the PDF is never uploaded." path="/tools/pdf-text-extractor/" keywords="pdf text extractor, extract text from pdf, pdf to text, copy text from pdf, pdf to txt" -->
+{{tool-hero:pdf-text-extractor}}
+<section class="section--tight">
+  <div class="container">
+    <div class="dropzone" id="pt-drop">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#file-text"></use></svg>
+      <div><strong>Drop a PDF here</strong> or click to choose</div>
+      <div class="xs">The file stays on your device.</div>
+    </div>
+    <p class="muted small mt-3" id="pt-info"></p>
+
+    <div class="result-panel mt-4 hidden" id="pt-result">
+      <div class="row between mb-3">
+        <span class="label" id="pt-out-label">Text</span>
+        <div class="row gap-2">
+          <button class="btn copy-btn" data-copy="#pt-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          <button class="btn" id="pt-download"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download .txt</button>
+        </div>
+      </div>
+      <textarea class="textarea mono" id="pt-out" readonly spellcheck="false" style="min-height:320px;"></textarea>
+    </div>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#lock"></use></svg>
+      <div>The PDF is read on your device with WebAssembly, and never uploaded. A scanned PDF that is really a set of images has no selectable text to pull, so nothing will come out of those.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/pdf-text-extractor.js"></script>

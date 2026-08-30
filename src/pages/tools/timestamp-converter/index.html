@@ -4,8 +4,8 @@
   <div class="container" style="max-width:760px;">
     <div class="result-panel text-center mb-5">
       <div class="muted small">Current Unix time</div>
-      <div class="result-value" id="ts-now">—</div>
-      <button class="btn btn--sm copy-btn mt-2" data-copy="#ts-now-val"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+      <div class="result-value" id="ts-now">-</div>
+      <button class="btn copy-btn mt-2" data-copy="#ts-now-val"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
       <input type="hidden" id="ts-now-val" />
     </div>
 
@@ -19,11 +19,11 @@
         <label for="ts-tz">Timezone</label>
         <select class="select" id="ts-tz"></select>
       </div>
-      <div class="stack mt-4">
-        <div class="result-row"><span class="label">Local</span><span class="val" id="ts-local">—</span></div>
-        <div class="result-row"><span class="label">UTC</span><span class="val" id="ts-utc">—</span></div>
-        <div class="result-row"><span class="label">ISO 8601</span><span class="val mono" id="ts-iso">—</span></div>
-        <div class="result-row"><span class="label">Relative</span><span class="val" id="ts-rel">—</span></div>
+      <div class="stack stack--copy mt-4">
+        <div class="result-row"><span class="label">Local</span><span class="val" id="ts-local">-</span></div>
+        <div class="result-row"><span class="label">UTC</span><span class="val" id="ts-utc">-</span></div>
+        <div class="result-row"><span class="label">ISO 8601</span><span class="val mono" id="ts-iso">-</span></div>
+        <div class="result-row"><span class="label">Relative</span><span class="val" id="ts-rel">-</span></div>
       </div>
     </div>
 
@@ -32,10 +32,15 @@
         <label for="ts-date">Date and time</label>
         <input class="input mono" id="ts-date" type="datetime-local" />
       </div>
-      <div class="stack mt-4">
-        <div class="result-row"><span class="label">Seconds</span><span class="val mono" id="ts-out-s">—</span></div>
-        <div class="result-row"><span class="label">Milliseconds</span><span class="val mono" id="ts-out-ms">—</span></div>
+      <div class="stack stack--copy mt-4">
+        <div class="result-row"><span class="label">Seconds</span><span class="val mono" id="ts-out-s">-</span></div>
+        <div class="result-row"><span class="label">Milliseconds</span><span class="val mono" id="ts-out-ms">-</span></div>
       </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>The current Unix time ticks live at the top. Convert a timestamp to dates in any timezone, or a date back to a timestamp. Seconds and milliseconds are detected automatically, it all runs in your browser, and you can click any value below to copy it.</div>
     </div>
   </div>
 </section>

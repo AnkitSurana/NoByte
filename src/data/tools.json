@@ -347,7 +347,7 @@
     "id": "timestamp-converter",
     "name": "Timestamp converter",
     "description": "Convert between Unix time and human dates, with a live clock.",
-    "category": "developer",
+    "category": "daily-use",
     "path": "/tools/timestamp-converter/",
     "icon": "clock",
     "metaDescription": "Convert Unix timestamps (seconds or milliseconds) to and from human-readable dates, in any timezone. Runs in your browser.",
@@ -381,7 +381,7 @@
     "id": "color-palette",
     "name": "Color palette",
     "description": "Build a tint, shade, and harmony palette from one base color.",
-    "category": "developer",
+    "category": "daily-use",
     "path": "/tools/color-palette/",
     "icon": "palette",
     "popularity": 4,
@@ -1069,5 +1069,274 @@
     ],
     "featured": false,
     "popularity": 1
+  },
+  {
+    "id": "http-status-codes",
+    "name": "HTTP status codes",
+    "description": "Look up any HTTP status code and what it means, grouped by class.",
+    "category": "developer",
+    "path": "/tools/http-status-codes/",
+    "icon": "globe",
+    "metaDescription": "Look up any HTTP status code and what it means, from 100 to 511, grouped by class. Runs in your browser.",
+    "keywords": [
+      "http status codes",
+      "404 meaning",
+      "500 error",
+      "http response codes",
+      "status code list"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "mime-types",
+    "name": "MIME types",
+    "description": "Find the MIME type for a file extension, or the other way around.",
+    "category": "developer",
+    "path": "/tools/mime-types/",
+    "icon": "file-type",
+    "metaDescription": "Find the MIME type for a file extension, or the other way around, from a searchable list. Runs in your browser.",
+    "keywords": [
+      "mime types",
+      "content type",
+      "file extension mime",
+      "mime type lookup",
+      "media type"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "unicode-inspector",
+    "name": "Unicode inspector",
+    "description": "See each character's Unicode code point, decimal, HTML entity, and UTF-8 bytes.",
+    "category": "developer",
+    "path": "/tools/unicode-inspector/",
+    "icon": "type",
+    "metaDescription": "Paste text to see each character's Unicode code point, decimal, hex, HTML entity, and UTF-8 byte length. Runs in your browser.",
+    "keywords": [
+      "unicode inspector",
+      "code point",
+      "character codes",
+      "html entity",
+      "utf-8 bytes"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "yaml-json",
+    "name": "YAML to JSON",
+    "description": "Convert YAML to JSON and JSON back to YAML, live.",
+    "category": "developer",
+    "path": "/tools/yaml-json/",
+    "icon": "arrow-right-left",
+    "metaDescription": "Convert YAML to JSON and JSON to YAML, live, in your browser. Nothing is uploaded.",
+    "keywords": [
+      "yaml to json",
+      "json to yaml",
+      "yaml converter",
+      "convert yaml",
+      "yaml parser"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "sql-formatter",
+    "name": "SQL formatter",
+    "description": "Format and indent an SQL query, for MySQL, PostgreSQL, SQLite, and more.",
+    "category": "developer",
+    "path": "/tools/sql-formatter/",
+    "icon": "table",
+    "metaDescription": "Format and indent an SQL query, with support for MySQL, PostgreSQL, SQLite, and more. Runs in your browser, nothing is uploaded.",
+    "keywords": [
+      "sql formatter",
+      "format sql",
+      "pretty print sql",
+      "sql beautifier",
+      "sql query formatter"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "code-beautifier",
+    "name": "Code beautifier",
+    "description": "Beautify HTML, CSS, and JavaScript, and minify CSS or HTML.",
+    "category": "developer",
+    "path": "/tools/code-beautifier/",
+    "icon": "braces",
+    "metaDescription": "Beautify and indent HTML, CSS, and JavaScript, and minify CSS or HTML. Runs in your browser, nothing is uploaded.",
+    "keywords": [
+      "code beautifier",
+      "format javascript",
+      "css beautifier",
+      "html formatter",
+      "prettify code"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "text-encryptor",
+    "name": "Text encryptor",
+    "description": "Lock and unlock a message with a passphrase, using AES-GCM on your device.",
+    "category": "productivity",
+    "path": "/tools/text-encryptor/",
+    "icon": "lock",
+    "metaDescription": "Encrypt and decrypt a message with a passphrase using AES-GCM, entirely in your browser. The passphrase is never stored or sent.",
+    "keywords": [
+      "text encryptor",
+      "encrypt text",
+      "password encrypt message",
+      "aes encryption online",
+      "decrypt text"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "pdf-text-extractor",
+    "name": "PDF text extractor",
+    "description": "Pull the text out of a PDF and copy it or save it as a .txt file.",
+    "category": "productivity",
+    "path": "/tools/pdf-text-extractor/",
+    "icon": "file-text",
+    "metaDescription": "Extract the text from a PDF and copy it or download it as .txt. Runs in your browser, the PDF is never uploaded.",
+    "keywords": [
+      "pdf text extractor",
+      "extract text from pdf",
+      "pdf to text",
+      "copy text from pdf",
+      "pdf to txt"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "markdown-preview",
+    "name": "Markdown preview",
+    "description": "Write Markdown and see it rendered live, then copy the HTML.",
+    "category": "developer",
+    "path": "/tools/markdown-preview/",
+    "icon": "book",
+    "metaDescription": "Write Markdown and see it rendered live, then copy the HTML. Runs in your browser, nothing is uploaded.",
+    "keywords": [
+      "markdown preview",
+      "markdown to html",
+      "markdown editor",
+      "live markdown",
+      "md preview"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "read-aloud",
+    "name": "Read aloud",
+    "description": "Have your browser read text out loud, with a choice of voice, speed, and pitch.",
+    "category": "productivity",
+    "path": "/tools/read-aloud/",
+    "icon": "volume-2",
+    "metaDescription": "Have your browser read text aloud, with a choice of voice, speed, and pitch. Runs on your device, nothing is uploaded.",
+    "keywords": [
+      "read aloud",
+      "text to speech",
+      "tts",
+      "read text out loud",
+      "browser text to speech"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "find-replace",
+    "name": "Find and replace",
+    "description": "Find and replace across text, plain or with a regular expression.",
+    "category": "productivity",
+    "path": "/tools/find-replace/",
+    "icon": "search",
+    "metaDescription": "Find and replace across a block of text, plain or regex, case sensitive or not. Runs in your browser, nothing is uploaded.",
+    "keywords": [
+      "find and replace",
+      "text replace",
+      "regex replace",
+      "replace all",
+      "bulk find replace"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "json-to-typescript",
+    "name": "JSON to TypeScript",
+    "description": "Turn JSON into TypeScript interfaces, with nested types and optionals.",
+    "category": "developer",
+    "path": "/tools/json-to-typescript/",
+    "icon": "file-type",
+    "metaDescription": "Paste JSON and get TypeScript interfaces, with nested objects, arrays, unions, and optional fields worked out. Runs in your browser.",
+    "keywords": [
+      "json to typescript",
+      "json to interface",
+      "generate typescript types",
+      "typescript interface generator"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "gitignore-generator",
+    "name": "Gitignore generator",
+    "description": "Pick your languages, tools, and OS, and build a .gitignore file.",
+    "category": "developer",
+    "path": "/tools/gitignore-generator/",
+    "icon": "git-compare",
+    "metaDescription": "Pick your languages, tools, and operating systems, and get a combined .gitignore file to copy or download. Runs in your browser.",
+    "keywords": [
+      "gitignore generator",
+      "create gitignore",
+      "git ignore file",
+      "node gitignore",
+      "python gitignore"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "url-inspector",
+    "name": "URL inspector",
+    "description": "Break a URL into its parts and read the decoded query parameters.",
+    "category": "developer",
+    "path": "/tools/url-inspector/",
+    "icon": "link",
+    "metaDescription": "Break a URL into its protocol, host, port, path, and query parameters, and read each decoded value. Runs in your browser.",
+    "keywords": [
+      "url parser",
+      "parse url",
+      "query string parser",
+      "url inspector",
+      "decode url parameters"
+    ],
+    "featured": false,
+    "popularity": 2
+  },
+  {
+    "id": "audio-extractor",
+    "name": "Audio extractor",
+    "description": "Pull the audio out of a video file as MP3, M4A, WAV, or lossless FLAC.",
+    "category": "audio",
+    "path": "/tools/audio-extractor/",
+    "icon": "music",
+    "featured": true,
+    "metaDescription": "Extract audio from a video file to MP3, M4A, WAV, or FLAC entirely in your browser. Your video never leaves your device: no upload, no account.",
+    "keywords": [
+      "audio extractor",
+      "video to mp3",
+      "extract audio from video",
+      "mp4 to mp3",
+      "video to audio converter"
+    ],
+    "popularity": 3
   }
 ]

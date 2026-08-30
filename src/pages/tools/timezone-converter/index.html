@@ -3,10 +3,10 @@
 <section class="section--tight">
   <div class="container" style="max-width:760px;">
     <div class="card">
-      <div class="row row-wrap" style="gap:var(--s4);align-items:end;">
+      <div class="row row-wrap gap-4 items-end">
         <div class="field"><label for="tz-date">Date</label><input class="input" type="date" id="tz-date" /></div>
         <div class="field"><label for="tz-time">Time</label><input class="input" type="time" id="tz-time" /></div>
-        <div class="field" style="flex:1;min-width:14rem;"><label for="tz-from">From time zone</label>
+        <div class="field grow tz-from"><label for="tz-from">From time zone</label>
           <select class="select" id="tz-from"></select>
         </div>
       </div>
@@ -24,4 +24,7 @@
     </div>
   </div>
 </section>
+<style>
+  .tz-from { min-width: 14rem; }
+</style>
 <script type="module" src="/js/tools/timezone-converter.js"></script>

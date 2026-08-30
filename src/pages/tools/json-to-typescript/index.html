@@ -1,0 +1,29 @@
+<!-- meta tool="1" title="JSON to TypeScript interface generator | NoByte" description="Paste JSON and get TypeScript interfaces, with nested objects, arrays, unions, and optional fields worked out. Runs in your browser, nothing is uploaded." path="/tools/json-to-typescript/" keywords="json to typescript, json to interface, generate typescript types, json to types, typescript interface generator" -->
+{{tool-hero:json-to-typescript}}
+<section class="section--tight">
+  <div class="container">
+    <div class="field mb-4"><label for="jt-root">Root name</label><input class="input mono" id="jt-root" value="Root" spellcheck="false" autocomplete="off" style="width:200px;" /></div>
+    <div class="tool-layout tool-layout--split">
+      <div class="field">
+        <div class="row between">
+          <label for="jt-in">JSON</label>
+          <button class="btn" id="jt-example">Load example</button>
+        </div>
+        <textarea class="textarea mono" id="jt-in" spellcheck="false" style="min-height:320px;" placeholder='{ "id": 1, "name": "Ada", "tags": ["a", "b"] }'></textarea>
+        <p class="field-error" id="jt-status"></p>
+      </div>
+      <div class="field">
+        <div class="row between"><label for="jt-out">TypeScript</label>
+          <button class="btn copy-btn" data-copy="#jt-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="jt-out" readonly spellcheck="false" style="min-height:320px;"></textarea>
+      </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Paste JSON and the interfaces update live, all in your browser. Nested objects become their own interfaces, arrays become typed arrays, and keys missing from some samples are marked optional. Set the root name for the top-level type.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/json-to-typescript.js"></script>

@@ -3,12 +3,35 @@
 <section class="section--tight">
   <div class="container" style="max-width:720px;">
     <div class="stack">
-      <div class="field"><label for="nb-dec">Decimal (base 10)</label><input class="input mono" id="nb-dec" data-base="10" spellcheck="false" placeholder="255" /></div>
-      <div class="field"><label for="nb-hex">Hexadecimal (base 16)</label><input class="input mono" id="nb-hex" data-base="16" spellcheck="false" placeholder="ff" /></div>
-      <div class="field"><label for="nb-oct">Octal (base 8)</label><input class="input mono" id="nb-oct" data-base="8" spellcheck="false" placeholder="377" /></div>
-      <div class="field"><label for="nb-bin">Binary (base 2)</label><input class="input mono" id="nb-bin" data-base="2" spellcheck="false" placeholder="11111111" /></div>
-      <div class="field"><label for="nb-custom-base">Custom base (2–36)</label>
-        <div class="row" style="gap:var(--s2);">
+      <div class="field">
+        <div class="row between"><label for="nb-dec">Decimal (base 10)</label>
+          <button class="btn btn--icon btn--soft copy-btn" data-copy="#nb-dec" aria-label="Copy decimal"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
+        </div>
+        <input class="input mono" id="nb-dec" data-base="10" spellcheck="false" placeholder="255" />
+      </div>
+      <div class="field">
+        <div class="row between"><label for="nb-hex">Hexadecimal (base 16)</label>
+          <button class="btn btn--icon btn--soft copy-btn" data-copy="#nb-hex" aria-label="Copy hexadecimal"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
+        </div>
+        <input class="input mono" id="nb-hex" data-base="16" spellcheck="false" placeholder="ff" />
+      </div>
+      <div class="field">
+        <div class="row between"><label for="nb-oct">Octal (base 8)</label>
+          <button class="btn btn--icon btn--soft copy-btn" data-copy="#nb-oct" aria-label="Copy octal"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
+        </div>
+        <input class="input mono" id="nb-oct" data-base="8" spellcheck="false" placeholder="377" />
+      </div>
+      <div class="field">
+        <div class="row between"><label for="nb-bin">Binary (base 2)</label>
+          <button class="btn btn--icon btn--soft copy-btn" data-copy="#nb-bin" aria-label="Copy binary"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
+        </div>
+        <input class="input mono" id="nb-bin" data-base="2" spellcheck="false" placeholder="11111111" />
+      </div>
+      <div class="field">
+        <div class="row between"><label for="nb-custom-base">Custom base (2-36)</label>
+          <button class="btn btn--icon btn--soft copy-btn" data-copy="#nb-custom" aria-label="Copy custom-base value"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
+        </div>
+        <div class="row gap-2">
           <input class="input mono" id="nb-custom-base" type="number" min="2" max="36" value="36" style="width:90px;" />
           <input class="input mono grow" id="nb-custom" spellcheck="false" aria-label="Value in custom base" />
         </div>
@@ -16,12 +39,16 @@
     </div>
     <p class="field-error mt-2" id="nb-error"></p>
 
-    <div class="stack mt-5">
-      <div class="result-row"><span class="label">Bits needed</span><span class="mono val" id="nb-bits">—</span></div>
-      <div class="result-row"><span class="label">Grouped binary</span><span class="mono val" id="nb-grouped">—</span></div>
-      <div class="result-row"><span class="label">Bytes (if used as size)</span><span class="mono val" id="nb-bytes">—</span></div>
+    <div class="stack stack--copy mt-5">
+      <div class="result-row"><span class="label">Bits needed</span><span class="mono val" id="nb-bits">-</span></div>
+      <div class="result-row"><span class="label">Grouped binary</span><span class="mono val" id="nb-grouped">-</span></div>
+      <div class="result-row"><span class="label">Bytes (if used as size)</span><span class="mono val" id="nb-bytes">-</span></div>
     </div>
-    <p class="muted xs mt-4">Whole numbers only. Very large values use JavaScript's BigInt, so precision is kept.</p>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Type a number in any base and the others update live, all in your browser. Whole numbers only; very large values use JavaScript's BigInt, so precision is kept. Below, bits needed is the shortest binary length, grouped binary is padded into nibbles for readability, and bytes reads the number as a size. Click any value to copy it.</div>
+    </div>
   </div>
 </section>
 <script type="module" src="/js/tools/number-base-converter.js"></script>

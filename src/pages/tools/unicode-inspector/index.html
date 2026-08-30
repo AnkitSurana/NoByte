@@ -1,0 +1,23 @@
+<!-- meta tool="1" title="Unicode inspector: characters, code points, bytes | NoByte" description="Paste text to see each character's Unicode code point, decimal, hex, HTML entity, and UTF-8 byte length. Runs in your browser." path="/tools/unicode-inspector/" keywords="unicode inspector, code point, character codes, html entity, utf-8 bytes" -->
+{{tool-hero:unicode-inspector}}
+<section class="section--tight">
+  <div class="container">
+    <div class="field">
+      <div class="row between mb-2">
+        <label for="uc-in">Text</label>
+        <button class="btn" id="uc-example">Load example</button>
+      </div>
+      <textarea class="textarea mono" id="uc-in" style="min-height:120px;" placeholder="Type or paste text to inspect each character">Hi! café é € 🚀</textarea>
+    </div>
+    <p class="muted small mt-3" id="uc-summary"></p>
+    <div class="table-scroll mt-2">
+      <table class="data-table data-table--copy" id="uc-table"><thead><tr><th>Char</th><th>Code point</th><th>Decimal</th><th>HTML entity</th><th>UTF-8 bytes</th></tr></thead><tbody></tbody></table>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Paste or type any text to break it into characters, all in your browser. Each row shows the Unicode code point (like <code>U+00E9</code>), its decimal value, the HTML entity to paste into markup, and how many UTF-8 bytes the character takes. The summary counts characters, UTF-16 code units, and total bytes. Click any row to copy its code point.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/unicode-inspector.js"></script>

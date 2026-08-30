@@ -46,22 +46,41 @@ function show(text) {
   stats.textContent = `${text.length.toLocaleString()} characters`;
 }
 
-document.getElementById("jf-format").addEventListener("click", () => {
+let mode = "format";
+const tabs = [document.getElementById("jf-t-format"), document.getElementById("jf-t-minify")];
+const indentWrap = document.getElementById("jf-indent-wrap");
+const indentSel = document.getElementById("jf-indent");
+
+// Live output: re-render on input, mode change, or indent change.
+function render() {
   const v = parse();
-  if (v !== null) show(JSON.stringify(v, null, indentValue()));
-});
-document.getElementById("jf-minify").addEventListener("click", () => {
-  const v = parse();
-  if (v !== null) show(JSON.stringify(v));
-});
-document.getElementById("jf-example").addEventListener("click", () => {
-  input.value = EXAMPLE;
-  show(JSON.stringify(JSON.parse(EXAMPLE), null, indentValue()));
-  error.textContent = "";
-});
-document.getElementById("jf-clear").addEventListener("click", () => {
-  input.value = ""; output.value = ""; error.textContent = ""; stats.textContent = "";
-  input.classList.remove("textarea--invalid");
-  input.focus();
-});
-input.addEventListener("input", () => { if (input.value.trim()) parse(); else { error.textContent=""; input.classList.remove("textarea--invalid"); } });
+  if (v === null) return; // parse() clears output/stats on empty or invalid input
+  show(mode === "minify" ? JSON.stringify(v) : JSON.stringify(v, null, indentValue()));
+}
+
+// Format / Minify segmented control, self-contained (mouse + arrow keys).
+function selectMode(fmt) {
+  mode = fmt ? "format" : "minify";
+  tabs[0].setAttribute("aria-selected", String(fmt));
+  tabs[1].setAttribute("aria-selected", String(!fmt));
+  tabs[0].tabIndex = fmt ? 0 : -1;
+  tabs[1].tabIndex = fmt ? -1 : 0;
+  // Indent only applies when formatting. Keep it in place (disabled) so the
+  // layout below never shifts when switching modes.
+  indentWrap.classList.toggle("is-disabled", !fmt);
+  indentSel.disabled = !fmt;
+  render();
+}
+tabs[0].addEventListener("click", () => selectMode(true));
+tabs[1].addEventListener("click", () => selectMode(false));
+tabs.forEach((t) => t.addEventListener("keydown", (e) => {
+  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+  e.preventDefault();
+  const fmt = e.key === "ArrowLeft";
+  tabs[fmt ? 0 : 1].focus();
+  selectMode(fmt);
+}));
+document.getElementById("jf-indent").addEventListener("change", render);
+document.getElementById("jf-example").addEventListener("click", () => { input.value = EXAMPLE; render(); });
+input.addEventListener("input", render);
+selectMode(true);

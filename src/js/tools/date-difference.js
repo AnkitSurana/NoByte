@@ -29,7 +29,7 @@ function calendarParts(a, b) {
 function runDiff() {
   const a = parse(from.value), b = parse(to.value);
   const ids = ["dd-main", "dd-days", "dd-weeks", "dd-hours", "dd-months"];
-  if (a === null || b === null) { ids.forEach((id) => ($(id).textContent = "—")); return; }
+  if (a === null || b === null) { ids.forEach((id) => ($(id).textContent = "-")); return; }
 
   const lo = Math.min(a, b), hi = Math.max(a, b);
   let totalDays = Math.round((hi - lo) / DAY);
@@ -50,7 +50,7 @@ function runDiff() {
 
 function runAdd() {
   const a = parse(base.value);
-  if (a === null || amount.value === "") { $("dd-result").textContent = "—"; return; }
+  if (a === null || amount.value === "") { $("dd-result").textContent = "-"; return; }
   const n = Math.trunc(Number(amount.value)) * Number(op.value);
   $("dd-result").textContent = fmt.format(new Date(a + n * DAY));
 }

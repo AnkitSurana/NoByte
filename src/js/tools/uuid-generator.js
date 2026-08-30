@@ -1,8 +1,7 @@
 // UUID generator — crypto.randomUUID with a small fallback.
 const out = document.getElementById("uu-out");
 const countEl = document.getElementById("uu-count");
-const upper = document.getElementById("uu-upper");
-const nodash = document.getElementById("uu-nodash");
+const format = document.getElementById("uu-format");
 
 function uuid() {
   if (crypto.randomUUID) return crypto.randomUUID();
@@ -16,15 +15,17 @@ function uuid() {
 function generate() {
   const n = Math.min(100, Math.max(1, parseInt(countEl.value) || 1));
   countEl.value = n;
+  const f = format.value;
   const list = Array.from({ length: n }, () => {
     let v = uuid();
-    if (nodash.checked) v = v.replace(/-/g, "");
-    if (upper.checked) v = v.toUpperCase();
+    if (f.endsWith("nodash")) v = v.replace(/-/g, "");
+    if (f.startsWith("upper")) v = v.toUpperCase();
     return v;
   });
   out.value = list.join("\n");
 }
 
 document.getElementById("uu-gen").addEventListener("click", generate);
-[countEl, upper, nodash].forEach((el) => el.addEventListener("input", generate));
+countEl.addEventListener("input", generate);
+format.addEventListener("change", generate);
 generate();

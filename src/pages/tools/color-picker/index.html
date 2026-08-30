@@ -5,7 +5,7 @@
     <div class="tool-layout tool-layout--split">
       <div>
         <div class="color-preview" id="cp-preview" style="background:#2563eb;"></div>
-        <div class="row mt-4" style="gap:var(--s3);">
+        <div class="row mt-4">
           <input type="color" id="cp-input" value="#2563eb" aria-label="Pick a color" />
           <input class="input mono grow" id="cp-hex-edit" value="#2563EB" aria-label="Enter a hex color" />
         </div>
@@ -13,10 +13,15 @@
       </div>
 
       <div class="stack">
-        <div class="result-row"><span class="label">HEX</span><span class="mono val" data-fmt="hex">#2563EB</span><button class="btn btn--sm copy-btn" data-copy-fmt="hex" aria-label="Copy HEX value"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
-        <div class="result-row"><span class="label">RGB</span><span class="mono val" data-fmt="rgb">rgb(37, 99, 235)</span><button class="btn btn--sm copy-btn" data-copy-fmt="rgb" aria-label="Copy RGB value"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
-        <div class="result-row"><span class="label">HSL</span><span class="mono val" data-fmt="hsl">hsl(222, 83%, 53%)</span><button class="btn btn--sm copy-btn" data-copy-fmt="hsl" aria-label="Copy HSL value"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
+        <div class="result-row"><span class="label">HEX</span><span class="mono val" data-fmt="hex">#2563EB</span><button class="btn copy-btn" data-copy-fmt="hex" aria-label="Copy HEX value"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
+        <div class="result-row"><span class="label">RGB</span><span class="mono val" data-fmt="rgb">rgb(37, 99, 235)</span><button class="btn copy-btn" data-copy-fmt="rgb" aria-label="Copy RGB value"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
+        <div class="result-row"><span class="label">HSL</span><span class="mono val" data-fmt="hsl">hsl(222, 83%, 53%)</span><button class="btn copy-btn" data-copy-fmt="hsl" aria-label="Copy HSL value"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></div>
       </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Pick a colour with a preset swatch, the native picker, or by typing a hex value. The HEX, RGB, and HSL forms update together, and each copies with one click. Everything runs in your browser.</div>
     </div>
   </div>
 </section>

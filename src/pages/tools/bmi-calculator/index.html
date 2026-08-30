@@ -8,31 +8,38 @@
         <button class="tab" role="tab" id="b-t-imperial" aria-controls="b-p-imperial" aria-selected="false" tabindex="-1">Imperial</button>
       </div>
       <div class="tab-panel" id="b-p-metric" role="tabpanel" aria-labelledby="b-t-metric">
-        <div class="row row-wrap" style="gap:var(--s3);">
+        <div class="row row-wrap gap-3">
           <div class="field grow"><label for="bmi-cm">Height (cm)</label><input class="input mono" id="bmi-cm" type="number" value="170" inputmode="decimal" /></div>
           <div class="field grow"><label for="bmi-kg">Weight (kg)</label><input class="input mono" id="bmi-kg" type="number" value="70" inputmode="decimal" /></div>
         </div>
       </div>
       <div class="tab-panel" id="b-p-imperial" role="tabpanel" aria-labelledby="b-t-imperial" hidden>
-        <div class="row row-wrap" style="gap:var(--s3);">
-          <div class="field"><label for="bmi-ft">Height (ft)</label><input class="input mono" id="bmi-ft" type="number" value="5" style="width:100px;" /></div>
-          <div class="field"><label for="bmi-in">Height (in)</label><input class="input mono" id="bmi-in" type="number" value="7" style="width:100px;" /></div>
+        <div class="row row-wrap gap-3">
+          <div class="field"><label for="bmi-ft">Height (ft)</label><input class="input mono bmi-hnum" id="bmi-ft" type="number" value="5" /></div>
+          <div class="field"><label for="bmi-in">Height (in)</label><input class="input mono bmi-hnum" id="bmi-in" type="number" value="7" /></div>
           <div class="field grow"><label for="bmi-lb">Weight (lb)</label><input class="input mono" id="bmi-lb" type="number" value="154" inputmode="decimal" /></div>
         </div>
       </div>
     </div>
     <div class="result-panel text-center mt-4">
       <div class="muted small">Body mass index</div>
-      <div class="result-value" id="bmi-value">—</div>
-      <div class="mt-2"><span class="badge badge--muted" id="bmi-category">—</span></div>
+      <div class="result-value" id="bmi-value">-</div>
+      <div class="mt-2"><span class="badge badge--muted" id="bmi-category">-</span></div>
     </div>
     <div class="stack mt-4">
       <div class="result-row"><span class="label">Underweight</span><span class="mono val">below 18.5</span></div>
-      <div class="result-row"><span class="label">Healthy weight</span><span class="mono val">18.5 – 24.9</span></div>
-      <div class="result-row"><span class="label">Overweight</span><span class="mono val">25.0 – 29.9</span></div>
+      <div class="result-row"><span class="label">Healthy weight</span><span class="mono val">18.5 to 24.9</span></div>
+      <div class="result-row"><span class="label">Overweight</span><span class="mono val">25.0 to 29.9</span></div>
       <div class="result-row"><span class="label">Obesity</span><span class="mono val">30.0 and above</span></div>
     </div>
-    <p class="muted xs mt-4">BMI is a rough screening measure. It does not account for muscle mass, body composition, or age, and is not medical advice.</p>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Enter height and weight to get your body mass index and its WHO category; the result updates as you type. BMI is a rough screening measure only. It does not account for muscle mass, body composition, or age, and is not medical advice. Everything runs in your browser.</div>
+    </div>
   </div>
 </section>
+<style>
+  .bmi-hnum { width: 100px; }
+</style>
 <script type="module" src="/js/tools/bmi-calculator.js"></script>

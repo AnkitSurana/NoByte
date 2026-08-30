@@ -134,7 +134,7 @@ function takeHint() {
   renderHint();
   timeLeft = Math.max(0, timeLeft - cfg.hint);
   updateTime();
-  statusEl.textContent = `Letter ${i + 1} is "${answer[i].toUpperCase()}". −${cfg.hint}s`;
+  statusEl.textContent = `Letter ${i + 1} is "${answer[i].toUpperCase()}". -${cfg.hint}s`;
   updateHintBtn();
   if (timeLeft <= 0) endGame();
 }
@@ -244,7 +244,7 @@ function submit() {
   if (row >= ROWS) {
     timeLeft = Math.max(0, timeLeft - cfg.penalty); updateTime();
     revealAnswer();
-    statusEl.textContent = `Missed. It was "${answer.toUpperCase()}". −${cfg.penalty}s`;
+    statusEl.textContent = `Missed. It was "${answer.toUpperCase()}". -${cfg.penalty}s`;
     unsolved = false;
     busy = true; updateHintBtn();
     setTimeout(() => { busy = false; if (timeLeft <= 0) endGame(); else if (!ended) nextWord(); }, 1600);

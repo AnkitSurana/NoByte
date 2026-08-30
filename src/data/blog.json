@@ -1,5 +1,33 @@
 [
   {
+    "slug": "lock-a-note-with-a-passphrase",
+    "title": "How to lock a note behind a passphrase",
+    "excerpt": "You can encrypt a message with a passphrase in the browser, so only someone who knows the passphrase can read it. How it works, and where it helps.",
+    "date": "2026-08-20",
+    "cats": ["productivity", "privacy", "guide"]
+  },
+  {
+    "slug": "json-to-typescript-types",
+    "title": "How to turn JSON into TypeScript types",
+    "excerpt": "Get TypeScript interfaces from a sample of JSON, including nested objects, arrays, unions, and optional fields. How the inference works and where it helps.",
+    "date": "2026-08-20",
+    "cats": ["developer", "guide"]
+  },
+  {
+    "slug": "what-goes-in-a-gitignore",
+    "title": "What belongs in a .gitignore",
+    "excerpt": "A .gitignore keeps generated files, secrets, and editor clutter out of your repository. What to ignore for common stacks, and what to keep.",
+    "date": "2026-08-20",
+    "cats": ["developer", "guide"]
+  },
+  {
+    "slug": "extract-audio-without-uploading",
+    "title": "How to get the audio out of a video without uploading it",
+    "excerpt": "Most video to MP3 sites upload your whole file to a server first. The same job runs in your browser, where the video never leaves your device. How it works, and which format to pick.",
+    "date": "2026-08-20",
+    "cats": ["audio", "privacy", "guide"]
+  },
+  {
     "slug": "what-compounding-actually-does",
     "title": "What compounding actually does to savings",
     "excerpt": "Compounding looks slow for years and then stops looking slow. Why time matters far more than the compounding frequency, and what a projection can and cannot tell you.",

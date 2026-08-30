@@ -1,0 +1,44 @@
+<!-- meta title="What belongs in a .gitignore | NoByte" description="A .gitignore keeps generated files, secrets, and editor clutter out of your repository. What to ignore for common stacks, and what to keep." path="/blog/what-goes-in-a-gitignore/" keywords="gitignore, what to put in gitignore, git ignore file, node gitignore, python gitignore" -->
+<section class="section">
+  <div class="container container-wide has-stickers">
+    <span class="sticker sticker--1">no build output</span>
+    <span class="sticker sticker--2">no secrets</span>
+    <span class="sticker sticker--3">no editor clutter</span>
+    <span class="sticker sticker--4">40 stacks</span>
+    <span class="sticker sticker--5">combine them</span>
+    <span class="sticker sticker--6">copy or download</span>
+    <span class="sticker sticker--7">in your browser</span>
+    <span class="sticker sticker--8">no uploads</span>
+    <span class="sticker sticker--9">no account</span>
+    <span class="sticker sticker--10">open source</span>
+    <span class="sticker sticker--11">node to rust</span>
+    <span class="sticker sticker--12">works offline</span>
+    <article class="post-wrap">
+      <header class="post__head">
+        <nav class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>The .gitignore file</span></nav>
+        {{blog-meta:what-goes-in-a-gitignore}}
+        <h1 class="page-title post__title">What belongs in a .gitignore</h1>
+        <p class="page-lead">A <code>.gitignore</code> file tells Git which files to leave out of your repository. Get it right and your history stays clean and safe. Get it wrong and you either commit noise or leak a secret. Here is what to ignore, and what to keep.</p>
+      </header>
+
+      <div class="prose post__body">
+        <h2>The three things worth ignoring</h2>
+        <p>Almost everything you want out of a repository falls into one of three groups.</p>
+        <ul>
+          <li><strong>Generated output.</strong> Anything a build step produces from your source, like <code>node_modules/</code>, <code>dist/</code>, <code>target/</code>, or <code>__pycache__/</code>. It can be rebuilt, so committing it just bloats the history and causes merge conflicts.</li>
+          <li><strong>Secrets and local config.</strong> Files like <code>.env</code>, private keys, and credentials. These should never enter a repository, because once something is committed it stays in the history even after you delete it.</li>
+          <li><strong>Editor and operating system clutter.</strong> Files your machine leaves behind, such as <code>.DS_Store</code> on a Mac, <code>Thumbs.db</code> on Windows, or an editor's <code>.idea/</code> folder. They mean nothing to anyone else on the project.</li>
+        </ul>
+
+        <h2>What to keep, so nobody is stuck</h2>
+        <p>The mistake in the other direction is ignoring too much. Lock files such as <code>package-lock.json</code> or <code>Cargo.lock</code> belong in the repository, because they pin the exact versions everyone should install. An example config, like <code>.env.example</code> with the keys but no values, is worth keeping so a new person knows what settings the project expects. The <a href="/tools/gitignore-generator/">generator</a> keeps these by using a rule like <code>!.env.example</code>, where the leading <code>!</code> means "do not ignore this one".</p>
+
+        <h2>Order and combining stacks</h2>
+        <p>A real project often needs several sets of rules at once. A web app might use Node, plus your operating system, plus your editor. You can stack these safely, since a <code>.gitignore</code> is just a list of patterns read from top to bottom. That is why the <a href="/tools/gitignore-generator/">gitignore generator</a> lets you pick as many as you need and stitches them into one file with a heading for each.</p>
+
+        <h2>Build one</h2>
+        <p>Open the <a href="/tools/gitignore-generator/">gitignore generator</a>, pick the languages, frameworks, editors, and operating systems your project uses, and copy or download the result. There are 40 templates to combine, from Node and Python to Rust, Flutter, and Unity. It runs in your browser, and the templates are on <a href="https://github.com/AnkitSurana/NoByte" rel="noopener">GitHub</a>.</p>
+      </div>
+    </article>
+  </div>
+</section>

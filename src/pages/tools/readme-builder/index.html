@@ -2,33 +2,25 @@
 {{tool-hero:readme-builder}}
 <section class="section--tight">
   <div class="container container-wide">
-    <div class="row row-wrap between mb-4" style="gap:var(--s3);">
-      <div class="row row-wrap" style="gap:var(--s2);">
-        <label class="label" for="rb-template" style="align-self:center;">Start from</label>
-        <select class="select" id="rb-template" style="width:auto;">
-          <!-- Picking one replaces the sections and the control returns to this
-               line, because it performs an action rather than holding a setting:
-               staying on "Minimal" would keep claiming that after the sections
-               were edited away from it, and would block re-applying the same one. -->
-          <option value="">Choose a template…</option>
-          <option value="minimal">Minimal</option>
-          <option value="oss">Open-source project</option>
-          <option value="library">Library / API</option>
-        </select>
-        <button class="btn btn--sm" id="rb-clear">Start fresh</button>
-      </div>
-      <div class="row row-wrap" style="gap:var(--s2);">
-        <button class="btn btn--sm copy-btn" id="rb-copy"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy Markdown</button>
-        <button class="btn btn--sm btn--primary" id="rb-download"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download README.md</button>
-      </div>
-    </div>
-
     <div class="rb-split" id="rb-split">
       <!-- Editor -->
       <div class="rb-editor">
-        <div class="tabs mb-3" data-tabs role="tablist" aria-label="Editor mode">
-          <button class="tab" role="tab" id="rb-t-builder" aria-controls="rb-p-builder" aria-selected="true">Builder</button>
-          <button class="tab" role="tab" id="rb-t-raw" aria-controls="rb-p-raw" aria-selected="false" tabindex="-1">Raw Markdown</button>
+        <div class="row between items-center row-wrap gap-2 mb-3">
+          <div class="tabs" role="tablist" aria-label="Editor mode">
+            <button class="tab" role="tab" id="rb-t-builder" aria-controls="rb-p-builder" aria-selected="true">Builder</button>
+            <button class="tab" role="tab" id="rb-t-raw" aria-controls="rb-p-raw" aria-selected="false" tabindex="-1">Raw Markdown</button>
+          </div>
+          <select class="select select--sm" id="rb-template" aria-label="Start from a template">
+            <!-- Picking one replaces the sections and the control returns to the
+                 placeholder, because it performs an action rather than holding a
+                 setting: staying on "Minimal" would go stale once sections are
+                 edited, and would block re-applying the same one. -->
+            <option value="">Start from…</option>
+            <option value="blank">Blank</option>
+            <option value="minimal">Minimal</option>
+            <option value="oss">Open-source project</option>
+            <option value="library">Library / API</option>
+          </select>
         </div>
 
         <div class="tab-panel" id="rb-p-builder" role="tabpanel" aria-labelledby="rb-t-builder">
@@ -47,7 +39,7 @@
             <button class="btn btn--sm" data-md="link" title="Link">Link</button>
             <button class="btn btn--sm" data-md="table" title="Table">Table</button>
             <button class="btn btn--sm" data-md="fence" title="Code block">Code</button>
-            <button class="btn btn--sm" id="rb-reparse" style="margin-left:auto;" title="Turn headings back into builder cards">Re-parse into sections</button>
+            <button class="btn btn--sm ml-auto" id="rb-reparse" title="Turn headings back into builder cards">Re-parse into sections</button>
           </div>
           <textarea class="textarea mono" id="rb-raw" spellcheck="false" style="min-height:520px;" aria-label="Raw Markdown"></textarea>
         </div>
@@ -58,9 +50,20 @@
 
       <!-- Preview -->
       <div class="rb-preview">
-        <div class="rb-preview__bar">Preview</div>
+        <div class="rb-preview__bar row between items-center row-wrap gap-2">
+          <span>Preview</span>
+          <div class="row gap-2">
+            <button class="btn copy-btn" id="rb-copy"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+            <button class="btn btn--primary" id="rb-download"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download</button>
+          </div>
+        </div>
         <div class="markdown-body" id="rb-preview"></div>
       </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Start from a template or add sections one at a time, then drag the handles to reorder them; the preview updates live. Switch to Raw Markdown to edit the text directly, and Re-parse turns your headings back into cards. Everything is kept in your browser (nothing uploaded) and saved so it is still here when you return. Copy the Markdown or download it as README.md.</div>
     </div>
   </div>
 </section>

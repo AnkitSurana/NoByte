@@ -14,7 +14,7 @@ let token = 0;      // invalidates pending timers on reset
 let startTime = 0;
 const times = [];
 let best = Number(localStorage.getItem(KEY)) || 0;
-bestEl.textContent = best ? `${best} ms` : "—";
+bestEl.textContent = best ? `${best} ms` : "-";
 
 const setLights = (n) => lights.forEach((l, i) => l.classList.toggle("on", i < n));
 

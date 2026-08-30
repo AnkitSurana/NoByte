@@ -38,17 +38,25 @@ export function cardHTML(t) {
 /* Pinboard rhythm — rows of three spans that always sum to 12; a partial last
    row widens to fill. Re-applied to the VISIBLE cards whenever a grid is
    filtered or re-rendered. */
-const SPAN_PATTERN = [5, 3, 4, 4, 5, 3];
-function spanFor(i, total) {
-  const leftover = total % 3;
-  if (leftover === 1 && i === total - 1) return 12;
-  if (leftover === 2 && i >= total - 2) return 6;
-  return SPAN_PATTERN[i % SPAN_PATTERN.length];
-}
 export function applySpans(cards) {
+  const total = cards.length, leftover = total % 3, full = total - leftover;
+  const spans = new Array(total).fill(4);
+  // Each row is the previous row rotated by 1 or 2 places (seeded PRNG), so every
+  // column changes width from the row above and nothing stacks into a column.
+  // Fixed seed keeps it stable and identical to spansFor() in build.mjs, so there
+  // is no re-layout flash. Keep the two in step.
+  let seed = 1;
+  const rand = () => (seed = (seed * 48271) % 0x7fffffff) / 0x7fffffff;
+  let row = [5, 4, 3];
+  for (let r = 0; r < full; r += 3) {
+    const shift = 1 + Math.floor(rand() * 2);
+    row = row.slice(shift).concat(row.slice(0, shift));
+    row.forEach((s, k) => (spans[r + k] = s));
+  }
+  if (leftover === 1) spans[total - 1] = 12;
+  else if (leftover === 2) spans[total - 2] = spans[total - 1] = 6;
   cards.forEach((el, i) => {
     el.classList.remove("span-3", "span-4", "span-5", "span-6", "span-12");
-    const s = spanFor(i, cards.length);
-    if (s !== 4) el.classList.add(`span-${s}`);
+    if (spans[i] !== 4) el.classList.add(`span-${spans[i]}`);
   });
 }

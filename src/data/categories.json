@@ -25,6 +25,11 @@
     "description": "Quick calculators and generators for common tasks."
   },
   {
+    "id": "audio",
+    "name": "Audio",
+    "description": "Pull audio out of your own files, right in the browser. Nothing is uploaded."
+  },
+  {
     "id": "games",
     "name": "Games",
     "description": "Small games that run in your browser. No signup, high scores stay on your device."

@@ -1,0 +1,25 @@
+<!-- meta tool="1" title="Gitignore generator: build a .gitignore file | NoByte" description="Pick your languages, tools, and operating systems, and get a combined .gitignore file to copy or download. Runs in your browser." path="/tools/gitignore-generator/" keywords="gitignore generator, create gitignore, git ignore file, node gitignore, python gitignore" -->
+{{tool-hero:gitignore-generator}}
+<section class="section--tight">
+  <div class="container">
+    <span class="label">Pick what your project uses</span>
+    <div class="row row-wrap gap-2 mt-3" id="gi-chips"></div>
+
+    <div class="result-panel mt-4">
+      <div class="row between mb-3">
+        <span class="label" id="gi-count">.gitignore</span>
+        <div class="row gap-2">
+          <button class="btn copy-btn" data-copy="#gi-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          <button class="btn" id="gi-download"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download</button>
+        </div>
+      </div>
+      <textarea class="textarea mono" id="gi-out" readonly style="min-height:280px;" placeholder="Choose one or more above to build your file"></textarea>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Templates are combined in your browser from a curated set, so nothing is uploaded. Pick every language, framework, and tool your project uses, then copy the file or download it as .gitignore. Give it a quick review before committing, since setups vary.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/gitignore-generator.js"></script>

@@ -38,4 +38,7 @@ document.querySelector("[data-clear]").addEventListener("click", () => {
   input.focus();
   render();
 });
+
+// Start with the example so the stats show live numbers instead of a row of zeros.
+input.value = EXAMPLE;
 render();

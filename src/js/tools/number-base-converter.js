@@ -1,5 +1,6 @@
 // Number base converter — BigInt based so large values keep full precision.
 import { parseInBase as parseIn } from "/js/lib/bases.js";
+import { copyText, toast } from "/js/ui.js";
 
 const fields = [...document.querySelectorAll("[data-base]")];
 const customBase = document.getElementById("nb-custom-base");
@@ -22,7 +23,7 @@ function update(value, sourceEl) {
   if (customField !== sourceEl) customField.value = value === null ? "" : value.toString(cb);
 
   const set = (id, v) => (document.getElementById(id).textContent = v);
-  if (value === null) { ["nb-bits", "nb-grouped", "nb-bytes"].forEach((i) => set(i, "—")); return; }
+  if (value === null) { ["nb-bits", "nb-grouped", "nb-bytes"].forEach((i) => set(i, "-")); return; }
   const bin = value.toString(2);
   set("nb-bits", bin.length);
   set("nb-grouped", bin.padStart(Math.ceil(bin.length / 4) * 4, "0").replace(/(.{4})(?=.)/g, "$1 "));
@@ -47,6 +48,16 @@ wire(customField, () => Math.min(36, Math.max(2, parseInt(customBase.value) || 3
 customBase.addEventListener("input", () => {
   const dec = document.getElementById("nb-dec").value;
   try { update(parseIn(dec, 10), null); } catch {}
+});
+
+// Click a result row to copy its value.
+document.querySelector(".stack--copy").addEventListener("click", (e) => {
+  const row = e.target.closest(".result-row");
+  if (!row) return;
+  const val = row.querySelector(".val")?.textContent?.trim();
+  if (!val || val === "-") return;
+  copyText(val);
+  toast(`Copied ${row.querySelector(".label")?.textContent || "value"}`);
 });
 
 document.getElementById("nb-dec").value = "255";

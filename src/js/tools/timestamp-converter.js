@@ -1,4 +1,6 @@
 // Timestamp converter — epoch <-> date, with a live clock and timezone list.
+import { copyText, toast } from "/js/ui.js";
+
 const nowEl = document.getElementById("ts-now");
 const nowVal = document.getElementById("ts-now-val");
 const epochInput = document.getElementById("ts-epoch");
@@ -37,12 +39,12 @@ function relative(ms) {
 function fromEpoch() {
   const raw = epochInput.value.trim();
   const set = (id, v) => (document.getElementById(id).textContent = v);
-  if (!raw || Number.isNaN(Number(raw))) { ["ts-local","ts-utc","ts-iso","ts-rel"].forEach((i) => set(i, "—")); return; }
+  if (!raw || Number.isNaN(Number(raw))) { ["ts-local","ts-utc","ts-iso","ts-rel"].forEach((i) => set(i, "-")); return; }
   const n = Number(raw);
   // Heuristic: 13+ digits is milliseconds
   const ms = raw.replace("-", "").length >= 12 ? n : n * 1000;
   const d = new Date(ms);
-  if (Number.isNaN(d.getTime())) { ["ts-local","ts-utc","ts-iso","ts-rel"].forEach((i) => set(i, "—")); return; }
+  if (Number.isNaN(d.getTime())) { ["ts-local","ts-utc","ts-iso","ts-rel"].forEach((i) => set(i, "-")); return; }
   const tz = tzSelect.value;
   set("ts-local", d.toLocaleString(undefined, { timeZone: tz, dateStyle: "medium", timeStyle: "medium" }));
   set("ts-utc", d.toLocaleString(undefined, { timeZone: "UTC", dateStyle: "medium", timeStyle: "medium" }));
@@ -59,8 +61,27 @@ function fromDate() {
   document.getElementById("ts-out-ms").textContent = ms;
 }
 
+// Click any result value to copy it.
+document.querySelectorAll(".stack--copy").forEach((stack) => {
+  stack.addEventListener("click", (e) => {
+    const row = e.target.closest(".result-row");
+    if (!row) return;
+    const val = row.querySelector(".val")?.textContent?.trim();
+    if (!val || val === "-") return;
+    copyText(val);
+    toast(`Copied ${row.querySelector(".label")?.textContent || "value"}`);
+  });
+});
+
 epochInput.addEventListener("input", fromEpoch);
 tzSelect.addEventListener("change", fromEpoch);
 dateInput.addEventListener("input", fromDate);
+
 epochInput.value = String(Math.floor(Date.now() / 1000));
 fromEpoch();
+
+// Prefill the date field with the current local time so it shows output too.
+const pad = (n) => String(n).padStart(2, "0");
+const now = new Date();
+dateInput.value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+fromDate();

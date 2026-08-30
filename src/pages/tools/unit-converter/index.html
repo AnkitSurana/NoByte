@@ -7,7 +7,7 @@
       <select class="select" id="uc-category"></select>
     </div>
 
-    <div class="tool-layout tool-layout--split" style="align-items:end;">
+    <div class="tool-layout tool-layout--split items-end">
       <div class="field">
         <label for="uc-from-val">From</label>
         <input class="input mono" id="uc-from-val" type="number" value="1" inputmode="decimal" />
@@ -20,11 +20,16 @@
       </div>
     </div>
 
-    <div class="row mt-4" style="gap:var(--s3);">
+    <div class="row mt-4">
       <button class="btn" id="uc-swap" type="button"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-right-left"></use></svg> Swap</button>
       <button class="btn copy-btn" id="uc-copy" type="button" data-copy="#uc-to-val"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy result</button>
     </div>
     <p class="muted small mt-4" id="uc-formula"></p>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Pick a category, then a unit on each side; the result converts as you type, and Swap flips the two units. Temperature uses the proper offset formulas, not just a factor. Everything runs in your browser.</div>
+    </div>
   </div>
 </section>
 <script type="module" src="/js/tools/unit-converter.js"></script>

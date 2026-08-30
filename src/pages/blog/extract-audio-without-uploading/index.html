@@ -1,0 +1,54 @@
+<!-- meta title="How to get the audio out of a video without uploading it | NoByte" description="Most video to MP3 sites upload your whole file to a server first. The same job runs in your browser, where the video never leaves your device. How it works, and which format to pick." path="/blog/extract-audio-without-uploading/" keywords="extract audio from video, video to mp3, mp4 to mp3, get audio from video, video to audio, audio extractor privacy" -->
+<section class="section">
+  <div class="container container-wide has-stickers">
+    <span class="sticker sticker--1">no uploads</span>
+    <span class="sticker sticker--2">stays on device</span>
+    <span class="sticker sticker--3">mp3 or flac</span>
+    <span class="sticker sticker--4">in your browser</span>
+    <span class="sticker sticker--5">trim to a clip</span>
+    <span class="sticker sticker--6">no account</span>
+    <span class="sticker sticker--7">ffmpeg inside</span>
+    <span class="sticker sticker--8">nothing stored</span>
+    <span class="sticker sticker--9">lossless too</span>
+    <span class="sticker sticker--10">works offline</span>
+    <span class="sticker sticker--11">check the code</span>
+    <span class="sticker sticker--12">your file, yours</span>
+    <article class="post-wrap">
+      <header class="post__head">
+        <nav class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>Audio from a video</span></nav>
+        {{blog-meta:extract-audio-without-uploading}}
+        <h1 class="page-title post__title">How to get the audio out of a video without uploading it</h1>
+        <p class="page-lead">Most tools that turn a video into an MP3 upload the whole file to a server first. The audio extractor does the same job in your browser, so the video never leaves your device. Here is how that works, and how to pick a format.</p>
+      </header>
+
+      <div class="prose post__body">
+        <h2>Where your file goes with most converters</h2>
+        <p>When you drop a video into a typical video to MP3 site, the file is uploaded to that company's servers. The audio is pulled out there, and the result is sent back to you. There is a practical reason for it: the heavy lifting is done by a program called ffmpeg, and running it on their own machines is easier than asking a browser to. The cost is that a copy of your video has sat on a computer you do not control, and you waited for the whole thing to upload before anything happened.</p>
+
+        <h2>The browser can do the same work</h2>
+        <p>Browsers can now run that same program themselves. ffmpeg has been compiled to WebAssembly, a format that runs inside the page at close to native speed. The audio extractor loads that build, reads your video straight from disk into the tab, pulls the audio out, and hands back the file. None of it is uploaded, and no account is involved.</p>
+        <p>The first time you use the tool it downloads the engine, about 32 MB, and your browser keeps it in cache. Every extraction after that starts without the wait.</p>
+
+        <h2>Which format to pick</h2>
+        <p>Four options, and the right one depends on what you are doing with the result.</p>
+        <ul>
+          <li><strong>MP3</strong> plays on anything, from a car stereo to a decade-old phone. It is the safe default. The quality setting controls the bitrate, and 320 kbps is the top of the range: leave it there unless you need a smaller file.</li>
+          <li><strong>M4A</strong> uses AAC, which sounds better than MP3 at the same file size. Pick it when you want good quality without a large file and your player supports it, which most now do.</li>
+          <li><strong>WAV</strong> is uncompressed. It is lossless and it is large, several times the size of an MP3. Useful when you are going to edit the audio afterwards.</li>
+          <li><strong>FLAC</strong> is also lossless but compressed, so it is smaller than WAV for the same audio. A sensible choice for keeping a copy.</li>
+        </ul>
+        <p>One honest note on the lossless formats. The audio inside a video is usually already compressed, so WAV and FLAC keep exactly what is there without adding any further loss. They do not rebuild quality the video never had.</p>
+
+        <h2>Keeping only part of the video</h2>
+        <p>If you only want a section, a ringtone from a song or a single line from a clip, there is no need to export the whole thing. The tool shows the video with a bar underneath and two handles. Drag them to mark the start and end, and the player jumps to each point as you move it, so you can see exactly where the cut falls. The times read down to the hundredth of a second, and you can type them in directly if you already know them.</p>
+
+        <h2>What it cannot do</h2>
+        <p>It works on a file you already have on your device. It cannot fetch a video from a link, because a web page is not allowed to read files from another site such as YouTube or Instagram. If that is what you are after, you would save the video first and then bring the file here. Two smaller limits worth knowing: a very large file depends on how much memory your device can spare, and a video with no sound has nothing to pull, so the tool tells you rather than handing back an empty file.</p>
+
+        <h2>Checking that nothing is uploaded</h2>
+        <p>You do not have to take this on trust. Open your browser's developer tools, switch to the network tab, and run an extraction. You will see the engine load the first time, and after that nothing that carries your video anywhere. NoByte is open source as well, so you can read exactly what the tool does.</p>
+        <p>Try it on the <a href="/tools/audio-extractor/">audio extractor</a>, browse the rest of the <a href="/tools/">tools</a>, or read the source on <a href="https://github.com/AnkitSurana/NoByte" rel="noopener">GitHub</a>.</p>
+      </div>
+    </article>
+  </div>
+</section>

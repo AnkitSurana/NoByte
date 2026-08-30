@@ -5,13 +5,13 @@
     <div class="tool-layout tool-layout--split">
       <div class="field">
         <label for="rn-number">Number</label>
-        <input class="input mono" id="rn-number" type="text" inputmode="numeric" placeholder="2026" style="font-size:var(--t-lg);" />
+        <input class="input mono rn-io" id="rn-number" type="text" inputmode="numeric" placeholder="2026" value="2026" />
       </div>
       <div class="field">
         <div class="row between"><label for="rn-roman">Roman numeral</label>
-          <button class="btn btn--sm copy-btn" data-copy="#rn-roman"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          <button class="btn copy-btn" data-copy="#rn-roman"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
         </div>
-        <input class="input mono" id="rn-roman" type="text" placeholder="MMXXVI" style="font-size:var(--t-lg);text-transform:uppercase;" />
+        <input class="input mono rn-io rn-io--upper" id="rn-roman" type="text" placeholder="MMXXVI" />
       </div>
     </div>
     <p class="field-error mt-2" id="rn-error"></p>
@@ -23,4 +23,8 @@
     </div>
   </div>
 </section>
+<style>
+  .rn-io { font-size: var(--t-lg); }
+  .rn-io--upper { text-transform: uppercase; }
+</style>
 <script type="module" src="/js/tools/roman-numerals.js"></script>

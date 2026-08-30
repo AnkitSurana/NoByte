@@ -1,0 +1,56 @@
+<!-- meta tool="1" title="Text encryptor: lock a message with a passphrase | NoByte" description="Encrypt and decrypt a message with a passphrase using AES-GCM, entirely in your browser. The passphrase is never stored or sent." path="/tools/text-encryptor/" keywords="text encryptor, encrypt text, password encrypt message, aes encryption online, decrypt text" -->
+{{tool-hero:text-encryptor}}
+<section class="section--tight">
+  <div class="container te-wrap">
+    <!-- Input: a message to lock, or an encrypted block to unlock -->
+    <div class="field">
+      <div class="row between items-end mb-2">
+        <label for="te-in">Message or encrypted block</label>
+        <button class="btn" type="button" id="te-example">Load example</button>
+      </div>
+      <textarea class="textarea mono" id="te-in" spellcheck="false" style="min-height:150px;" placeholder="Type a message to lock it, or paste an encrypted block to unlock it"></textarea>
+    </div>
+
+    <!-- Passphrase -->
+    <div class="field mt-5">
+      <label for="te-pass">Passphrase</label>
+      <div class="input-reveal">
+        <input class="input mono" id="te-pass" type="password" autocomplete="off" spellcheck="false" />
+        <button type="button" class="input-reveal__btn" id="te-eye" aria-label="Show passphrase" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#eye"></use></svg></button>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="row gap-2 mt-5">
+      <button class="btn btn--primary" type="button" id="te-lock"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#lock"></use></svg> Lock</button>
+      <button class="btn" type="button" id="te-unlock"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 7-2"/></svg> Unlock</button>
+    </div>
+    <p class="te-error mt-3" id="te-error"></p>
+
+    <!-- Output (read-only): flips between the decrypted message and the encrypted block -->
+    <div class="te-card mt-5" id="te-card" data-face="front">
+      <div class="te-card__inner">
+        <div class="te-face te-face--front">
+          <div class="te-face__head">
+            <span class="te-face__cap">Decrypted message</span>
+            <button class="btn copy-btn" type="button" id="te-copy-dec" data-copy="#te-out-dec" hidden><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          </div>
+          <textarea class="te-face__text mono" id="te-out-dec" readonly tabindex="-1" spellcheck="false" placeholder="The unlocked message appears here"></textarea>
+        </div>
+        <div class="te-face te-face--back">
+          <div class="te-face__head">
+            <span class="te-face__cap">Encrypted block</span>
+            <button class="btn copy-btn" type="button" id="te-copy-enc" data-copy="#te-out-enc" hidden><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          </div>
+          <textarea class="te-face__text mono" id="te-out-enc" readonly tabindex="-1" spellcheck="false" placeholder="The locked block appears here"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#lock"></use></svg>
+      <div>Put a message in the box and press Lock to encrypt it, or paste an encrypted block and press Unlock to read it. The result flips into view below, ready to copy. Encryption is AES-GCM with a key from your passphrase (PBKDF2, 200,000 rounds); nothing is uploaded and the passphrase is never stored, so a lost passphrase means a lost message.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/text-encryptor.js"></script>

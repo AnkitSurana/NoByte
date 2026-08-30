@@ -4,21 +4,25 @@
   <div class="container" style="max-width:720px;">
     <div class="field">
       <label for="rp-input">List <span class="muted xs">(one entry per line)</span></label>
-      <textarea class="textarea" id="rp-input" spellcheck="false" placeholder="Ana&#10;Ben&#10;Chris&#10;Dana&#10;Eli" style="min-height:180px;"></textarea>
+      <textarea class="textarea" id="rp-input" spellcheck="false" placeholder="Ana&#10;Ben&#10;Chris&#10;Dana&#10;Eli" style="min-height:180px;">Ana
+Ben
+Chris
+Dana
+Eli</textarea>
       <p class="muted xs" id="rp-count"></p>
     </div>
 
-    <div class="row row-wrap mt-4" style="gap:var(--s4);align-items:end;">
-      <div class="field"><label for="rp-n">How many to pick</label><input class="input mono" type="number" id="rp-n" value="1" min="1" style="width:8rem;" /></div>
+    <div class="row row-wrap mt-4 gap-4 items-end">
+      <div class="field"><label for="rp-n">How many to pick</label><input class="input mono rp-n" type="number" id="rp-n" value="1" min="1" /></div>
       <label class="switch"><input type="checkbox" id="rp-repeat" /><span class="switch__track"></span> Allow repeats</label>
-      <button class="btn btn--primary" id="rp-pick" style="margin-left:auto;"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#shuffle"></use></svg> Pick</button>
+      <button class="btn btn--primary ml-auto" id="rp-pick"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#shuffle"></use></svg> Pick</button>
       <button class="btn" id="rp-shuffle">Shuffle all</button>
     </div>
     <p class="field-error mt-2" id="rp-error"></p>
 
     <div class="result-panel mt-4" id="rp-result-wrap" hidden>
       <div class="row between mb-2"><span class="label">Result</span>
-        <button class="btn btn--sm copy-btn" data-copy="#rp-result"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        <button class="btn copy-btn" data-copy="#rp-result"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
       </div>
       <textarea class="textarea mono" id="rp-result" readonly style="min-height:120px;background:var(--surface);"></textarea>
     </div>
@@ -29,4 +33,7 @@
     </div>
   </div>
 </section>
+<style>
+  .rp-n { width: 8rem; }
+</style>
 <script type="module" src="/js/tools/random-picker.js"></script>

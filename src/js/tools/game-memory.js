@@ -11,7 +11,7 @@ const KEY = "game_memory_best";
 const FACES = ["🍎", "🚀", "⭐", "🎈", "🐱", "🌙", "🍕", "🎸"];
 let deck, flipped, matched, moves, busy;
 let best = Number(localStorage.getItem(KEY)) || 0;
-bestEl.textContent = best || "—";
+bestEl.textContent = best || "-";
 
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }

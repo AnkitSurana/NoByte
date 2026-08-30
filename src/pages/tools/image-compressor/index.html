@@ -7,8 +7,8 @@
       <div><strong>Drop an image here</strong> or click to choose</div>
       <div class="xs">JPG, PNG, or WebP</div>
     </div>
-    <div class="row row-wrap mt-4" style="gap:var(--s4);align-items:end;">
-      <div class="field grow" style="min-width:220px;">
+    <div class="row row-wrap mt-4 gap-4 items-end">
+      <div class="field grow ic-quality-field">
         <div class="row between"><label for="ic-quality">Quality</label><span class="mono" id="ic-quality-val">70%</span></div>
         <input type="range" id="ic-quality" min="10" max="100" value="70" />
       </div>
@@ -17,13 +17,21 @@
       </div>
     </div>
     <div class="img-compare mt-4 hidden" id="ic-compare">
-      <div><div class="label mb-2">Original <span class="mono muted xs" id="ic-before">—</span></div><img class="img-preview" id="ic-img-before" alt="Original image" /></div>
-      <div><div class="label mb-2">Compressed <span class="mono muted xs" id="ic-after">—</span></div><img class="img-preview" id="ic-img-after" alt="Compressed image" /></div>
+      <div><div class="label mb-2">Original <span class="mono muted xs" id="ic-before">-</span></div><img class="img-preview" id="ic-img-before" alt="Original image" /></div>
+      <div><div class="label mb-2">Compressed <span class="mono muted xs" id="ic-after">-</span></div><img class="img-preview" id="ic-img-after" alt="Compressed image" /></div>
     </div>
-    <div class="row mt-4" style="gap:var(--s3);">
+    <div class="row mt-4 gap-3">
       <button class="btn btn--primary" id="ic-download" disabled><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download</button>
       <span class="badge badge--ok hidden" id="ic-saved"></span>
     </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Drop in a JPG, PNG, or WebP, then adjust the quality slider and output format; the before and after sizes show the saving. Compression happens entirely in your browser, so the image is never uploaded.</div>
+    </div>
   </div>
 </section>
+<style>
+  .ic-quality-field { min-width: 220px; }
+</style>
 <script type="module" src="/js/tools/image-compressor.js"></script>

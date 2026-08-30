@@ -2,7 +2,7 @@
 {{tool-hero:morse-code}}
 <section class="section--tight">
   <div class="container">
-    <div class="row row-wrap mb-3" style="gap:var(--s4);align-items:center;">
+    <div class="row row-wrap mb-3 gap-4 items-center">
       <div class="tabs" data-tabs role="tablist" aria-label="Direction">
         <button class="tab" role="tab" id="mc-t-enc" aria-controls="mc-p-enc" aria-selected="true">Text to Morse</button>
         <button class="tab" role="tab" id="mc-t-dec" aria-controls="mc-p-dec" aria-selected="false" tabindex="-1">Morse to text</button>
@@ -14,11 +14,11 @@
     <div class="tool-layout tool-layout--split">
       <div class="field">
         <label for="mc-input">Input</label>
-        <textarea class="textarea" id="mc-input" spellcheck="false" placeholder="SOS" style="min-height:200px;"></textarea>
+        <textarea class="textarea" id="mc-input" spellcheck="false" placeholder="SOS" style="min-height:200px;">SOS</textarea>
       </div>
       <div class="field">
         <div class="row between"><label for="mc-output">Output</label>
-          <button class="btn btn--sm copy-btn" data-copy="#mc-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          <button class="btn copy-btn" data-copy="#mc-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
         </div>
         <textarea class="textarea mono" id="mc-output" readonly spellcheck="false" style="min-height:200px;"></textarea>
         <p class="field-error" id="mc-error"></p>

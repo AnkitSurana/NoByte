@@ -2,28 +2,36 @@
 {{tool-hero:json-formatter}}
 <section class="section--tight">
   <div class="container">
-    <div class="row row-wrap mb-3" style="gap:var(--s3);align-items:end;">
-      <div class="field"><label for="jf-indent">Indent</label>
+    <div class="tool-toolbar tool-toolbar--end row-wrap mb-4">
+      <div class="tabs" role="tablist" aria-label="Output style">
+        <button class="tab" role="tab" id="jf-t-format" aria-selected="true">Format</button>
+        <button class="tab" role="tab" id="jf-t-minify" aria-selected="false" tabindex="-1">Minify</button>
+      </div>
+      <div class="field" id="jf-indent-wrap"><label for="jf-indent">Indent</label>
         <select class="select" id="jf-indent"><option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tab</option></select>
       </div>
-      <button class="btn btn--primary" id="jf-format">Format</button>
-      <button class="btn" id="jf-minify">Minify</button>
-      <button class="btn btn--sm" id="jf-example" style="margin-left:auto;">Load example</button>
-      <button class="btn btn--sm btn--ghost" id="jf-clear">Clear</button>
     </div>
     <div class="tool-layout tool-layout--split">
       <div class="field">
-        <label for="jf-input">Input</label>
+        <div class="row between">
+          <label for="jf-input">Input</label>
+          <button class="btn" id="jf-example">Load example</button>
+        </div>
         <textarea class="textarea mono" id="jf-input" spellcheck="false" placeholder='{"hello":"world"}' style="min-height:340px;"></textarea>
         <p class="field-error" id="jf-error"></p>
       </div>
       <div class="field">
         <div class="row between"><label for="jf-output">Output</label>
-          <button class="btn btn--sm copy-btn" data-copy="#jf-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          <button class="btn copy-btn" data-copy="#jf-output"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
         </div>
         <textarea class="textarea mono" id="jf-output" readonly spellcheck="false" style="min-height:340px;"></textarea>
         <p class="muted xs" id="jf-stats"></p>
       </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Everything runs in your browser, so nothing is uploaded. Format pretty-prints with your chosen indent; Minify strips the whitespace into one line. Invalid JSON is flagged below the input, with the line and column of the error when the browser reports a position.</div>
     </div>
   </div>
 </section>

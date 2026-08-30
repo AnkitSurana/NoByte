@@ -5,7 +5,7 @@ const customWrap = document.getElementById("gst-custom-wrap");
 const custom = document.getElementById("gst-custom");
 let mode = "add";
 
-const fmt = (n) => (Number.isFinite(n) ? n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "—");
+const fmt = (n) => (Number.isFinite(n) ? n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "-");
 
 function rate() {
   return rateSel.value === "custom" ? parseFloat(custom.value) || 0 : parseFloat(rateSel.value) || 0;
@@ -16,7 +16,7 @@ function calc() {
   const a = parseFloat(amount.value);
   const r = rate() / 100;
   if (!Number.isFinite(a)) {
-    ["gst-net","gst-tax","gst-gross"].forEach((id) => (document.getElementById(id).textContent = "—"));
+    ["gst-net","gst-tax","gst-gross"].forEach((id) => (document.getElementById(id).textContent = "-"));
     return;
   }
   let net, tax, gross;

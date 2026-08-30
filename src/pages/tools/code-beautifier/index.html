@@ -1,0 +1,42 @@
+<!-- meta tool="1" title="Code beautifier: format HTML, CSS, JS, Python | NoByte" description="Beautify and indent JavaScript, CSS, HTML, and Python (with the real black formatter), and minify CSS or HTML. Runs in your browser, nothing is uploaded." path="/tools/code-beautifier/" keywords="code beautifier, format javascript, css beautifier, html formatter, python formatter, black formatter" -->
+{{tool-hero:code-beautifier}}
+<section class="section--tight">
+  <div class="container">
+    <div class="field mb-4" style="max-width:220px;">
+      <label for="cb-lang">Language</label>
+      <select class="select" id="cb-lang">
+        <option value="js">JavaScript</option>
+        <option value="css">CSS</option>
+        <option value="html">HTML</option>
+        <option value="python">Python</option>
+      </select>
+    </div>
+    <div class="tool-layout tool-layout--split">
+      <div class="field">
+        <div class="row between">
+          <label for="cb-in">Input</label>
+          <div class="row gap-2">
+            <span class="muted xs" id="cb-status"></span>
+            <button class="btn btn--primary" id="cb-beautify">Beautify</button>
+            <button class="btn" id="cb-minify">Minify</button>
+          </div>
+        </div>
+        <textarea class="textarea mono" id="cb-in" spellcheck="false" style="min-height:340px;"></textarea>
+        <p class="field-error" id="cb-error"></p>
+      </div>
+      <div class="field">
+        <div class="row between">
+          <label for="cb-out">Output</label>
+          <button class="btn copy-btn" data-copy="#cb-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="cb-out" readonly spellcheck="false" style="min-height:340px;"></textarea>
+      </div>
+    </div>
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Beautify re-indents your code, all in your browser. JavaScript, CSS, and HTML are instant; Python uses the real <code>black</code> formatter, downloaded the first time you pick it (your code still never leaves the page). Minify strips comments and whitespace, and is available for CSS and HTML.</div>
+    </div>
+  </div>
+</section>
+<script src="/assets/vendor/beautify.min.js"></script>
+<script type="module" src="/js/tools/code-beautifier.js"></script>

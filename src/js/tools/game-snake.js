@@ -18,7 +18,7 @@ let CELL = 20;              // recomputed to fit the display
 // Step interval shrinks with score, so the snake gradually speeds up.
 const stepMs = () => Math.max(MIN_MS, START_MS - score * 6);
 // Each food has a clock; reach it in time or the game ends. The window shrinks as you grow.
-const foodMs = () => Math.max(3500, 6500 - score * 150);
+const foodMs = () => Math.max(7000, 12000 - score * 150);
 
 let snake, dir, nextDir, food, alive, running, paused, timer, score;
 let foodLeft, foodTotal, lastTickTime;
@@ -50,7 +50,7 @@ function placeFood() {
 
 function updateTime() {
   const secs = Math.max(0, Math.ceil((foodLeft || 0) / 1000));
-  timeEl.textContent = alive ? secs + "s" : "–";
+  timeEl.textContent = alive ? secs + "s" : "-";
   timeEl.classList.toggle("low", alive && running && !paused && foodLeft <= 2000);
 }
 

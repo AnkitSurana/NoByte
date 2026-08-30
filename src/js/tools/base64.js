@@ -48,6 +48,12 @@ encoded.addEventListener("input", () => {
 });
 urlSafe.addEventListener("change", () => plain.dispatchEvent(new Event("input")));
 
+// URL-safe only applies to text mode: hide it whenever the text panel is hidden.
+const urlSafeWrap = document.getElementById("b64-urlsafe-wrap");
+const textPanel = document.getElementById("b-p-text");
+new MutationObserver(() => urlSafeWrap.classList.toggle("hidden", textPanel.hidden))
+  .observe(textPanel, { attributes: true, attributeFilter: ["hidden"] });
+
 // File mode
 initDropzone(document.getElementById("b64-drop"), (files) => {
   const f = files[0];

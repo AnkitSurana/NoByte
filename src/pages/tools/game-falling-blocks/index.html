@@ -9,7 +9,7 @@
           <div class="score-box"><span class="score-box__label">Lines</span><span class="score-box__val" id="fb-lines">0</span></div>
           <div class="score-box"><span class="score-box__label">Level</span><span class="score-box__val" id="fb-level">1</span></div>
         </div>
-        <div class="row" style="gap:var(--s2);">
+        <div class="row gap-2">
           <button class="btn btn--sm" id="fb-pause" type="button">Pause</button>
           <button class="btn btn--primary btn--sm" id="fb-new" type="button">New</button>
         </div>
@@ -29,13 +29,12 @@
   </div>
 </section>
 <style>
-  /* The well is 1:2, so its width is really a height budget: the board renders
-     twice as tall as it is wide. svh (not vh) is what actually fits Chrome on
-     Android/iOS — vh measures the viewport with the URL bar hidden, so a
-     vh-sized board is taller than the screen you can actually see. */
-  /* The well is 1:2, so this width is really a height budget — the canvas
-     renders twice as tall as it is wide. 36svh keeps board + status + control
-     pad inside one screen below the sticky header. */
+  /* The well is 1:2, so #fb-wrap's width is really a height budget: the canvas
+     renders twice as tall as it is wide. svh (not vh) is what actually fits
+     mobile Chrome, whose vh ignores the URL bar and overshoots the visible
+     screen. The vh line is the fallback for browsers without svh; the svh line
+     overrides it. 36svh keeps board + status + control pad on one screen below
+     the sticky header. */
   #fb-wrap { padding: var(--s2); width: min(86vw, 33vh, 320px); margin-inline: auto; }
   #fb-wrap { width: min(86vw, 36svh, 320px); }
   #fb-canvas { display: block; width: 100%; height: auto; border-radius: var(--radius-sm); }

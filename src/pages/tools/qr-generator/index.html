@@ -14,6 +14,10 @@
   /* Branding is opt-in: a switch reveals the controls, so the code stays plain
      until someone asks for more. */
   .qr-brand-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); }
+  .qr-brand-head h2 { font-size: var(--t-xl); margin: 0; }
+  .qr-brand-head .hint { margin: .25rem 0 0; }
+  .qr-canvas-wrap { display: inline-block; padding: var(--s6); background: #fff; border-radius: var(--radius); }
+  .qr-panel .notice { text-align: left; }
   .qr-switch { flex: none; width: 52px; height: 30px; padding: 0; cursor: pointer; position: relative;
     border: var(--bw) solid var(--ink); border-radius: var(--radius-full); background: var(--surface);
     transition: background var(--t-fast) ease; }
@@ -51,8 +55,8 @@
         <div class="card mt-5">
           <div class="qr-brand-head">
             <div>
-              <h2 class="section-heading" style="font-size:var(--t-xl);margin:0;">Branding</h2>
-              <p class="hint" style="margin:.25rem 0 0;">Add a logo, name, colours, and a frame. Leave it off for a plain code.</p>
+              <h2 class="section-heading">Branding</h2>
+              <p class="hint">Add a logo, name, colours, and a frame. Leave it off for a plain code.</p>
             </div>
             <button type="button" class="qr-switch" id="qr-brand-toggle" role="switch" aria-checked="false" aria-label="Enable branding"><span class="qr-switch__dot"></span></button>
           </div>
@@ -60,7 +64,7 @@
           <div id="qr-brand-body" hidden>
             <!-- Shape comes first: it decides which of the controls below mean
                  anything at all, so choosing it last is choosing it backwards. -->
-            <div class="row row-wrap mt-4" style="gap:var(--s4);">
+            <div class="row row-wrap gap-4 mt-4">
               <div class="field"><label for="qr-frame">Shape</label>
                 <select class="select" id="qr-frame">
                   <option value="none" selected>Plain</option>
@@ -80,7 +84,7 @@
               </div>
             </div>
 
-            <div class="row row-wrap mt-4" style="gap:var(--s4);">
+            <div class="row row-wrap gap-4 mt-4">
               <div class="field"><label for="qr-brand-name">Your brand name</label><input class="input" id="qr-brand-name" maxlength="40" placeholder="Optional" /></div>
               <div class="field"><label for="qr-logo">Your logo</label>
                 <input class="input" type="file" id="qr-logo" accept="image/*" />
@@ -92,7 +96,7 @@
               </div>
             </div>
 
-            <div class="row row-wrap mt-4" style="gap:var(--s4);">
+            <div class="row row-wrap gap-4 mt-4">
               <div class="field" id="f-lockup"><label for="qr-lockup">Layout</label>
                 <select class="select" id="qr-lockup">
                   <option value="split" selected>Logo above, name below</option>
@@ -112,7 +116,7 @@
               </div>
             </div>
 
-            <div class="row row-wrap mt-4" style="gap:var(--s4);">
+            <div class="row row-wrap gap-4 mt-4">
               <div class="field"><label for="qr-name-font">Name font</label>
                 <select class="select" id="qr-name-font">
                   <option value="display" selected>Display</option>
@@ -137,7 +141,7 @@
               </div>
             </div>
 
-            <div class="row row-wrap mt-4" style="gap:var(--s4);">
+            <div class="row row-wrap gap-4 mt-4">
               <div class="field"><label for="qr-fg">Foreground</label><input type="color" id="qr-fg" value="#0b0c0e" /></div>
               <div class="field"><label for="qr-eye">Corner colour</label><input type="color" id="qr-eye" value="#0b0c0e" /></div>
               <div class="field"><label for="qr-bg">Background</label><input type="color" id="qr-bg" value="#ffffff" /></div>
@@ -152,17 +156,22 @@
       <!-- The controls column is tall now, so the preview follows you down it
            rather than scrolling off the top. -->
       <div class="result-panel text-center qr-panel" id="qr-panel">
-        <div id="qr-canvas-wrap" style="display:inline-block;padding:var(--s6);background:#fff;border-radius:var(--radius);"><canvas id="qr-canvas" width="280" height="280"></canvas></div>
+        <div id="qr-canvas-wrap" class="qr-canvas-wrap"><canvas id="qr-canvas" width="280" height="280"></canvas></div>
         <p class="field-error mt-2" id="qr-error"></p>
-        <div class="notice notice--warn mt-3" id="qr-warn" style="text-align:left;" hidden>
+        <div class="notice notice--warn mt-3" id="qr-warn" hidden>
           <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#alert-triangle"></use></svg>
           <div></div>
         </div>
-        <div class="row mt-4" style="justify-content:center;gap:var(--s3);">
+        <div class="row justify-center mt-4">
           <button class="btn btn--primary" id="qr-png"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> PNG</button>
           <button class="btn" id="qr-svg"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> SVG</button>
         </div>
       </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>The code updates live as you type. Everything, including any logo you add, is generated in your browser and never uploaded. For Wi-Fi codes, phones join the network on scanning. Download as PNG for sharing or SVG to scale it up without blur.</div>
     </div>
   </div>
 </section>

@@ -5,9 +5,9 @@
     <div class="result-panel">
       <div class="row between mb-2">
         <span class="label">Generated password</span>
-        <span class="badge badge--muted" id="pg-strength">—</span>
+        <span class="badge badge--muted" id="pg-strength">-</span>
       </div>
-      <div class="row" style="gap:var(--s2);">
+      <div class="row gap-2">
         <input class="input mono grow" id="pg-output" readonly value="" aria-label="Generated password" style="font-size:var(--t-lg);" />
         <button class="btn copy-btn" type="button" data-copy="#pg-output">
           <svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg>
@@ -32,23 +32,14 @@
       </div>
 
       <div class="mt-4 pg-options">
-        <label class="switch"><input type="checkbox" id="pg-upper" checked /><span class="switch__track"></span> Uppercase (A–Z)</label>
-        <label class="switch"><input type="checkbox" id="pg-lower" checked /><span class="switch__track"></span> Lowercase (a–z)</label>
-        <label class="switch"><input type="checkbox" id="pg-numbers" checked /><span class="switch__track"></span> Numbers (0–9)</label>
-        <label class="switch"><input type="checkbox" id="pg-symbols" checked /><span class="switch__track"></span> Symbols (!@#…)</label>
+        <label class="switch"><input type="checkbox" id="pg-upper" checked /><span class="switch__track"></span> Uppercase (A-Z)</label>
+        <label class="switch"><input type="checkbox" id="pg-lower" checked /><span class="switch__track"></span> Lowercase (a-z)</label>
+        <label class="switch"><input type="checkbox" id="pg-numbers" checked /><span class="switch__track"></span> Numbers (0-9)</label>
+        <label class="switch"><input type="checkbox" id="pg-symbols" checked /><span class="switch__track"></span> Symbols (!@#...)</label>
         <label class="switch"><input type="checkbox" id="pg-exclude" /><span class="switch__track"></span> No look-alikes (0/O, 1/l)</label>
       </div>
       <p class="field-error mt-2" id="pg-error"></p>
     </div>
-    <style>
-      .pg-options { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
-      /* Two columns squeezed "No look-alikes (0/O, 1/l)" onto three lines on a
-         phone, so the toggles stack there instead. */
-      @media (max-width: 560px) {
-        .pg-options { grid-template-columns: 1fr; gap: var(--s4); }
-        .pg-options .switch { min-height: 44px; }
-      }
-    </style>
 
     <div class="notice notice--info mt-4">
       <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>

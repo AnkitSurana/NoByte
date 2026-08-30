@@ -8,36 +8,49 @@
     </div>
 
     <div class="tab-panel" id="dd-p-diff" role="tabpanel" aria-labelledby="dd-t-diff">
-      <div class="row row-wrap" style="gap:var(--s4);">
+      <div class="row row-wrap gap-4">
         <div class="field"><label for="dd-from">From</label><input class="input" type="date" id="dd-from" /></div>
         <div class="field"><label for="dd-to">To</label><input class="input" type="date" id="dd-to" /></div>
-        <label class="switch" style="align-self:end;padding-bottom:var(--s3);"><input type="checkbox" id="dd-inclusive" /><span class="switch__track"></span> Count both end days</label>
+        <label class="switch dd-switch"><input type="checkbox" id="dd-inclusive" /><span class="switch__track"></span> Count both end days</label>
       </div>
       <div class="result-panel mt-4">
-        <span class="label">Difference</span>
-        <p class="result-value" id="dd-main" style="margin-top:var(--s2);">—</p>
+        <div class="row between"><span class="label">Difference</span>
+          <button class="btn copy-btn" data-copy="#dd-main"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <p class="result-value mt-2" id="dd-main">-</p>
       </div>
       <div class="stat-grid mt-4">
-        <div class="stat"><span class="stat__value" id="dd-days">—</span><span class="stat__label">total days</span></div>
-        <div class="stat"><span class="stat__value" id="dd-weeks">—</span><span class="stat__label">weeks</span></div>
-        <div class="stat"><span class="stat__value" id="dd-hours">—</span><span class="stat__label">hours</span></div>
-        <div class="stat"><span class="stat__value" id="dd-months">—</span><span class="stat__label">months</span></div>
+        <div class="stat"><span class="stat__value" id="dd-days">-</span><span class="stat__label">total days</span></div>
+        <div class="stat"><span class="stat__value" id="dd-weeks">-</span><span class="stat__label">weeks</span></div>
+        <div class="stat"><span class="stat__value" id="dd-hours">-</span><span class="stat__label">hours</span></div>
+        <div class="stat"><span class="stat__value" id="dd-months">-</span><span class="stat__label">months</span></div>
       </div>
     </div>
 
     <div class="tab-panel" id="dd-p-add" role="tabpanel" aria-labelledby="dd-t-add" hidden>
-      <div class="row row-wrap" style="gap:var(--s4);align-items:end;">
+      <div class="row row-wrap gap-4 items-end">
         <div class="field"><label for="dd-base">Start date</label><input class="input" type="date" id="dd-base" /></div>
         <div class="field"><label for="dd-op">Direction</label>
           <select class="select" id="dd-op"><option value="1">Add</option><option value="-1">Subtract</option></select>
         </div>
-        <div class="field"><label for="dd-amount">Days</label><input class="input mono" type="number" id="dd-amount" value="30" min="0" style="width:8rem;" /></div>
+        <div class="field"><label for="dd-amount">Days</label><input class="input mono dd-amount" type="number" id="dd-amount" value="30" min="0" /></div>
       </div>
       <div class="result-panel mt-4">
-        <span class="label">Result date</span>
-        <p class="result-value" id="dd-result" style="margin-top:var(--s2);">—</p>
+        <div class="row between"><span class="label">Result date</span>
+          <button class="btn copy-btn" data-copy="#dd-result"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <p class="result-value mt-2" id="dd-result">-</p>
       </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>"Between dates" breaks the span into years, months, and days, plus totals; turn on "Count both end days" to include the start and end dates. "Add or subtract" shifts a start date by a number of days. Everything runs in your browser.</div>
     </div>
   </div>
 </section>
+<style>
+  .dd-switch { align-self: end; padding-bottom: var(--s3); }
+  .dd-amount { width: 8rem; }
+</style>
 <script type="module" src="/js/tools/date-difference.js"></script>

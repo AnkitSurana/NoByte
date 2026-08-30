@@ -10,7 +10,7 @@ const KEY = "game_sliding_best";
 const N = 4;
 let tiles, moves, solving;
 let best = Number(localStorage.getItem(KEY)) || 0;
-bestEl.textContent = best || "—";
+bestEl.textContent = best || "-";
 
 const SOLVED = [...Array(N * N - 1).keys()].map((i) => i + 1).concat(0);
 const isSolved = () => tiles.every((t, i) => t === SOLVED[i]);

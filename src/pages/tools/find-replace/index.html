@@ -1,0 +1,44 @@
+<!-- meta tool="1" title="Find and replace text online | NoByte" description="Find and replace in text, one match at a time or all at once, plain or with a regular expression. Runs in your browser, nothing is uploaded." path="/tools/find-replace/" keywords="find and replace, find next replace, text replace, regex replace, replace all" -->
+{{tool-hero:find-replace}}
+<section class="section--tight">
+  <div class="container">
+    <div class="field">
+      <div class="row between items-end mb-2">
+        <label for="fr-text">Text</label>
+        <div class="row gap-2">
+          <button class="btn" id="fr-example">Load example</button>
+          <button class="btn copy-btn" data-copy="#fr-text"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+      </div>
+      <textarea class="textarea mono" id="fr-text" spellcheck="false" style="min-height:220px;" placeholder="Paste or type your text here"></textarea>
+    </div>
+
+    <div class="row row-wrap items-end gap-2 mt-4 fr-line">
+      <div class="field grow" style="min-width:200px;"><label for="fr-find">Find</label><input class="input mono" id="fr-find" spellcheck="false" autocomplete="off" /></div>
+      <div class="row gap-2">
+        <button class="btn" id="fr-prev">Previous</button>
+        <button class="btn" id="fr-next">Find next</button>
+      </div>
+    </div>
+
+    <div class="row row-wrap items-end gap-2 mt-4 fr-line">
+      <div class="field grow" style="min-width:200px;"><label for="fr-repl">Replace with</label><input class="input mono" id="fr-repl" spellcheck="false" autocomplete="off" /></div>
+      <div class="row gap-2">
+        <button class="btn" id="fr-replace">Replace</button>
+        <button class="btn btn--primary" id="fr-all">Replace all</button>
+      </div>
+    </div>
+
+    <div class="row row-wrap items-center gap-2 mt-4">
+      <label class="switch"><input type="checkbox" id="fr-regex" /><span class="switch__track"></span> Regular expression</label>
+      <label class="switch"><input type="checkbox" id="fr-ci" /><span class="switch__track"></span> Ignore case</label>
+      <span class="mono xs muted grow tr" id="fr-status"></span>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Find next selects each match in turn so you can Replace them one at a time, or hit Replace all. Turn on Regular expression to match with a regex (use $1, $2 for capture groups in the replacement), or Ignore case to match regardless of capitals. Everything runs in your browser.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/find-replace.js"></script>

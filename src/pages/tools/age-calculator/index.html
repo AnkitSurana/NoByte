@@ -9,13 +9,21 @@
     </div>
     <div class="result-panel text-center mt-4">
       <div class="muted small">Age</div>
-      <div class="result-value" id="ag-main">—</div>
+      <div class="result-value" id="ag-main">-</div>
+      <div class="row justify-center mt-3">
+        <button class="btn copy-btn" data-copy="#ag-main" aria-label="Copy age"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+      </div>
     </div>
     <div class="stack mt-4">
-      <div class="result-row"><span class="label">In months</span><span class="mono val" id="ag-months">—</span></div>
-      <div class="result-row"><span class="label">In weeks</span><span class="mono val" id="ag-weeks">—</span></div>
-      <div class="result-row"><span class="label">In days</span><span class="mono val" id="ag-days">—</span></div>
-      <div class="result-row"><span class="label">Next birthday</span><span class="val" id="ag-next">—</span></div>
+      <div class="result-row"><span class="label">In months</span><span class="mono val" id="ag-months">-</span></div>
+      <div class="result-row"><span class="label">In weeks</span><span class="mono val" id="ag-weeks">-</span></div>
+      <div class="result-row"><span class="label">In days</span><span class="mono val" id="ag-days">-</span></div>
+      <div class="result-row"><span class="label">Next birthday</span><span class="val" id="ag-next">-</span></div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Enter a date of birth to get the exact age in years, months, and days, plus totals and the countdown to the next birthday. Set "Age on" to any date to measure the age at that point instead of today. Everything runs in your browser.</div>
     </div>
   </div>
 </section>

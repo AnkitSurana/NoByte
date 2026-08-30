@@ -35,7 +35,6 @@ function calc() {
 
   const principalFrac = totalPaid > 0 ? P / totalPaid : 0;
   arc.setAttribute("stroke-dasharray", `${principalFrac * CIRC} ${CIRC}`);
-  arc.parentElement.querySelector("circle").setAttribute("stroke", "var(--ink-3)");
 
   buildSchedule(P, r, monthly, years);
 }

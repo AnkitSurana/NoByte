@@ -5,14 +5,15 @@ const error = document.getElementById("ag-error");
 
 const iso = (d) => d.toISOString().slice(0, 10);
 on.value = iso(new Date());
+if (!dob.value) dob.value = "2000-01-01";
 
 function calc() {
   error.textContent = "";
   const set = (id, v) => (document.getElementById(id).textContent = v);
-  if (!dob.value) { ["ag-main","ag-months","ag-weeks","ag-days","ag-next"].forEach((i) => set(i, "—")); return; }
+  if (!dob.value) { ["ag-main","ag-months","ag-weeks","ag-days","ag-next"].forEach((i) => set(i, "-")); return; }
   const birth = new Date(dob.value + "T00:00:00");
   const target = new Date((on.value || iso(new Date())) + "T00:00:00");
-  if (birth > target) { error.textContent = "The date of birth is after the comparison date."; ["ag-main","ag-months","ag-weeks","ag-days","ag-next"].forEach((i) => set(i, "—")); return; }
+  if (birth > target) { error.textContent = "The date of birth is after the comparison date."; ["ag-main","ag-months","ag-weeks","ag-days","ag-next"].forEach((i) => set(i, "-")); return; }
 
   let years = target.getFullYear() - birth.getFullYear();
   let months = target.getMonth() - birth.getMonth();

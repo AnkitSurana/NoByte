@@ -1,4 +1,6 @@
 // URL encoder / decoder + URL part inspector.
+import { copyText, toast } from "/js/ui.js";
+
 const plain = document.getElementById("ue-plain");
 const encoded = document.getElementById("ue-encoded");
 const error = document.getElementById("ue-error");
@@ -43,6 +45,21 @@ urlInput.addEventListener("input", () => {
   const entries = [...u.searchParams.entries()];
   if (entries.length) {
     paramsWrap.classList.remove("hidden");
-    paramsTable.innerHTML = `<tr><th>Key</th><th>Value</th></tr>` + entries.map(([k, val]) => `<tr><td>${escapeHtml(k)}</td><td>${escapeHtml(val)}</td></tr>`).join("");
+    paramsTable.innerHTML = `<thead><tr><th>Key</th><th>Value</th></tr></thead><tbody>` + entries.map(([k, val]) => `<tr data-copyval="${escapeHtml(val)}" title="Copy value"><td>${escapeHtml(k)}</td><td class="mono">${escapeHtml(val)}</td></tr>`).join("") + `</tbody>`;
   }
 });
+
+const EXAMPLE = "https://example.com/search?q=café münchen & brötchen";
+document.getElementById("ue-example").addEventListener("click", () => { plain.value = EXAMPLE; plain.dispatchEvent(new Event("input")); });
+
+// Click a query-parameter row to copy its value.
+paramsTable.addEventListener("click", (e) => {
+  const row = e.target.closest("tr[data-copyval]");
+  if (!row) return;
+  copyText(row.dataset.copyval);
+  toast("Copied value");
+});
+
+// Prefilled defaults so both sections show output on load.
+plain.dispatchEvent(new Event("input"));
+urlInput.dispatchEvent(new Event("input"));

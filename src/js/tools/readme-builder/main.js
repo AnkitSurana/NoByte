@@ -242,21 +242,21 @@ document.getElementById("rb-t-raw").addEventListener("click", () => switchMode("
 
 /* ---------- templates / clear / export ---------- */
 el.template.addEventListener("change", () => {
-  const t = TEMPLATES[el.template.value];
-  if (!t) return;
-  state.cards = t.map((defId) => ({ uid: uid++, defId, collapsed: false, values: {} }));
+  const v = el.template.value;
+  if (!v) return;
+  if (v === "blank") {
+    state.cards = [];
+    state.raw = "";
+    el.raw.value = "";
+  } else {
+    const t = TEMPLATES[v];
+    if (!t) { el.template.value = ""; return; }
+    state.cards = t.map((defId) => ({ uid: uid++, defId, collapsed: false, values: {} }));
+  }
   // Back to the placeholder: this is an action, not a stored setting. Holding
   // the name would go stale the moment a section is edited, and picking the
   // same entry twice fires no change event, so it could not be re-applied.
   el.template.value = "";
-  switchMode("builder");
-  renderDoc();
-  afterChange();
-});
-document.getElementById("rb-clear").addEventListener("click", () => {
-  state.cards = [];
-  state.raw = "";
-  el.raw.value = "";
   switchMode("builder");
   renderDoc();
   afterChange();

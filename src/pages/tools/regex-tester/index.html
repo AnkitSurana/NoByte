@@ -1,41 +1,68 @@
-<!-- meta tool="1" title="Regex tester: live match highlighting | NoByte" description="Test JavaScript regular expressions with live match highlighting, capture groups, and flags. Runs in your browser." path="/tools/regex-tester/" keywords="regex tester, regular expression, regex match, regex online" -->
+<!-- meta tool="1" title="Regex tester: live match highlighting | NoByte" description="Test regular expressions with live match highlighting, capture groups, and flags, using the real JavaScript or Python engine. Runs in your browser." path="/tools/regex-tester/" keywords="regex tester, regular expression, regex match, regex online, python regex" -->
 {{tool-hero:regex-tester}}
 <section class="section--tight">
   <div class="container">
-    <div class="row row-wrap mb-3" style="gap:var(--s3);align-items:end;">
-      <div class="field grow" style="min-width:240px;">
-        <label for="re-pattern">Pattern</label>
-        <div class="row" style="gap:var(--s2);">
-          <span class="mono muted">/</span>
-          <input class="input mono grow" id="re-pattern" spellcheck="false" placeholder="\b\w+@\w+\.\w+\b" />
-          <span class="mono muted">/</span>
-          <input class="input mono" id="re-flags" value="g" style="width:80px;" aria-label="Flags" spellcheck="false" />
-        </div>
-      </div>
+    <div class="row between items-end mb-3 row-wrap gap-2">
       <div class="field">
-        <label for="re-common">Common patterns</label>
-        <select class="select" id="re-common">
-          <option value="">Choose…</option>
-          <option value="[\w.+-]+@[\w-]+\.[\w.]+">Email</option>
-          <option value="https?://[^\s]+">URL</option>
-          <option value="\b(?:\d{1,3}\.){3}\d{1,3}\b">IPv4</option>
-          <option value="\d{4}-\d{2}-\d{2}">Date (YYYY-MM-DD)</option>
-          <option value="#[0-9a-fA-F]{3,6}\b">Hex color</option>
+        <label for="re-lang">Language</label>
+        <select class="select select--sm" id="re-lang">
+          <option value="js">JavaScript</option>
+          <option value="python">Python</option>
         </select>
       </div>
+      <select class="select select--sm" id="re-common" aria-label="Load an example">
+        <option value="">Load an example…</option>
+      </select>
+    </div>
+
+    <div class="regex-bar">
+      <div class="regex-part regex-part--grow">
+        <span class="regex-cap">Pattern</span>
+        <div class="row gap-2">
+          <span class="mono muted regex-slash">/</span>
+          <input class="input mono grow" id="re-pattern" spellcheck="false" placeholder="\b\w+@\w+\.\w+\b" />
+          <span class="mono muted regex-slash">/</span>
+        </div>
+      </div>
+      <div class="regex-part">
+        <span class="regex-cap">Flags</span>
+        <details class="flag-menu" id="re-flags">
+          <summary class="mono" aria-label="Choose flags"><span id="re-flags-label">g</span></summary>
+          <div class="flag-menu__panel">
+            <div class="flag-row"><label><input type="checkbox" data-flag="g" checked> <span><b>g</b> global: find every match, not just the first</span></label><button type="button" class="flag-try" data-demo="g">Try</button></div>
+            <div class="flag-row"><label><input type="checkbox" data-flag="i"> <span><b>i</b> ignore case, so a matches A</span></label><button type="button" class="flag-try" data-demo="i">Try</button></div>
+            <div class="flag-row"><label><input type="checkbox" data-flag="m"> <span><b>m</b> multiline: ^ and $ match each line</span></label><button type="button" class="flag-try" data-demo="m">Try</button></div>
+            <div class="flag-row"><label><input type="checkbox" data-flag="s"> <span><b>s</b> dotall: . matches line breaks too</span></label><button type="button" class="flag-try" data-demo="s">Try</button></div>
+            <div class="flag-row"><label><input type="checkbox" data-flag="u"> <span><b>u</b> unicode: full character set, incl. emoji</span></label><button type="button" class="flag-try" data-demo="u">Try</button></div>
+            <div class="flag-row"><label><input type="checkbox" data-flag="v"> <span><b>v</b> unicode sets: newer mode with set operations (replaces u)</span></label><button type="button" class="flag-try" data-demo="v">Try</button></div>
+            <div class="flag-row"><label><input type="checkbox" data-flag="y"> <span><b>y</b> sticky: match only from where the last ended</span></label><button type="button" class="flag-try" data-demo="y">Try</button></div>
+            <div class="flag-row"><label><input type="checkbox" data-flag="d"> <span><b>d</b> indices: record each match's start and end (no visible change here)</span></label><button type="button" class="flag-try" data-demo="d">Try</button></div>
+          </div>
+        </details>
+      </div>
+      <button class="btn btn--icon copy-btn" id="re-copy" aria-label="Copy regex literal" title="Copy regex"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
     </div>
     <p class="field-error" id="re-error"></p>
+    <p class="muted xs mt-2 hidden" id="re-snippet-line">Copy gives <span class="mono" id="re-snippet"></span></p>
 
-    <div class="field mt-3">
+    <div class="field mt-4">
       <label for="re-text">Test string</label>
       <textarea class="textarea mono" id="re-text" spellcheck="false" style="min-height:170px;">Contact ada@example.com or grace@navy.mil for details.</textarea>
     </div>
 
-    <div class="row between mt-4 mb-2"><span class="label">Matches</span><span class="badge badge--muted" id="re-count">0</span></div>
+    <div class="row between mt-4 mb-2">
+      <span class="label">Matches</span>
+      <span class="row gap-2"><span class="muted xs" id="re-engine-status"></span><span class="badge badge--muted" id="re-count">0</span></span>
+    </div>
     <div class="output-box" id="re-highlight" aria-live="polite"></div>
     <div class="mt-4 hidden" id="re-groups-wrap">
       <div class="label mb-2">Capture groups</div>
-      <div style="overflow-x:auto;"><table class="data-table" id="re-groups"></table></div>
+      <div class="table-scroll"><table class="data-table" id="re-groups"></table></div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Matches highlight live in the test string, with capture groups below. Pick a language to match with its real engine, shown next to Matches: JavaScript is instant, Python downloads the first time you use it. The examples and available flags adapt to the language, so you can try language-specific syntax like named groups. Your pattern and text never leave your browser; only the engine is downloaded.</div>
     </div>
   </div>
 </section>

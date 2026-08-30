@@ -1,0 +1,31 @@
+<!-- meta tool="1" title="Markdown preview: write Markdown, see HTML | NoByte" description="Write Markdown and see it rendered live, then copy the HTML. Runs in your browser, nothing is uploaded." path="/tools/markdown-preview/" keywords="markdown preview, markdown to html, markdown editor, live markdown, md preview" -->
+{{tool-hero:markdown-preview}}
+<section class="section--tight">
+  <div class="container">
+    <div class="tool-layout tool-layout--split">
+      <div class="field">
+        <div class="row between">
+          <label for="md-in">Markdown</label>
+          <button class="btn" id="md-example">Load example</button>
+        </div>
+        <textarea class="textarea mono" id="md-in" spellcheck="false" style="min-height:380px;" placeholder="# Hello&#10;&#10;Type **Markdown** here."></textarea>
+      </div>
+      <div class="field">
+        <div class="row between">
+          <span class="label">Preview</span>
+          <button class="btn copy-btn" data-copy="#md-html"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy HTML</button>
+        </div>
+        <div class="markdown-body" id="md-preview" style="min-height:380px;"></div>
+      </div>
+    </div>
+    <textarea id="md-html" class="sr-only" readonly aria-hidden="true"></textarea>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Type Markdown on the left and it renders live on the right, all in your browser with nothing uploaded. The HTML is sanitised, so scripts and unsafe tags are stripped out. Copy HTML gives you the rendered markup to paste elsewhere.</div>
+    </div>
+  </div>
+</section>
+<script src="/assets/vendor/marked.min.js"></script>
+<script src="/assets/vendor/dompurify.min.js"></script>
+<script type="module" src="/js/tools/markdown-preview.js"></script>

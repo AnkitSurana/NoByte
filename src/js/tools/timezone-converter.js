@@ -57,7 +57,7 @@ function update() {
   resultsEl.querySelectorAll("[data-row]").forEach((row) => {
     const tz = row.querySelector("[data-tz-target]").value;
     const out = row.querySelector("[data-tz-out]");
-    if (!instant) { out.textContent = "—"; return; }
+    if (!instant) { out.textContent = "-"; return; }
     let label = outFmt(tz).format(instant);
     const diff = dayStamp(tz, instant) !== srcDay;
     out.innerHTML = `${label}${diff ? ' <span class="tz-daydiff">different day</span>' : ""}`;
@@ -70,7 +70,7 @@ function addRow(tz) {
   row.dataset.row = "";
   row.innerHTML = `
     <select class="select select--sm" data-tz-target aria-label="Target time zone">${optionList}</select>
-    <span class="tz-row__out"><span class="mono val" data-tz-out>—</span>
+    <span class="tz-row__out"><span class="mono val" data-tz-out>-</span>
     <button class="icon-btn icon-btn--sm" type="button" data-tz-remove aria-label="Remove zone"><svg class="icon" aria-hidden="true"><use href="#x"></use></svg></button></span>`;
   row.querySelector("[data-tz-target]").value = tz;
   row.querySelector("[data-tz-target]").addEventListener("change", update);

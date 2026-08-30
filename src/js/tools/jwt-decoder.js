@@ -22,7 +22,7 @@ function decode() {
   const token = input.value.trim();
   claimsEl.innerHTML = "";
   expBadge.innerHTML = "";
-  if (!token) { error.textContent = ""; headerEl.textContent = "—"; payloadEl.textContent = "—"; input.classList.remove("textarea--invalid"); return; }
+  if (!token) { error.textContent = ""; headerEl.textContent = "-"; payloadEl.textContent = "-"; input.classList.remove("textarea--invalid"); return; }
   const parts = token.split(".");
   if (parts.length < 2) {
     error.textContent = "A JWT has three parts separated by dots.";
@@ -52,8 +52,8 @@ function decode() {
   } catch {
     error.textContent = "Could not decode that token.";
     input.classList.add("textarea--invalid");
-    headerEl.textContent = "—";
-    payloadEl.textContent = "—";
+    headerEl.textContent = "-";
+    payloadEl.textContent = "-";
   }
 }
 

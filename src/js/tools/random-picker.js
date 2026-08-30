@@ -60,3 +60,5 @@ document.getElementById("rp-shuffle").addEventListener("click", () => {
 });
 input.addEventListener("input", updateCount);
 updateCount();
+// Show an example result on load using the prefilled list.
+if (items().length) pick();

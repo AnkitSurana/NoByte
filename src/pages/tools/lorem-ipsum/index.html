@@ -2,18 +2,33 @@
 {{tool-hero:lorem-ipsum}}
 <section class="section--tight">
   <div class="container" style="max-width:720px;">
-    <div class="row row-wrap mb-4" style="gap:var(--s3);align-items:end;">
-      <div class="field"><label for="li-count">How many</label><input class="input mono" id="li-count" type="number" min="1" max="50" value="3" style="width:110px;" /></div>
-      <div class="field"><label for="li-unit">Of</label>
+    <div class="row row-wrap mb-4 gap-3 items-end">
+      <div class="field"><label for="li-count">How many</label><input class="input mono li-count" id="li-count" type="number" min="1" max="50" value="3" /></div>
+      <div class="field"><label for="li-unit">Type</label>
         <select class="select" id="li-unit"><option value="paragraphs">Paragraphs</option><option value="sentences">Sentences</option><option value="words">Words</option></select>
       </div>
-      <label class="switch"><input type="checkbox" id="li-classic" checked /><span class="switch__track"></span> Start with "Lorem ipsum"</label>
-      <button class="btn btn--primary" id="li-gen"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#refresh"></use></svg> Generate</button>
+      <div class="li-ctrl li-push"><label class="switch"><input type="checkbox" id="li-classic" checked /><span class="switch__track"></span> Start with "Lorem ipsum"</label></div>
+      <div class="li-ctrl"><button class="btn btn--primary" id="li-gen"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#refresh"></use></svg> Generate</button></div>
     </div>
     <div class="row between mb-2"><span class="label">Output</span>
-      <button class="btn btn--sm copy-btn" data-copy="#li-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+      <button class="btn copy-btn" data-copy="#li-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
     </div>
     <textarea class="textarea" id="li-out" readonly style="min-height:280px;" aria-label="Generated text"></textarea>
+
+    <div class="notice notice--info mt-4">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Pick how many paragraphs, sentences, or words you need, then Generate for fresh filler text and copy it in one click. Keep "Start with Lorem ipsum" on for the classic opening, or turn it off for a random start. Everything runs in your browser.</div>
+    </div>
   </div>
 </section>
+<style>
+  .li-count { width: 110px; }
+  /* Centre the label-less controls on the input boxes: the row bottom-aligns, so
+     a box the height of an .input makes the switch and button sit at the input's
+     vertical middle instead of hanging at the bottom. */
+  .li-ctrl { display: flex; align-items: center; min-height: 51px; }
+  /* On one line, push the switch + Generate to the right edge so Generate lines
+     up under the Copy button. When the row wraps, keep them left-aligned. */
+  @media (min-width: 700px) { .li-push { margin-left: auto; } }
+</style>
 <script type="module" src="/js/tools/lorem-ipsum.js"></script>

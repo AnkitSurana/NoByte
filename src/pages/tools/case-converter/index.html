@@ -2,38 +2,40 @@
 {{tool-hero:case-converter}}
 <section class="section--tight">
   <div class="container">
-    <div class="field">
-      <label for="cc-input" class="sr-only">Text to convert</label>
-      <textarea class="textarea mono" id="cc-input" placeholder="Type or paste text, then pick a case below…" style="min-height:160px;" autofocus></textarea>
-      <div class="row row-wrap between mt-2">
-        <button class="btn btn--sm" type="button" data-example>Load example</button>
-        <button class="btn btn--sm btn--ghost" type="button" data-clear>Clear</button>
+    <div class="cc-split">
+      <!-- Input -->
+      <div class="field">
+        <div class="row between items-end mb-2">
+          <label for="cc-input">Text</label>
+          <button class="btn" type="button" data-example>Load example</button>
+        </div>
+        <textarea class="textarea mono" id="cc-input" placeholder="Type or paste text, then pick a case" style="min-height:340px;"></textarea>
+      </div>
+
+      <!-- Case picker (middle): a seamless 3D spinner wheel; scroll or drag to roll -->
+      <div class="cc-mid">
+        <div class="cc-spinner" id="cc-spinner" tabindex="0" role="spinbutton" aria-label="Case, scroll to change" aria-valuetext="UPPERCASE">
+          <div class="cc-spinner__stage"><div class="cc-spinner__reel" id="cc-reel"></div></div>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="field">
+        <div class="row between items-center mb-2">
+          <span class="label" id="cc-active-label">UPPERCASE</span>
+          <button class="btn copy-btn" type="button" data-copy="#cc-output">
+            <svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg>
+            <svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg>
+            <span>Copy</span>
+          </button>
+        </div>
+        <textarea class="textarea mono" id="cc-output" readonly style="min-height:340px;" aria-label="Converted text"></textarea>
       </div>
     </div>
 
-    <div class="row row-wrap mt-4" id="cc-buttons" role="group" aria-label="Case options">
-      <button class="btn btn--sm" data-case="upper">UPPERCASE</button>
-      <button class="btn btn--sm" data-case="lower">lowercase</button>
-      <button class="btn btn--sm" data-case="title">Title Case</button>
-      <button class="btn btn--sm" data-case="sentence">Sentence case</button>
-      <button class="btn btn--sm" data-case="camel">camelCase</button>
-      <button class="btn btn--sm" data-case="pascal">PascalCase</button>
-      <button class="btn btn--sm" data-case="snake">snake_case</button>
-      <button class="btn btn--sm" data-case="kebab">kebab-case</button>
-      <button class="btn btn--sm" data-case="constant">CONSTANT_CASE</button>
-      <button class="btn btn--sm" data-case="alternating">aLtErNaTiNg</button>
-    </div>
-
-    <div class="result-panel mt-4">
-      <div class="row between mb-3">
-        <span class="label" id="cc-active-label">Result</span>
-        <button class="btn btn--sm copy-btn" type="button" data-copy="#cc-output">
-          <svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg>
-          <svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg>
-          <span>Copy</span>
-        </button>
-      </div>
-      <textarea class="textarea mono" id="cc-output" readonly style="min-height:120px;" aria-label="Converted text"></textarea>
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Scroll the Case picker (or use the arrows) to roll through the styles; the result updates live and you can copy it. The code styles join words with no spaces: <code>camelCase</code> and <code>PascalCase</code> for identifiers, <code>snake_case</code> and <code>kebab-case</code> joined with an underscore or hyphen, and <code>CONSTANT_CASE</code> in caps for constants. Everything runs in your browser.</div>
     </div>
   </div>
 </section>

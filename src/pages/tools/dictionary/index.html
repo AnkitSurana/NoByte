@@ -2,7 +2,7 @@
 {{tool-hero:dictionary}}
 <section class="section--tight">
   <div class="container" style="max-width:720px;">
-    <form class="hero__search" id="dc-form" role="search" style="max-width:none;margin-top:0;">
+    <form class="hero__search" id="dc-form" role="search">
       <input type="search" id="dc-input" placeholder="Look up a word…" aria-label="Word to look up" autocomplete="off" spellcheck="false" />
       <button type="submit"><span class="btn-label">Define</span></button>
     </form>
@@ -17,6 +17,7 @@
   </div>
 </section>
 <style>
+  #dc-form { max-width: none; margin-top: 0; }
   .dc-entry { border: var(--bw) solid var(--ink); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--hard); padding: var(--s5); margin-bottom: var(--s4); }
   .dc-word { font-family: var(--font-display); font-weight: 700; font-size: var(--t-2xl); letter-spacing: var(--track-display); }
   .dc-phon { font-family: var(--font-mono); color: var(--ink-2); margin-left: var(--s3); font-size: var(--t-md); }

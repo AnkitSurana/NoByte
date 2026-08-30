@@ -2,31 +2,41 @@
 {{tool-hero:url-encoder}}
 <section class="section--tight">
   <div class="container">
+    <h2 class="section-heading">Percent encode and decode</h2>
     <div class="tool-layout tool-layout--split">
       <div class="field">
-        <label for="ue-plain">Plain text</label>
-        <textarea class="textarea mono" id="ue-plain" placeholder="hello world & more" style="min-height:150px;"></textarea>
+        <div class="row between row-wrap gap-2">
+          <span class="row gap-2"><label for="ue-plain">Plain text</label><span class="muted xs">type to encode</span></span>
+          <span class="row gap-2"><button class="btn" id="ue-example">Load example</button><button class="btn copy-btn" data-copy="#ue-plain"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button></span>
+        </div>
+        <textarea class="textarea mono" id="ue-plain" placeholder="https://example.com/search?q=café & more" style="min-height:150px;">https://example.com/search?q=café münchen &amp; brötchen</textarea>
       </div>
       <div class="field">
-        <div class="row between"><label for="ue-encoded">Encoded</label>
-          <button class="btn btn--sm copy-btn" data-copy="#ue-encoded"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        <div class="row between">
+          <span class="row gap-2"><label for="ue-encoded">Encoded</label><span class="muted xs">paste to decode</span></span>
+          <button class="btn copy-btn" data-copy="#ue-encoded"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
         </div>
-        <textarea class="textarea mono" id="ue-encoded" placeholder="hello%20world%20%26%20more" style="min-height:150px;"></textarea>
+        <textarea class="textarea mono" id="ue-encoded" placeholder="https%3A%2F%2Fexample.com%2Fsearch" style="min-height:150px;"></textarea>
         <p class="field-error" id="ue-error"></p>
       </div>
     </div>
     <label class="switch mt-3"><input type="checkbox" id="ue-component" checked /><span class="switch__track"></span> Encode as a component (encodes &amp; ? / : =)</label>
 
-    <h2 class="section-heading mt-6" style="font-size:var(--t-xl);">Inspect a URL</h2>
+    <h2 class="section-heading mt-6">Inspect a URL</h2>
     <div class="field">
       <label for="ue-url">URL</label>
-      <input class="input mono" id="ue-url" placeholder="https://example.com/path?a=1&b=two#top" />
+      <input class="input mono" id="ue-url" placeholder="https://example.com/path?a=1&amp;b=two#top" value="https://example.com/path?a=1&amp;b=two#top" />
       <p class="field-error" id="ue-url-error"></p>
     </div>
     <div class="stack mt-3" id="ue-parts"></div>
     <div id="ue-params-wrap" class="mt-4 hidden">
       <div class="label mb-2">Query parameters</div>
-      <div style="overflow-x:auto;"><table class="data-table" id="ue-params"></table></div>
+      <div class="table-scroll"><table class="data-table data-table--copy" id="ue-params"></table></div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Type in either box to encode or decode percent-encoded text, all in your browser. The toggle chooses between encoding a whole URL and encoding a single component, which also escapes <code>&amp; ? / : =</code> so the text is safe inside a query value. Paste a URL below to break it into its protocol, host, path, and query parameters.</div>
     </div>
   </div>
 </section>

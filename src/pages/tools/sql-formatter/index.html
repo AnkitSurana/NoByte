@@ -1,0 +1,42 @@
+<!-- meta tool="1" title="SQL formatter: pretty-print a query | NoByte" description="Format and indent an SQL query, with support for MySQL, PostgreSQL, SQLite, and more. Runs in your browser, nothing is uploaded." path="/tools/sql-formatter/" keywords="sql formatter, format sql, pretty print sql, sql beautifier, sql query formatter" -->
+{{tool-hero:sql-formatter}}
+<section class="section--tight">
+  <div class="container">
+    <div class="field mb-4" style="max-width:220px;">
+      <label for="sf-dialect">Dialect</label>
+      <select class="select" id="sf-dialect">
+        <option value="sql">Standard SQL</option>
+        <option value="mysql">MySQL</option>
+        <option value="postgresql">PostgreSQL</option>
+        <option value="sqlite">SQLite</option>
+        <option value="mariadb">MariaDB</option>
+        <option value="bigquery">BigQuery</option>
+        <option value="tsql">SQL Server</option>
+      </select>
+    </div>
+    <div class="tool-layout tool-layout--split">
+      <div class="field">
+        <div class="row between">
+          <label for="sf-in">SQL</label>
+          <button class="btn" id="sf-example">Load example</button>
+        </div>
+        <textarea class="textarea mono" id="sf-in" spellcheck="false" style="min-height:340px;"></textarea>
+        <p class="field-error" id="sf-error"></p>
+      </div>
+      <div class="field">
+        <div class="row between">
+          <label for="sf-out">Formatted</label>
+          <button class="btn copy-btn" data-copy="#sf-out"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+        </div>
+        <textarea class="textarea mono" id="sf-out" readonly spellcheck="false" style="min-height:340px;"></textarea>
+      </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Formats and indents an SQL query in your browser, with nothing uploaded. Pick your database dialect so keywords and quoting are handled correctly, paste a query on the left, and the formatted version appears on the right with keywords uppercased, ready to copy.</div>
+    </div>
+  </div>
+</section>
+<script src="/assets/vendor/sql-formatter.min.js"></script>
+<script type="module" src="/js/tools/sql-formatter.js"></script>

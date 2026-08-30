@@ -67,7 +67,7 @@ function generate() {
 function updateStrength(length, poolSize) {
   if (!length || !poolSize) {
     meter.removeAttribute("data-level");
-    strengthBadge.textContent = "—";
+    strengthBadge.textContent = "-";
     strengthBadge.className = "badge badge--muted";
     return;
   }

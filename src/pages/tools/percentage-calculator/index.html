@@ -4,28 +4,70 @@
   <div class="container" style="max-width:720px;">
     <div class="card mb-4">
       <div class="label mb-3">What is X% of Y?</div>
-      <div class="row row-wrap" style="gap:var(--s3);align-items:end;">
-        <div class="field"><label for="p1-x">Percent</label><input class="input mono" id="p1-x" type="number" value="15" style="width:120px;" /></div>
-        <div class="field"><label for="p1-y">of</label><input class="input mono" id="p1-y" type="number" value="200" style="width:140px;" /></div>
-        <div class="result-row grow" style="border:none;"><span class="label">Result</span><span class="mono val" id="p1-out">—</span></div>
+      <div class="row row-wrap gap-3 items-end">
+        <div class="field"><label for="p1-x">Percent</label><input class="input mono pc-a" id="p1-x" type="number" value="15" /></div>
+        <div class="field"><label for="p1-y">of</label><input class="input mono pc-b" id="p1-y" type="number" value="200" /></div>
+        <div class="field">
+          <label>Result</label>
+          <div class="row items-center gap-2">
+            <span class="mono pc-out" id="p1-out">-</span>
+            <button class="btn copy-btn" data-copy="#p1-out" aria-label="Copy result"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card mb-4">
       <div class="label mb-3">X is what percent of Y?</div>
-      <div class="row row-wrap" style="gap:var(--s3);align-items:end;">
-        <div class="field"><label for="p2-x">Value</label><input class="input mono" id="p2-x" type="number" value="30" style="width:120px;" /></div>
-        <div class="field"><label for="p2-y">of</label><input class="input mono" id="p2-y" type="number" value="200" style="width:140px;" /></div>
-        <div class="result-row grow" style="border:none;"><span class="label">Result</span><span class="mono val" id="p2-out">—</span></div>
+      <div class="row row-wrap gap-3 items-end">
+        <div class="field"><label for="p2-x">Value</label><input class="input mono pc-a" id="p2-x" type="number" value="30" /></div>
+        <div class="field"><label for="p2-y">of</label><input class="input mono pc-b" id="p2-y" type="number" value="200" /></div>
+        <div class="field">
+          <label>Result</label>
+          <div class="row items-center gap-2">
+            <span class="mono pc-out" id="p2-out">-</span>
+            <button class="btn copy-btn" data-copy="#p2-out" aria-label="Copy result"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card">
       <div class="label mb-3">Percentage change from X to Y</div>
-      <div class="row row-wrap" style="gap:var(--s3);align-items:end;">
-        <div class="field"><label for="p3-x">From</label><input class="input mono" id="p3-x" type="number" value="120" style="width:120px;" /></div>
-        <div class="field"><label for="p3-y">To</label><input class="input mono" id="p3-y" type="number" value="150" style="width:140px;" /></div>
-        <div class="result-row grow" style="border:none;"><span class="label">Change</span><span class="mono val" id="p3-out">—</span></div>
+      <div class="row row-wrap gap-3 items-end">
+        <div class="field"><label for="p3-x">From</label><input class="input mono pc-a" id="p3-x" type="number" value="120" /></div>
+        <div class="field"><label for="p3-y">To</label><input class="input mono pc-b" id="p3-y" type="number" value="150" /></div>
+        <div class="field">
+          <label>Change</label>
+          <div class="row items-center gap-2">
+            <span class="mono pc-out" id="p3-out">-</span>
+            <button class="btn copy-btn" data-copy="#p3-out" aria-label="Copy change"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>Three common percentage jobs, each updating as you type: a percent of a number, one number as a percent of another, and the percent change between two numbers (green for an increase, red for a decrease). Everything runs in your browser.</div>
     </div>
   </div>
 </section>
+<style>
+  .pc-a { width: 120px; }
+  .pc-b { width: 140px; }
+  /* The answer sits in a soft green, borderless box, value centred, sized to
+     line up with the input boxes beside it. */
+  .pc-out {
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 51px;
+    background: var(--ok-wash);
+    color: var(--ok);
+    border-radius: var(--radius);
+    padding: var(--s2) var(--s3);
+    font-size: var(--t-base);
+    font-weight: 700;
+  }
+</style>
 <script type="module" src="/js/tools/percentage-calculator.js"></script>

@@ -1,0 +1,17 @@
+<!-- meta tool="1" title="MIME types: file extension lookup | NoByte" description="Find the MIME type for a file extension, or the other way around, from a searchable list. Runs in your browser." path="/tools/mime-types/" keywords="mime types, content type, file extension mime, mime type lookup, media type" -->
+{{tool-hero:mime-types}}
+<section class="section--tight">
+  <div class="container">
+    <input class="input" id="mt-search" placeholder="Search by extension or type, e.g. .png or json" autocomplete="off" spellcheck="false" />
+    <p class="muted small mt-2" id="mt-count"></p>
+    <div class="table-scroll mt-3">
+      <table class="data-table data-table--copy" id="mt-table"><thead><tr><th>Extension</th><th>MIME type</th></tr></thead><tbody></tbody></table>
+    </div>
+
+    <div class="notice notice--info mt-5">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+      <div>A MIME type (Multipurpose Internet Mail Extensions) is the label that tells a browser what kind of file it is receiving, like <code>image/png</code> or <code>application/json</code>. It is the value a server sends in the <code>Content-Type</code> header so the browser knows whether to show, play, or download the file. Search by file extension (like <code>.png</code>) or by type (like <code>json</code>) to filter the list, all in your browser, and click any row to copy its MIME type.</div>
+    </div>
+  </div>
+</section>
+<script type="module" src="/js/tools/mime-types.js"></script>

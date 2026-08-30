@@ -20,8 +20,8 @@ function ensureSize() {
 
 function render() {
   const { c } = ensureSize();
-  const alignRow = `<tr><th></th>${aligns.map((a, j) => `<th><select class="select" data-align="${j}" style="min-height:38px;padding:2px 22px 2px 6px;font-size:var(--t-xs);"><option value="left"${a==="left"?" selected":""}>Left</option><option value="center"${a==="center"?" selected":""}>Center</option><option value="right"${a==="right"?" selected":""}>Right</option></select></th>`).join("")}</tr>`;
-  const body = data.map((row, i) => `<tr><td class="muted xs">${i === 0 ? "Header" : i}</td>${row.map((cell, j) => `<td><input class="input mono" data-r="${i}" data-c="${j}" value="${cell.replace(/"/g, "&quot;")}" style="min-height:32px;font-size:var(--t-xs);" /></td>`).join("")}</tr>`).join("");
+  const alignRow = `<tr><th></th>${aligns.map((a, j) => `<th><select class="select select--sm" data-align="${j}"><option value="left"${a==="left"?" selected":""}>Left</option><option value="center"${a==="center"?" selected":""}>Center</option><option value="right"${a==="right"?" selected":""}>Right</option></select></th>`).join("")}</tr>`;
+  const body = data.map((row, i) => `<tr><td class="muted xs">${i === 0 ? "Header" : i}</td>${row.map((cell, j) => `<td><input class="input mono mt-cell" data-r="${i}" data-c="${j}" value="${cell.replace(/"/g, "&quot;")}" /></td>`).join("")}</tr>`).join("");
   grid.innerHTML = alignRow + body;
   grid.querySelectorAll("input[data-r]").forEach((inp) => {
     inp.addEventListener("input", () => { data[+inp.dataset.r][+inp.dataset.c] = inp.value; build(); });

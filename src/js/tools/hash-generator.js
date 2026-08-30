@@ -2,6 +2,13 @@
 import { initDropzone, humanBytes, copyText, debounce, toast } from "/js/ui.js";
 
 const ALGOS = ["SHA-1", "SHA-256", "SHA-384", "SHA-512"];
+// Short "what is it" note shown beside each algorithm name.
+const DESC = {
+  "SHA-1": "160-bit · legacy, avoid for security",
+  "SHA-256": "256-bit · most widely used",
+  "SHA-384": "384-bit",
+  "SHA-512": "512-bit",
+};
 const results = document.getElementById("hg-results");
 const input = document.getElementById("hg-input");
 
@@ -10,10 +17,11 @@ const hex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart
 function renderRows(values) {
   results.innerHTML = ALGOS.map((a) => `
     <div class="card">
-      <div class="row between mb-2"><strong class="small">${a}</strong>
-        <button class="btn btn--sm copy-btn" data-algo="${a}"><svg class="icon icon-copy" aria-hidden="true"><use href="#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="#check"></use></svg></button>
+      <div class="row between mb-3">
+        <span><strong class="small">${a}</strong> <span class="muted xs">${DESC[a]}</span></span>
+        <button class="btn btn--icon copy-btn" data-algo="${a}" aria-label="Copy ${a}"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg></button>
       </div>
-      <div class="output-box" data-out="${a}" style="font-size:var(--t-xs);">${values[a] || "—"}</div>
+      <div class="output-box" data-out="${a}" style="font-size:var(--t-xs);">${values[a] || "-"}</div>
     </div>`).join("");
   results.querySelectorAll("[data-algo]").forEach((btn) => {
     btn.addEventListener("click", () => copyText(values[btn.dataset.algo] || "", btn));
