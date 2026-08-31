@@ -1,9 +1,12 @@
 // Audio extractor — pull the audio track out of a video file, entirely in the
 // browser via ffmpeg.wasm. The file is decoded on-device; nothing is uploaded.
 // The UMD build exposes window.FFmpegWASM (loaded by a plain <script> in the page).
+// The ~31 MB core is fetched from a CDN, not self-hosted: it is over Cloudflare's
+// 25 MiB per-asset limit, and the tool already tells the user the engine downloads
+// once. The user's own video is still decoded on-device and never uploaded.
 import { initDropzone, download, humanBytes, toast } from "/js/ui.js";
 
-const VENDOR = "/assets/vendor/ffmpeg";
+const CORE_CDN = "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd";
 const $ = (id) => document.getElementById(id);
 
 const drop = $("ax-drop");
@@ -274,11 +277,16 @@ async function ensureEngine() {
   // Don't pass classWorkerURL: that forces a module worker whose UMD fallback can't
   // import an external core. Omitting it loads 814.ffmpeg.js as a classic worker via
   // webpack's publicPath (auto-detected from the vendored script's own URL), where
-  // importScripts() loads the UMD core. coreURL/wasmURL must be fully-qualified.
-  const abs = (p) => new URL(p, location.href).href;
+  // importScripts() loads the UMD core. Fetch the CDN core into same-origin blob URLs
+  // so the classic worker can import it without cross-origin restrictions.
+  const toBlobURL = async (url, type) => {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("core-fetch-failed");
+    return URL.createObjectURL(new Blob([await res.arrayBuffer()], { type }));
+  };
   await ffmpeg.load({
-    coreURL: abs(`${VENDOR}/ffmpeg-core.js`),
-    wasmURL: abs(`${VENDOR}/ffmpeg-core.wasm`),
+    coreURL: await toBlobURL(`${CORE_CDN}/ffmpeg-core.js`, "text/javascript"),
+    wasmURL: await toBlobURL(`${CORE_CDN}/ffmpeg-core.wasm`, "application/wasm"),
   });
   engineReady = true;
   return ffmpeg;
