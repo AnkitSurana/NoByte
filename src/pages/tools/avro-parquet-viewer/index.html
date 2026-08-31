@@ -1,11 +1,11 @@
-<!-- meta tool="1" title="Avro & Parquet schema viewer | NoByte" description="Inspect the schema of Avro and Parquet files — .avsc, .avro container headers, and .parquet footers — as a tree and as JSON. Runs entirely in your browser; nothing is uploaded." path="/tools/avro-parquet-viewer/" keywords="avro schema viewer, parquet schema viewer, parquet metadata, avro viewer, parquet viewer, avsc" -->
+<!-- meta tool="1" title="Avro & Parquet schema viewer | NoByte" description="Inspect the schema of Avro and Parquet files - .avsc, .avro container headers, and .parquet footers - as a tree and as JSON. Runs entirely in your browser; nothing is uploaded." path="/tools/avro-parquet-viewer/" keywords="avro schema viewer, parquet schema viewer, parquet metadata, avro viewer, parquet viewer, avsc" -->
 {{tool-hero:avro-parquet-viewer}}
 <section class="section--tight">
   <div class="container">
     <div class="card drop-zone" id="apv-drop" role="button" tabindex="0" aria-label="Drop an Avro or Parquet file here, or press Enter to browse">
-      <svg class="icon" aria-hidden="true" style="width:28px;height:28px;"><use href="/assets/icons.svg#download"></use></svg>
+      <svg class="icon apv-drop-icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg>
       <p class="strong">Drop an <span class="mono">.avro</span>, <span class="mono">.avsc</span>, or <span class="mono">.parquet</span> file here</p>
-      <p class="muted small">or click to choose — the file is read locally and never uploaded</p>
+      <p class="muted small">or click to choose - the file is read locally and never uploaded</p>
       <input type="file" id="apv-file" accept=".avro,.avsc,.avr,.parquet,.parq,.pq" hidden />
     </div>
 
@@ -43,7 +43,7 @@
       </div>
       <div class="field">
         <div class="row between"><label for="apv-raw">Raw schema</label>
-          <div class="row" style="gap:var(--s2);">
+          <div class="row gap-2">
             <button class="btn btn--sm copy-btn" data-copy="#apv-raw"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
             <button class="btn btn--sm" id="apv-download" type="button"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download .json</button>
           </div>
@@ -54,8 +54,11 @@
 
     <div class="notice notice--info mt-5">
       <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
-      <div>Files are decoded entirely in your browser — no uploads, no third-party services. <span class="mono">.avsc</span> is plain JSON. A <span class="mono">.avro</span> header holds a map of metadata carrying the schema and codec. A <span class="mono">.parquet</span> file ends in a Thrift-compact <span class="mono">FileMetaData</span> footer, from which the row count, the first column's compression codec, and the flattened schema are recovered and shown, here, rebuilt as a tree.</div>
+      <div>Files are decoded entirely in your browser - no uploads, no third-party services. <span class="mono">.avsc</span> is plain JSON. A <span class="mono">.avro</span> header holds a map of metadata carrying the schema and codec. A <span class="mono">.parquet</span> file ends in a Thrift-compact <span class="mono">FileMetaData</span> footer, from which the row count, the first column's compression codec, and the flattened schema are recovered and shown, here, rebuilt as a tree.</div>
     </div>
   </div>
 </section>
+<style>
+  .apv-drop-icon { width: 28px; height: 28px; }
+</style>
 <script type="module" src="/js/tools/avro-parquet-viewer.js"></script>

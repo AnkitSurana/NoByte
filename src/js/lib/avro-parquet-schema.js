@@ -12,7 +12,7 @@
  *    just enough of that compact-encoded struct to pull the format version,
  *    created_by, num_rows, the schema tree, and the first column's codec.
  *
- * No frameworks, no WASM, nothing to install — it only reads bytes.
+ * No frameworks, no WASM, nothing to install - it only reads bytes.
  */
 
 /* ---- detection ------------------------------------------------------- */
@@ -107,7 +107,7 @@ export function readAvroContainer(u8) {
   return { format: "avro", codec, schema };
 }
 
-/** Parse .avsc — a raw JSON schema document. */
+/** Parse .avsc - a raw JSON schema document. */
 export function readAvsc(text) {
   let schema;
   try { schema = JSON.parse(text); }

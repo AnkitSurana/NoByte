@@ -1,4 +1,4 @@
-// Avro & Parquet schema viewer — thin DOM shell over the pure parser.
+// Avro & Parquet schema viewer - thin DOM shell over the pure parser.
 //
 // Drag/drop or pick an .avsc / .avro / .parquet file; the file is read entirely
 // in the browser and the schema is shown both as an expandable tree and as raw
@@ -92,10 +92,10 @@ function render(file, result) {
   set("m-name", file.name);
   set("m-format", result.format.toUpperCase());
   set("m-size", humanBytes(file.size));
-  set("m-codec", result.codec || "—");
-  set("m-rows", result.numRows != null ? Number(result.numRows).toLocaleString() : "—");
-  set("m-version", result.version != null ? result.version : "—");
-  set("m-created", result.createdBy || "—");
+  set("m-codec", result.codec || "-");
+  set("m-rows", result.numRows != null ? Number(result.numRows).toLocaleString() : "-");
+  set("m-version", result.version != null ? result.version : "-");
+  set("m-created", result.createdBy || "-");
 
   rawEl.value = JSON.stringify(exportObject(result), null, 2);
   drawTree(result);

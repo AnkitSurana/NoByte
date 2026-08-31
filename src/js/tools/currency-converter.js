@@ -1,9 +1,9 @@
-// Currency converter — one amount into several currencies at once, using the
+// Currency converter - one amount into several currencies at once, using the
 // European Central Bank's daily reference rates via Frankfurter
 // (frankfurter.dev). The row UI mirrors the time zone converter's.
 //
 // Honest scope: these rates are fixed once a business day, so this is a daily
-// reference rather than a live tick-by-tick feed — and the page says so. Every
+// reference rather than a live tick-by-tick feed - and the page says so. Every
 // result is stamped with the rate's as-of date. Fetched rates are cached in
 // localStorage, so conversions keep working offline. Only the base currency
 // code is sent when refreshing rates; the amount never leaves the browser.
@@ -49,7 +49,7 @@ const CURRENCIES = {
 };
 
 const codes = Object.keys(CURRENCIES);
-const optionList = codes.map((c) => `<option value="${c}">${c} — ${CURRENCIES[c]}</option>`).join("");
+const optionList = codes.map((c) => `<option value="${c}">${c} - ${CURRENCIES[c]}</option>`).join("");
 
 const amountEl = document.getElementById("ccx-amount");
 const fromEl = document.getElementById("ccx-from");
@@ -73,7 +73,7 @@ const writeJSON = (key, value) => {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch {
-    /* private browsing or a full store — caching is best-effort */
+    /* private browsing or a full store - caching is best-effort */
   }
 };
 
@@ -95,7 +95,7 @@ function setRates(date, r, persist = true) {
 
 const dmy = (iso) =>
   new Date(`${iso}T00:00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
-const fmt = (n) => (Number.isFinite(n) ? n.toLocaleString(undefined, { maximumFractionDigits: 4 }) : "—");
+const fmt = (n) => (Number.isFinite(n) ? n.toLocaleString(undefined, { maximumFractionDigits: 4 }) : "-");
 const ageLabel = (ms) => {
   const h = Math.round(ms / 36e5);
   if (h < 1) return "just now";
@@ -116,7 +116,7 @@ function render() {
   resultsEl.querySelectorAll("[data-row]").forEach((row) => {
     const to = row.querySelector("[data-ccx-target]").value;
     const out = row.querySelector("[data-ccx-out]");
-    if (!rates || !hasAmount) { out.textContent = "—"; return; }
+    if (!rates || !hasAmount) { out.textContent = "-"; return; }
     const r = convert(amount, from, to);
     out.textContent = `${fmt(r)} ${to}`;
   });
@@ -133,7 +133,7 @@ function addRow(code) {
   row.dataset.row = "";
   row.innerHTML = `
     <select class="select select--sm" data-ccx-target aria-label="Target currency">${optionList}</select>
-    <span class="ccx-row__out"><span class="mono val" data-ccx-out>—</span>
+    <span class="ccx-row__out"><span class="mono val" data-ccx-out>-</span>
     <button class="icon-btn icon-btn--sm" type="button" data-ccx-remove aria-label="Remove currency"><svg class="icon" aria-hidden="true"><use href="#x"></use></svg></button></span>`;
   row.querySelector("[data-ccx-target]").value = code;
   row.querySelector("[data-ccx-target]").addEventListener("change", () => { savePrefs(); render(); });
@@ -148,15 +148,15 @@ async function refresh(spinner) {
     try {
       const data = await fetchRates();
       setRates(data.date, data.rates);
-      statusEl.textContent = `Rates as of ${dmy(data.date)} — fetched just now.`;
+      statusEl.textContent = `Rates as of ${dmy(data.date)} - fetched just now.`;
     } catch {
       if (rates) {
         errorEl.textContent =
-          "Couldn't reach frankfurter.dev, so the cached rates above are shown. Press “Refresh rates” to try again when you're online.";
+          "Couldn't reach frankfurter.dev, so the cached rates above are shown. Press 'Refresh rates' to try again when you're online.";
       } else {
         statusEl.textContent = "";
         errorEl.textContent =
-          "Couldn't fetch today's rates. Check your connection, then press “Refresh rates” to try again.";
+          "Couldn't fetch today's rates. Check your connection, then press 'Refresh rates' to try again.";
       }
     } finally {
       render();
@@ -197,6 +197,6 @@ const savedTargets = (Array.isArray(prefs.targets) ? prefs.targets : [])
 const cached = readJSON(CACHE_KEY);
 if (validRates(cached)) {
   setRates(cached.date, cached.rates, false); // keep the original fetch time
-  statusEl.textContent = `Rates as of ${dmy(cached.date)} — fetched ${ageLabel(Date.now() - (Number(cached.fetchedAt) || 0))} and cached on this device.`;
+  statusEl.textContent = `Rates as of ${dmy(cached.date)} - fetched ${ageLabel(Date.now() - (Number(cached.fetchedAt) || 0))} and cached on this device.`;
 }
 refresh(false);
