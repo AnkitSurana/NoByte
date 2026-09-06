@@ -139,6 +139,18 @@ function nextRuns(parsed, count = 5) {
 const fmt = new Intl.DateTimeFormat(undefined, { weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
 const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 
+// A short "in 3 hours" style gap from now, used as the row label so the run
+// time reads as a proper label/value pair instead of floating alone.
+function relative(d) {
+  const mins = Math.round((d - Date.now()) / 60000);
+  if (mins < 1) return "now";
+  if (mins < 60) return `in ${mins} min`;
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return `in ${hrs} hour${hrs === 1 ? "" : "s"}`;
+  const days = Math.round(hrs / 24);
+  return `in ${days} day${days === 1 ? "" : "s"}`;
+}
+
 // One-line plain reading of a single field's value set.
 function fieldSummary(p, info) {
   const raw = p.raw, noun = info.label.toLowerCase();
@@ -182,7 +194,7 @@ function run() {
   renderFields(parsed);
   const runs = nextRuns(parsed);
   runsEl.innerHTML = runs.length
-    ? runs.map((d) => `<div class="result-row"><span class="mono val">${fmt.format(d)}</span></div>`).join("")
+    ? runs.map((d) => `<div class="result-row"><span class="label">${relative(d)}</span><span class="mono val">${fmt.format(d)}</span></div>`).join("")
     : `<p class="muted small">No run times in the next year.</p>`;
 }
 
