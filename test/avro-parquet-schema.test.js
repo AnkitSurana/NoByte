@@ -35,7 +35,18 @@ test("readAvsc parses a JSON schema document", () => {
 });
 
 test("readAvsc rejects non-JSON", () => {
-  assert.throws(() => readAvsc("not json"), /not valid JSON/);
+  assert.throws(() => readAvsc("not json"), /Not valid JSON/);
+});
+
+test("readAvsc rejects JSON that is not an Avro schema", () => {
+  assert.throws(() => readAvsc('{"foo":1}'), /not an Avro schema/);
+  assert.throws(() => readAvsc("42"), /not an Avro schema/);
+  assert.throws(() => readAvsc("{}"), /not an Avro schema/);
+  assert.throws(() => readAvsc("[1,2,3]"), /not an Avro schema/);
+});
+
+test("readAvsc accepts a valid union of type names", () => {
+  assert.equal(readAvsc('["null","string"]').format, "avsc");
 });
 
 test("avroToNodes flattens records and unions into a tree", () => {

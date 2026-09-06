@@ -11,47 +11,102 @@ import {
   avroToNodes, parquetToNodes,
 } from "/js/lib/avro-parquet-schema.js";
 
-const drop = document.getElementById("apv-drop");
 const fileInput = document.getElementById("apv-file");
 const errorEl = document.getElementById("apv-error");
-const metaCard = document.getElementById("apv-meta");
+const errorTextEl = document.getElementById("apv-error-text");
+const metaEl = document.getElementById("apv-meta");
 const resultBox = document.getElementById("apv-result");
 const treeEl = document.getElementById("apv-tree");
 const rawEl = document.getElementById("apv-raw");
 const filterEl = document.getElementById("apv-filter");
 const pasteEl = document.getElementById("apv-paste");
+const treeBtn = document.getElementById("apv-view-tree");
+const jsonBtn = document.getElementById("apv-view-json");
+const jsonActions = document.getElementById("apv-json-actions");
+
+// A sample .avsc so the tool shows a populated tree the moment it loads.
+const EXAMPLE = JSON.stringify({
+  type: "record",
+  name: "User",
+  namespace: "in.nobyte",
+  fields: [
+    { name: "id", type: "long" },
+    { name: "name", type: "string" },
+    { name: "email", type: ["null", "string"], default: null },
+    { name: "roles", type: { type: "array", items: "string" } },
+    { name: "createdAt", type: { type: "long", logicalType: "timestamp-millis" } },
+  ],
+}, null, 2);
 
 let current = null; // the parsed result from the selected file
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const set = (id, text) => { document.getElementById(id).textContent = text; };
 
-function showError(msg) { errorEl.textContent = msg; }
+const exampleBtn = document.getElementById("apv-example");
+const DEFAULT_PLACEHOLDER = pasteEl.placeholder;
+let fileMode = false; // true while a binary file is the loaded source
+
+function showError(msg) {
+  errorTextEl.textContent = msg || "";
+  errorEl.hidden = !msg;
+}
+
+// Keep the paste box and the Load example / Clear button in step with the state:
+// a loaded file greys the box (you cannot type binary), and any loaded content
+// turns "Load example" into "Clear".
+function syncControls() {
+  pasteEl.readOnly = fileMode;
+  pasteEl.classList.toggle("apv-locked", fileMode);
+  pasteEl.placeholder = fileMode ? 'File loaded - press Clear to paste a schema instead.' : DEFAULT_PLACEHOLDER;
+
+  const loaded = fileMode || !resultBox.hidden || pasteEl.value.trim() !== "";
+  exampleBtn.dataset.mode = loaded ? "clear" : "load";
+  exampleBtn.innerHTML = loaded
+    ? '<svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#x"></use></svg> Clear'
+    : '<svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#refresh"></use></svg> Load example';
+}
+
+function resetOutputs() {
+  current = null;
+  resultBox.hidden = true;
+  metaEl.innerHTML = "";
+  treeEl.innerHTML = "";
+  rawEl.textContent = "";
+  syncControls();
+}
+
+const FORMAT_LABEL = { avsc: "Avro schema", avro: "Avro container", parquet: "Parquet" };
 
 /* ---- reading + parsing ---------------------------------------------- */
 async function handleFile(file) {
   showError("");
-  let result;
+  let result, format = null;
   try {
     const buffer = await file.arrayBuffer();
     const u8 = new Uint8Array(buffer);
-    const format = detectFormat(file.name, u8);
+    format = detectFormat(file.name, u8);
     if (format === "avsc") result = readAvsc(new TextDecoder().decode(u8));
     else if (format === "avro") result = readAvroContainer(u8);
     else if (format === "parquet") result = readParquet(u8);
-    else throw new Error("Unrecognised file type. Use .avsc, .avro, or .parquet.");
+    else throw new Error("Unrecognised file type. Choose a .avsc, .avro, or .parquet file.");
   } catch (e) {
-    current = null;
-    metaCard.hidden = true;
-    resultBox.hidden = true;
-    treeEl.innerHTML = "";
-    rawEl.value = "";
-    showError(`${file.name}: ${e.message}`);
+    fileMode = false;
+    resetOutputs();
+    // A known extension that fails to parse means the file is damaged; say so
+    // plainly and keep the technical reason in parentheses for the curious.
+    if (format) {
+      const label = FORMAT_LABEL[format];
+      const article = /^[aeiou]/i.test(label) ? "an" : "a";
+      showError(`Could not read "${file.name}" as ${article} ${label} file - it looks truncated or corrupted. (${e.message})`);
+    } else {
+      showError(e.message);
+    }
     return;
   }
   current = result;
+  fileMode = true;
   pasteEl.value = ""; // a chosen file supersedes any pasted schema
-  render(file, result);
+  render({ name: file.name, size: file.size }, result);
 }
 
 /* ---- pasted schema content ------------------------------------------ */
@@ -61,17 +116,15 @@ function handlePaste() {
   try {
     result = readAvsc(pasteEl.value);
   } catch (e) {
-    current = null;
-    metaCard.hidden = true;
-    resultBox.hidden = true;
-    treeEl.innerHTML = "";
-    rawEl.value = "";
+    fileMode = false;
+    resetOutputs();
     showError(e.message);
     return;
   }
   fileInput.value = ""; // pasted content supersedes any chosen file
   current = result;
-  render({ name: "Pasted schema", size: new Blob([pasteEl.value]).size }, result);
+  fileMode = false;
+  render({ name: null, size: new Blob([pasteEl.value]).size }, result);
 }
 
 function exportObject(result) {
@@ -88,19 +141,37 @@ function exportObject(result) {
   return result.schema;
 }
 
-function render(file, result) {
-  set("m-name", file.name);
-  set("m-format", result.format.toUpperCase());
-  set("m-size", humanBytes(file.size));
-  set("m-codec", result.codec || "-");
-  set("m-rows", result.numRows != null ? Number(result.numRows).toLocaleString() : "-");
-  set("m-version", result.version != null ? result.version : "-");
-  set("m-created", result.createdBy || "-");
+// Count the top-level fields so the facts strip can say "5 fields".
+function fieldCount(result) {
+  const nodes = result.format === "parquet" ? parquetToNodes(result.schema) : avroToNodes(result.schema);
+  if (nodes.length === 1 && nodes[0].children) return nodes[0].children.length;
+  return nodes.length;
+}
 
-  rawEl.value = JSON.stringify(exportObject(result), null, 2);
+// Labelled rows (label, value) so it is clear what each fact is. Only the facts
+// that apply are shown: a pasted schema has file type / fields / size, while a
+// real .parquet file also carries its codec, row count, version and writer.
+function metaRowsHtml(file, result) {
+  const row = (label, value) => `<dt>${label}</dt><dd>${esc(value)}</dd>`;
+  const rows = [];
+  if (file.name) rows.push(row("File name", file.name));
+  rows.push(row("File type", result.format.toUpperCase()));
+  const fc = fieldCount(result);
+  if (fc) rows.push(row("Fields", String(fc)));
+  rows.push(row("Size", humanBytes(file.size)));
+  if (result.codec) rows.push(row("Compression", result.codec));
+  if (result.numRows != null) rows.push(row("Rows", Number(result.numRows).toLocaleString()));
+  if (result.version != null) rows.push(row("Format version", String(result.version)));
+  if (result.createdBy) rows.push(row("Created by", result.createdBy));
+  return rows.join("");
+}
+
+function render(file, result) {
+  metaEl.innerHTML = metaRowsHtml(file, result);
+  rawEl.textContent = JSON.stringify(exportObject(result), null, 2);
   drawTree(result);
-  metaCard.hidden = false;
   resultBox.hidden = false;
+  syncControls();
 }
 
 /* ---- tree rendering ------------------------------------------------- */
@@ -133,38 +204,74 @@ function renderNode(node, q, depth) {
 function drawTree(result) {
   const nodes = result.format === "parquet" ? parquetToNodes(result.schema) : avroToNodes(result.schema);
   const q = filterEl.value.trim().toLowerCase();
-  treeEl.innerHTML = nodes.filter((n) => matches(n, q)).map((n) => renderNode(n, q, 0)).join("");
+  const shown = nodes.filter((n) => matches(n, q));
+  if (!shown.length) {
+    treeEl.innerHTML = `<p class="muted small">No field name or type matches "${esc(filterEl.value.trim())}". Clear the filter to see the whole schema.</p>`;
+    return;
+  }
+  treeEl.innerHTML = shown.map((n) => renderNode(n, q, 0)).join("");
 }
 
 /* ---- events --------------------------------------------------------- */
-drop.addEventListener("click", (e) => {
-  if (e.target === fileInput) return; // ignore the synthetic click from fileInput.click()
-  fileInput.click();
+// The textarea is both the paste field and the drop target: text parses live
+// as you type, and dropping a binary .avro/.parquet reads it straight away.
+let parseTimer;
+pasteEl.addEventListener("input", () => {
+  clearTimeout(parseTimer);
+  parseTimer = setTimeout(() => {
+    if (pasteEl.value.trim()) handlePaste();
+    else { showError(""); resetOutputs(); }
+  }, 350);
 });
-drop.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fileInput.click(); }
-});
-drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drop-zone--over"); });
-drop.addEventListener("dragleave", () => drop.classList.remove("drop-zone--over"));
-drop.addEventListener("drop", (e) => {
+pasteEl.addEventListener("dragover", (e) => { e.preventDefault(); pasteEl.classList.add("apv-drag"); });
+pasteEl.addEventListener("dragleave", () => pasteEl.classList.remove("apv-drag"));
+pasteEl.addEventListener("drop", (e) => {
+  if (!e.dataTransfer.files || !e.dataTransfer.files[0]) return; // let plain text drops fall through
   e.preventDefault();
-  drop.classList.remove("drop-zone--over");
-  if (e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  pasteEl.classList.remove("apv-drag");
+  handleFile(e.dataTransfer.files[0]);
 });
+
+document.getElementById("apv-choose").addEventListener("click", () => fileInput.click());
 fileInput.addEventListener("change", () => {
   if (fileInput.files && fileInput.files[0]) handleFile(fileInput.files[0]);
+});
+// The right button loads the example while empty, and becomes Clear once
+// anything is loaded (a pasted schema, the example, or an uploaded file).
+exampleBtn.addEventListener("click", () => {
+  if (exampleBtn.dataset.mode === "clear") {
+    fileMode = false;
+    fileInput.value = "";
+    pasteEl.value = "";
+    filterEl.value = "";
+    showError("");
+    resetOutputs();
+    pasteEl.focus();
+  } else {
+    fileMode = false;
+    fileInput.value = "";
+    pasteEl.value = EXAMPLE;
+    handlePaste();
+  }
 });
 
 filterEl.addEventListener("input", () => { if (current) drawTree(current); });
 
-document.getElementById("apv-paste-go").addEventListener("click", () => {
-  if (!pasteEl.value.trim()) { showError("Paste a schema first."); return; }
-  handlePaste();
-});
-pasteEl.addEventListener("keydown", (e) => {
-  // Parse on Ctrl/Cmd+Enter as a convenience.
-  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); handlePaste(); }
-});
+// The tabs flip the shared scroll area between the field outline and the raw
+// JSON. The filter only applies to the tree, and Copy / Download export the
+// JSON - so both are shown only in their relevant view.
+function setView(json) {
+  treeEl.hidden = json;
+  filterEl.hidden = json;
+  rawEl.hidden = !json;
+  jsonActions.hidden = !json;
+  treeBtn.setAttribute("aria-selected", String(!json));
+  jsonBtn.setAttribute("aria-selected", String(json));
+  treeBtn.tabIndex = json ? -1 : 0;
+  jsonBtn.tabIndex = json ? 0 : -1;
+}
+treeBtn.addEventListener("click", () => setView(false));
+jsonBtn.addEventListener("click", () => setView(true));
 
 document.getElementById("apv-download").addEventListener("click", () => {
   if (!current) return;
@@ -177,15 +284,7 @@ document.getElementById("apv-download").addEventListener("click", () => {
   URL.revokeObjectURL(url);
 });
 
-document.getElementById("apv-clear").addEventListener("click", () => {
-  current = null;
-  fileInput.value = "";
-  pasteEl.value = "";
-  filterEl.value = "";
-  showError("");
-  metaCard.hidden = true;
-  resultBox.hidden = true;
-  treeEl.innerHTML = "";
-  rawEl.value = "";
-});
+// Start with the example loaded so the tree and raw panels are populated on open.
+pasteEl.value = EXAMPLE;
+handlePaste();
 

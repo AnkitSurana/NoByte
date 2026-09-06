@@ -2,53 +2,45 @@
 {{tool-hero:avro-parquet-viewer}}
 <section class="section--tight">
   <div class="container">
-    <div class="card drop-zone" id="apv-drop" role="button" tabindex="0" aria-label="Drop an Avro or Parquet file here, or press Enter to browse">
-      <svg class="icon apv-drop-icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg>
-      <p class="strong">Drop an <span class="mono">.avro</span>, <span class="mono">.avsc</span>, or <span class="mono">.parquet</span> file here</p>
-      <p class="muted small">or click to choose - the file is read locally and never uploaded</p>
-      <input type="file" id="apv-file" accept=".avro,.avsc,.avr,.parquet,.parq,.pq" hidden />
-    </div>
-
-    <p class="label mt-5">or paste a schema</p>
-    <div class="card mt-2">
-      <textarea class="textarea mono" id="apv-paste" spellcheck="false" placeholder='{"type":"record","name":"User","fields":[{"name":"id","type":"long"},{"name":"name","type":"string"}]}' style="min-height:140px;"></textarea>
-      <div class="row between mt-2">
-        <p class="muted xs">Paste an <span class="mono">.avsc</span> file or any JSON schema. Binary <span class="mono">.avro</span> / <span class="mono">.parquet</span> data only works via the file drop above.</p>
-        <button class="btn btn--sm" id="apv-paste-go" type="button">Parse pasted schema</button>
-      </div>
-    </div>
-    <p class="field-error mt-3" id="apv-error"></p>
-
-    <div class="card mt-4" id="apv-meta" hidden>
-      <div class="row between mb-2">
-        <h3 class="label">File summary</h3>
-        <button class="btn btn--sm btn--ghost" id="apv-clear" type="button">Clear</button>
-      </div>
-      <dl class="meta-grid">
-        <div><dt>Name</dt><dd id="m-name"></dd></div>
-        <div><dt>Format</dt><dd id="m-format"></dd></div>
-        <div><dt>Size</dt><dd id="m-size"></dd></div>
-        <div><dt>Compression</dt><dd id="m-codec"></dd></div>
-        <div><dt>Rows</dt><dd id="m-rows"></dd></div>
-        <div><dt>Format version</dt><dd id="m-version"></dd></div>
-        <div><dt>Created by</dt><dd id="m-created"></dd></div>
-      </dl>
-    </div>
-
-    <div class="tool-layout tool-layout--split mt-4" id="apv-result" hidden>
-      <div class="field">
-        <label for="apv-filter">Schema tree</label>
-        <input class="input mono" id="apv-filter" type="search" placeholder="Filter fields…" autocomplete="off" />
-        <div class="tree mt-2" id="apv-tree"></div>
-      </div>
-      <div class="field">
-        <div class="row between"><label for="apv-raw">Raw schema</label>
-          <div class="row gap-2">
-            <button class="btn btn--sm copy-btn" data-copy="#apv-raw"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
-            <button class="btn btn--sm" id="apv-download" type="button"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download .json</button>
-          </div>
+    <div class="field">
+      <div class="row between row-wrap gap-2">
+        <label for="apv-paste">Schema or file</label>
+        <div class="apv-actions">
+          <button class="btn" id="apv-choose" type="button"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#upload"></use></svg> Choose file</button>
+          <button class="btn" id="apv-example" type="button"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#refresh"></use></svg> Load example</button>
         </div>
-        <textarea class="textarea mono" id="apv-raw" readonly spellcheck="false" style="min-height:340px;"></textarea>
+      </div>
+      <textarea class="textarea mono" id="apv-paste" spellcheck="false" placeholder="Paste an .avsc / JSON schema, or drop a .avro / .parquet file anywhere in this box..." style="min-height:240px;"></textarea>
+      <input type="file" id="apv-file" accept=".avro,.avsc,.avr,.parquet,.parq,.pq" hidden />
+      <div class="apv-error" id="apv-error" role="alert" hidden>
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg>
+        <span id="apv-error-text"></span>
+      </div>
+    </div>
+
+    <div id="apv-result" hidden>
+      <details class="apv-meta mt-3" open>
+        <summary>File details</summary>
+        <dl class="apv-meta__grid" id="apv-meta"></dl>
+      </details>
+
+      <div class="row between items-center row-wrap gap-3 mt-4 mb-3">
+        <div class="tabs" role="tablist" aria-label="Schema view">
+          <button class="tab" role="tab" id="apv-view-tree" aria-selected="true">Tree</button>
+          <button class="tab" role="tab" id="apv-view-json" aria-selected="false" tabindex="-1">JSON</button>
+        </div>
+        <div class="apv-actions" id="apv-json-actions" hidden>
+          <button class="btn copy-btn" data-copy="#apv-raw"><svg class="icon icon-copy" aria-hidden="true"><use href="/assets/icons.svg#copy"></use></svg><svg class="icon icon-check" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg> Copy</button>
+          <button class="btn" id="apv-download" type="button"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg> Download</button>
+        </div>
+      </div>
+
+      <div class="card apv-panel">
+        <input class="input mono mb-3" id="apv-filter" type="search" placeholder="Filter by field name or type, e.g. email or long" autocomplete="off" />
+        <div class="apv-scroll">
+          <div class="tree" id="apv-tree"></div>
+          <pre class="mono apv-raw" id="apv-raw" hidden></pre>
+        </div>
       </div>
     </div>
 
@@ -59,6 +51,28 @@
   </div>
 </section>
 <style>
-  .apv-drop-icon { width: 28px; height: 28px; }
+  #apv-paste.apv-drag { border-style: dashed; background: color-mix(in srgb, var(--hl) 12%, var(--surface)); }
+  /* A file loaded via Choose file / drop greys the paste box so it is clear you cannot type into it. */
+  #apv-paste.apv-locked { background: color-mix(in srgb, var(--ink) 6%, var(--surface)); color: var(--ink-3); cursor: not-allowed; }
+  .apv-error { display: flex; align-items: center; gap: var(--s2); margin-top: var(--s3); font-size: var(--t-sm); font-weight: 500; color: var(--bad); padding: var(--s3); background: var(--bad-wash); border: 2px solid color-mix(in srgb, var(--bad) 32%, transparent); border-radius: var(--radius); }
+  .apv-error .icon { flex: none; width: 18px; height: 18px; }
+  /* Metadata: a subtle dropdown, its own section under the input, with a labelled two-column table. */
+  .apv-meta { font-size: var(--t-sm); }
+  .apv-meta > summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: var(--s2); font-family: var(--font-display); font-weight: 700; color: var(--ink-2); }
+  .apv-meta > summary::-webkit-details-marker { display: none; }
+  .apv-meta > summary::before { content: "\25B8"; color: var(--ink-3); transition: transform var(--t-fast) ease; }
+  .apv-meta[open] > summary::before { transform: rotate(90deg); }
+  .apv-meta__grid { display: grid; grid-template-columns: auto 1fr; gap: var(--s2) var(--s5); margin: var(--s3) 0 0; max-width: 26rem; }
+  .apv-meta__grid dt { color: var(--ink-3); text-transform: uppercase; font-size: var(--t-xs); letter-spacing: var(--track-caps); align-self: center; }
+  .apv-meta__grid dd { margin: 0; font-family: var(--font-mono); color: var(--ink); overflow-wrap: anywhere; }
+  /* Fixed-height, resizable output panel: the card size never changes when you
+     switch Tree/JSON - only the scroll area inside it fills the space. */
+  .apv-panel { height: 30rem; display: flex; flex-direction: column; resize: vertical; overflow: hidden; }
+  .apv-panel #apv-filter { flex: none; }
+  .apv-scroll { flex: 1; min-height: 0; overflow: auto; }
+  .apv-raw { margin: 0; white-space: pre; font-size: var(--t-sm); line-height: 1.55; }
+  /* All action buttons share one width and gap for a consistent toolbar. */
+  .apv-actions { display: flex; gap: var(--s3); }
+  .apv-actions .btn { min-width: 10.25rem; justify-content: center; }
 </style>
 <script type="module" src="/js/tools/avro-parquet-viewer.js"></script>

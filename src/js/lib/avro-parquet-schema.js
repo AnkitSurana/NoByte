@@ -108,10 +108,23 @@ export function readAvroContainer(u8) {
 }
 
 /** Parse .avsc - a raw JSON schema document. */
+// A parsed value that could plausibly be an Avro schema: a type name string, a
+// union array, or an object that declares a "type". This is what separates a
+// real schema from arbitrary JSON that merely happens to parse.
+export function looksLikeAvroSchema(s) {
+  if (typeof s === "string") return s.length > 0;
+  if (Array.isArray(s)) return s.length > 0 && s.every(looksLikeAvroSchema); // union: every branch is itself a schema
+  if (s && typeof s === "object") return typeof s.type === "string";
+  return false;
+}
+
 export function readAvsc(text) {
   let schema;
   try { schema = JSON.parse(text); }
-  catch { throw new Error("not valid JSON (an .avsc is a JSON schema document)"); }
+  catch { throw new Error("Not valid JSON. An Avro schema (.avsc) is a JSON document."); }
+  if (!looksLikeAvroSchema(schema)) {
+    throw new Error('Valid JSON, but not an Avro schema - expected an object with a "type" (such as "record"), a union array, or a type name.');
+  }
   return { format: "avsc", codec: null, schema };
 }
 
